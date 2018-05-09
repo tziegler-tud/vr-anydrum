@@ -1,6 +1,7 @@
 package com.example.bluefish.anydrum;
 
 import Sensors.AccelerationSensor;
+import Visualizations.LineChart;
 import android.content.Context;
 import android.view.*;
 import android.hardware.SensorManager;
@@ -22,6 +23,8 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private PdUiDispatcher dispatcher;
+    private AccelerationSensor aclSensor;
+
     public SensorManager mSensorManager;
     public SensorManager getmSensorManager() {
         return mSensorManager;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private void initGui(){
         final ToggleButton onOff = (ToggleButton) findViewById(R.id.toggleButton);
         final Button playSnareDrum = (Button) findViewById(R.id.btnSnareDrum);
+        final Button drawChartBtn = (Button) findViewById(R.id.btnGraph);
 
         onOff.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
@@ -60,6 +64,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+        drawChartBtn.setOnClickListener(  new View.OnClickListener() {
+            public void onClick(View v) {
+               createChart();
+            }
+        });
+    }
+
+    private void createChart()
+    {
+        LineChart chart = new LineChart(this, aclSensor.getListOfSensorData());
     }
 
     @Override
@@ -72,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        AccelerationSensor aclSensor = new AccelerationSensor(this, 2 * 1000 * 1000);
+        aclSensor = new AccelerationSensor(this, 2 * 1000 * 1000);
         aclSensor.subscribeToAccelerationSensor();
 
         try {
