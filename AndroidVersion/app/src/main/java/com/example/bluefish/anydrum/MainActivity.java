@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createChart()
     {
-        LineChart chart = new LineChart(this, aclSensor.getListOfSensorData());
+        LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());
     }
 
     @Override

@@ -33,8 +33,8 @@ public class LineChart {
 
         series = new LineGraphSeries<DataPoint>(data);
         graph.addSeries(series);
-        graph.getViewport().setMinY(-0.1);
-        graph.getViewport().setMaxY(0.1);
+        graph.getViewport().setMinY(-0.001);
+        graph.getViewport().setMaxY(0.001);
         graph.getViewport().setMaxX(100);
     }
 }
