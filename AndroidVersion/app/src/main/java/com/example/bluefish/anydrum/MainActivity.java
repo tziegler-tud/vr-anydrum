@@ -8,9 +8,7 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 import org.puredata.android.io.AudioParameters;
 import org.puredata.android.io.PdAudio;
 import org.puredata.android.utils.PdUiDispatcher;
@@ -40,27 +38,36 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initGui(){
-        final ToggleButton onOff = (ToggleButton) findViewById(R.id.toggleButton);
         final Button playSnareDrum = (Button) findViewById(R.id.btnSnareDrum);
+        final Button playBassDrum = (Button) findViewById(R.id.btnBassDrum);
+        final Button playHiHatDrum = (Button) findViewById(R.id.btnHiHat);
+
         final Button drawChartBtn = (Button) findViewById(R.id.btnGraph);
 
-        onOff.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                                             @Override
-                                             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                                                // Log.i("onOff is: ", String.valueOf(b));
-                                                 float value = (isChecked) ? 1.0f : 0.0f;
-                                                 PdBase.sendFloat("onOff", value);
-                                             }
-                                         }
-
-        );
         playSnareDrum.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // do something when the button is clicked
                         // Yes we will handle click here but which button clicked??? We don't know
                         PdBase.sendBang("bangSnareDrum");
+                    }
+                }
+        );
+        playBassDrum.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // do something when the button is clicked
+                        // Yes we will handle click here but which button clicked??? We don't know
+                        PdBase.sendBang("bangBassDrum");
+                    }
+                }
+        );
+        playHiHatDrum.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // do something when the button is clicked
+                        // Yes we will handle click here but which button clicked??? We don't know
+                        PdBase.sendBang("bangHiHatDrum");
                     }
                 }
         );
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
+        TextView tv = (TextView) findViewById(R.id.sensorValue);
         tv.setText(stringFromJNI());
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -111,11 +118,14 @@ public class MainActivity extends AppCompatActivity {
     {
         File dir = getFilesDir();
         IoUtils.extractZipResource(getResources().openRawResource(R.raw.puredatafiles), dir, true);
-        File pdPatch = new File(dir, "simpleTest.pd");
-        File pdPatchSnareDrum = new File(dir, "drumset.pd");
+        File pdPatchSnareDrum = new File(dir, "snareDrum.pd");
+        File pdPatchBassDrum = new File(dir, "bassDrum.pd");
+        File pdPatchHiHatDrum = new File(dir, "hihatDrum.pd");
 
-        PdBase.openPatch(pdPatch.getAbsolutePath());
+
         PdBase.openPatch(pdPatchSnareDrum.getAbsolutePath());
+        PdBase.openPatch(pdPatchBassDrum.getAbsolutePath());
+        PdBase.openPatch(pdPatchHiHatDrum.getAbsolutePath());
     }
 
 
