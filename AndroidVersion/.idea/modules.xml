@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidVersion.iml" filepath="$PROJECT_DIR$/AndroidVersion.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidVersion.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidVersion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/build/generated/source/r/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/app/build/generated/source/r/androidTest/androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/src/androidTest/androidTest1.iml" filepath="$PROJECT_DIR$/app/src/androidTest/androidTest1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/build/generated/source/buildConfig/androidTest/androidTest2.iml" filepath="$PROJECT_DIR$/app/build/generated/source/buildConfig/androidTest/androidTest2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/build/generated/source/buildConfig/buildConfig.iml" filepath="$PROJECT_DIR$/app/build/generated/source/buildConfig/buildConfig.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/debug.iml" filepath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/src/main/main.iml" filepath="$PROJECT_DIR$/app/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/build/generated/source/r/r.iml" filepath="$PROJECT_DIR$/app/build/generated/source/r/r.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/build/intermediates/manifests/full/release/release.iml" filepath="$PROJECT_DIR$/app/build/intermediates/manifests/full/release/release.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/src/test/test.iml" filepath="$PROJECT_DIR$/app/src/test/test.iml" />
     </modules>
   </component>
 </project>
