@@ -8,7 +8,11 @@ import android.hardware.Sensor;
 import android.widget.TextView;
 import com.example.bluefish.anydrum.MainActivity;
 import com.example.bluefish.anydrum.R;
+
 import  org.apache.commons.math3.ml.clustering.DBSCANClusterer;
+import  org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
+
+
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 
@@ -18,6 +22,7 @@ import java.util.Vector;
 public class AccelerationSensor
 {
     private DBSCANClusterer clusterer;
+    private StandardDeviation stdDeviation;
     private Sensor mSensor;
     private MainActivity refMain;
     private int updatePeriod = 2 * 1000 * 1000;
@@ -29,6 +34,7 @@ public class AccelerationSensor
 
     public AccelerationSensor(MainActivity refMain, int period)
     {
+        stdDeviation = new StandardDeviation();
         //clusterer = new DBSCANClusterer(1, 15)
         this.updatePeriod = period;
         this.refMain = refMain;
