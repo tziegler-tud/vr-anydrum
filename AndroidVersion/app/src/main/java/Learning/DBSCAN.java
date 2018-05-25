@@ -8,6 +8,11 @@ import java.util.List;
 public class DBSCAN {
 
     private DBSCANClusterer clusterer;
+    List<ClusterableDoublePoint> points;
+    List<Cluster<ClusterableDoublePoint>> clusterHihat;
+    List<Cluster<ClusterableDoublePoint>> clusterSnare;
+    List<Cluster<ClusterableDoublePoint>> clusterBass;
+
 
     public DBSCAN(float radius, int minObjectNumber)
     {

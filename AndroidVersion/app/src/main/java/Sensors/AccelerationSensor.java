@@ -97,8 +97,7 @@ public class AccelerationSensor
                     viewDeviation.setText("deviation: "+formatter.format(stdDeviationValue));
                 }
 
-                double highpassFilteredY = highpassFilter(0.0001f, sensorEvent.values[2]);
-                listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, highpassFilteredY}));
+                listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, sensorEvent.values[2]}));
                 blockFilter(10);
 
                   /*if(listOfSensorData.size() >= 100)
@@ -108,14 +107,6 @@ public class AccelerationSensor
                 }*/
                   refMain.createChart();
             }
-
-            private double highpassFilter(float threshold, double skalar)
-            {
-                if(skalar < threshold)
-                    return 0;
-                return skalar;
-            }
-
             //Box-Filter-Kernel size 5
             private double blockFilter(float size)
             {
@@ -131,10 +122,19 @@ public class AccelerationSensor
                     }
                 }
                 filteredValue /= size;
+
+                double highpassFilteredY = highpassFilter(0.0002f, filteredValue);
                 TextView viewCurrentValue = (TextView) refMain.findViewById(R.id.sensorValue);
-                viewCurrentValue.setText(formatter.format(filteredValue));
-                listOfSensorDataFiltered.add(new ClusterableDoublePoint(new double[]{listOfSensorData.get(listOfSensorData.size()-1).getPoint()[0], filteredValue}));
-                return filteredValue;
+                viewCurrentValue.setText(formatter.format(highpassFilteredY));
+                listOfSensorDataFiltered.add(new ClusterableDoublePoint(new double[]{listOfSensorData.get(listOfSensorData.size()-1).getPoint()[0], highpassFilteredY}));
+                return highpassFilteredY;
+            }
+
+            private double highpassFilter(float threshold, double skalar)
+            {
+                if(skalar < threshold)
+                    return 0;
+                return skalar;
             }
 
 

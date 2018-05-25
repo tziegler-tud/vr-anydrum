@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 if(useClusters)
                     btnStart.setBackgroundColor(0xff00bb00);
                 else
-                    btnStart.setBackgroundColor(0xff444444);
+                    btnStart.setBackgroundColor(0xffaaaaaa);
             }
         });
     }
