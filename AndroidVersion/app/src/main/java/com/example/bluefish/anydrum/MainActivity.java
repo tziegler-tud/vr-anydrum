@@ -1,5 +1,6 @@
 package com.example.bluefish.anydrum;
 
+import Learning.DBSCAN;
 import Sensors.AccelerationSensor;
 import Visualizations.LineChart;
 import android.content.Context;
@@ -22,11 +23,18 @@ public class MainActivity extends AppCompatActivity {
 
     private PdUiDispatcher dispatcher;
     private AccelerationSensor aclSensor;
-
+    public AccelerationSensor getAclSensor() {
+        return aclSensor;
+    }
+    private DBSCAN dbscan;
+    public DBSCAN getDbscan() {
+        return dbscan;
+    }
     public SensorManager mSensorManager;
     public SensorManager getmSensorManager() {
         return mSensorManager;
     }
+
 
 
     // Used to load the 'native-lib' library on application startup.
@@ -38,47 +46,50 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initGui(){
+        final MainActivity refMain = this;
         final Button playSnareDrum = (Button) findViewById(R.id.btnSnareDrum);
         final Button playBassDrum = (Button) findViewById(R.id.btnBassDrum);
         final Button playHiHatDrum = (Button) findViewById(R.id.btnHiHat);
 
-        final Button drawChartBtn = (Button) findViewById(R.id.btnGraph);
+        final Button btnStart = (Button) findViewById(R.id.btnStart);
 
         playSnareDrum.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        // do something when the button is clicked
-                        // Yes we will handle click here but which button clicked??? We don't know
                         PdBase.sendBang("bangSnareDrum");
+                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeSnare), 10, refMain);
                     }
                 }
         );
         playBassDrum.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        // do something when the button is clicked
-                        // Yes we will handle click here but which button clicked??? We don't know
                         PdBase.sendBang("bangBassDrum");
+                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeBass), 10, refMain);
                     }
                 }
         );
         playHiHatDrum.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        // do something when the button is clicked
-                        // Yes we will handle click here but which button clicked??? We don't know
                         PdBase.sendBang("bangHiHatDrum");
+                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain);
                     }
                 }
         );
-        drawChartBtn.setOnClickListener(  new View.OnClickListener() {
+        btnStart.setOnClickListener(  new View.OnClickListener() {
             public void onClick(View v) {
-               createChart();
+                boolean useClusters = aclSensor.isStartUsingClusters()  ? false : true;
+                aclSensor.setStartUsingClusters(useClusters);
+                if(useClusters)
+                    btnStart.setBackgroundColor(0xff00bb00);
+                else
+                    btnStart.setBackgroundColor(0xff444444);
             }
         });
     }
 
-    private void createChart()
+    public void createChart()
     {
         LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());
     }
@@ -91,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sensorValue);
         tv.setText(stringFromJNI());
+
+        dbscan = new DBSCAN(0.00005f, 1);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         aclSensor = new AccelerationSensor(this, 2 * 1000 * 1000);
