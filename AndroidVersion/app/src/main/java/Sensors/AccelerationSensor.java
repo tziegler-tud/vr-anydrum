@@ -98,7 +98,9 @@ public class AccelerationSensor
                 }
 
                 listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, sensorEvent.values[2]}));
-                blockFilter(10);
+                double blockfilterValue = blockFilter(10);
+                if(startUsingClusters && blockfilterValue>(stdDeviationValue/10.0))
+                    refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0,  blockfilterValue}));
 
                   /*if(listOfSensorData.size() >= 100)
                 {
@@ -123,14 +125,14 @@ public class AccelerationSensor
                 }
                 filteredValue /= size;
 
-                double highpassFilteredY = highpassFilter(0.0002f, filteredValue);
+                double highpassFilteredY = highpassFilter(stdDeviationValue/10.0, filteredValue); //stdDeviationValue around 0.0002f
                 TextView viewCurrentValue = (TextView) refMain.findViewById(R.id.sensorValue);
                 viewCurrentValue.setText(formatter.format(highpassFilteredY));
                 listOfSensorDataFiltered.add(new ClusterableDoublePoint(new double[]{listOfSensorData.get(listOfSensorData.size()-1).getPoint()[0], highpassFilteredY}));
                 return highpassFilteredY;
             }
 
-            private double highpassFilter(float threshold, double skalar)
+            private double highpassFilter(double threshold, double skalar)
             {
                 if(skalar < threshold)
                     return 0;

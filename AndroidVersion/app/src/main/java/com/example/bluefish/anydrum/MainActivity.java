@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         PdBase.sendBang("bangSnareDrum");
-                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeSnare), 10, refMain);
+                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
                     }
                 }
         );
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         PdBase.sendBang("bangBassDrum");
-                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeBass), 10, refMain);
+                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeBass), 10, refMain, EnumDrum.BASS);
                     }
                 }
         );
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         PdBase.sendBang("bangHiHatDrum");
-                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain);
+                        TextTimer timer = new TextTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain, EnumDrum.HIHAT);
                     }
                 }
         );
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 if(useClusters)
                     btnStart.setBackgroundColor(0xff00bb00);
                 else
-                    btnStart.setBackgroundColor(0xffaaaaaa);
+                    btnStart.setBackgroundColor(0xffeeeeee);
             }
         });
     }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.sensorValue);
         tv.setText(stringFromJNI());
 
-        dbscan = new DBSCAN(0.00005f, 1);
+        dbscan = new DBSCAN(0.00005f, 2);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         aclSensor = new AccelerationSensor(this, 2 * 1000 * 1000);
