@@ -8,11 +8,11 @@ import org.puredata.core.PdBase;
 
 import java.util.List;
 
-public class TextTimer {
+public class LearningTimer {
     public List<Cluster<ClusterableDoublePoint>> cluster;
 
 
-    public TextTimer(final TextView refTextView, int seconds, final MainActivity refMain, final EnumDrum enumDrum)
+    public LearningTimer(final TextView refTextView, int seconds, final MainActivity refMain, final EnumDrum enumDrum)
     {
         final int sizeOfStart = refMain.getAclSensor().getListOfSensorDataFiltered().size();
 

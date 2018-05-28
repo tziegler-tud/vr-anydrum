@@ -38,6 +38,19 @@ public class DBSCAN {
        return clusterer.cluster(points);
     }
 
+    public EnumDrum evaluteList(List<ClusterableDoublePoint> points)
+    {
+        double sumY = 0;
+        for (int i=0; i<points.size(); ++i)
+        {
+            sumY += points.get(i).getPoint()[1];
+        }
+        //averageY = sumY/points.size();
+        ClusterableDoublePoint doublePoint = new ClusterableDoublePoint(new double[]{0, sumY});
+
+        return evaluatePoint(doublePoint);
+    }
+
     public EnumDrum evaluatePoint(ClusterableDoublePoint point)
     {
         EnumDrum drumSound = EnumDrum.NONE;
@@ -47,25 +60,27 @@ public class DBSCAN {
 
 
         //is part of hihat?
-        double medianHihat = statHihat.getPercentile(50.0);
+        double medianHihat = statHihat.getMean();
+        double averageHihat = statHihat.getSum()/statHihat.getValues().length;
         distanceHihat = medianHihat -point.getPoint()[1];
         if(distanceHihat < 0) distanceHihat *= -1;
         drumSound = drumSound.HIHAT;
 
         //is part of snare?
-        double medianSnare = statSnare.getPercentile(50.0);
+        double medianSnare = statSnare.getMean();
+        double averageSnare = statSnare.getSum()/statSnare.getValues().length;
         distanceSnare = medianSnare -point.getPoint()[1];
         if(distanceSnare < 0) distanceSnare *= -1;
         if(distanceSnare < distanceHihat)
             drumSound = EnumDrum.SNARE;
 
         //is part of drum?
-        double medianBass = statBass.getPercentile(50.0);
+        double medianBass = statBass.getMean();
+        double averageBass = statBass.getSum()/statBass.getValues().length;
         distanceBass = medianBass -point.getPoint()[1];
         if(distanceBass < 0) distanceBass *= -1;
         if(distanceBass < distanceSnare || distanceBass < distanceHihat)
             drumSound = EnumDrum.BASS;
-
 
         playSound(drumSound);
 

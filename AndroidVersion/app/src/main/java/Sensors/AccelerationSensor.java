@@ -37,7 +37,7 @@ public class AccelerationSensor
     private double stdDeviationValue=0;
     private Sensor mSensor;
     private MainActivity refMain;
-    private int updatePeriod = 2 * 1000 * 1000;
+    private int updatePeriod =100;//microseconds
     private double stepX = 1;
 
     private Vector<ClusterableDoublePoint> listOfSensorDataFiltered;
@@ -100,7 +100,21 @@ public class AccelerationSensor
                 listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, sensorEvent.values[2]}));
                 double blockfilterValue = blockFilter(10);
                 if(startUsingClusters && blockfilterValue>(stdDeviationValue/10.0))
-                    refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0,  blockfilterValue}));
+                {
+                    int amount = 2;
+                    int start = listOfSensorDataFiltered.size()-1 - amount;
+                    int end = listOfSensorDataFiltered.size()-1;
+                    List<ClusterableDoublePoint> subPoints =listOfSensorDataFiltered.subList(start, end);
+
+                    for(int i=0; i<subPoints.size(); ++i) {
+                        if (subPoints.get(i).getPoint()[1] < (stdDeviationValue / 10.0))
+                            subPoints.get(i).getPoint()[1] = 0;
+                    }
+
+                    refMain.getDbscan().evaluteList(subPoints);
+
+                   // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
+                }
 
                   /*if(listOfSensorData.size() >= 100)
                 {
@@ -134,7 +148,7 @@ public class AccelerationSensor
 
             private double highpassFilter(double threshold, double skalar)
             {
-                if(skalar < threshold)
+                if(skalar < threshold )//&& (skalar >-threshold))
                     return 0;
                 return skalar;
             }
