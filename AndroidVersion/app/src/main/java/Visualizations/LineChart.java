@@ -1,5 +1,6 @@
 package Visualizations;
 
+import Learning.ClusterableDoublePoint;
 import com.example.bluefish.anydrum.MainActivity;
 import com.example.bluefish.anydrum.R;
 
@@ -14,7 +15,7 @@ public class LineChart {
     GraphView graph;
     LineGraphSeries<DataPoint> series;
 
-    public LineChart(MainActivity refMain, Vector<DataPoint> listOfSensorData)
+    public LineChart(MainActivity refMain, Vector<ClusterableDoublePoint> listOfSensorData)
     {
         this.refMain = refMain;
         graph = (GraphView) refMain.findViewById(R.id.graph);
@@ -28,13 +29,13 @@ public class LineChart {
         {
             if(i>=100 || i >=listOfSensorData.size())
                 break;
-            data[i] = new DataPoint(i,  listOfSensorData.get((listOfSensorData.size()-1-i)).getY());//get newest sensordata from back
+            data[i] = new DataPoint(i,  listOfSensorData.get((listOfSensorData.size()-1-i)).getPoint()[1]);//get newest sensordata from back
         }
 
         series = new LineGraphSeries<DataPoint>(data);
         graph.addSeries(series);
-        graph.getViewport().setMinY(-0.1);
-        graph.getViewport().setMaxY(0.1);
+        graph.getViewport().setMinY(-0.001);
+        graph.getViewport().setMaxY(0.001);
         graph.getViewport().setMaxX(100);
     }
 }
