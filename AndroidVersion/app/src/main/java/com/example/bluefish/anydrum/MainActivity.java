@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         aclSensor = new AccelerationSensor(this, 100); //period in ms
         aclSensor.subscribeToAccelerationSensor();
 
+        ArduinoUSB arduinoUSB = new ArduinoUSB(this);
+
         try {
             initPD();
             loadPDPatch();
