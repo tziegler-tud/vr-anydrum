@@ -1,4 +1,4 @@
-package Sensors;
+/*package Sensors;
 
 import Learning.ClusterableDoublePoint;
 import android.hardware.SensorEvent;
@@ -40,16 +40,17 @@ public class AccelerationSensor
     private int updatePeriod =100;//microseconds
     private double stepX = 1;
 
-    private Vector<ClusterableDoublePoint> listOfSensorDataFiltered;
+
     private List<ClusterableDoublePoint> points;
+
+
+    private Vector<ClusterableDoublePoint> listOfSensorData;
+    private Vector<ClusterableDoublePoint> listOfSensorDataFiltered;
 
     public Vector<ClusterableDoublePoint> getListOfSensorDataFiltered() {
         return listOfSensorDataFiltered;
     }
-    private Vector<ClusterableDoublePoint> listOfSensorData;
-    public Vector<ClusterableDoublePoint> getListOfSensorData() {
-        return listOfSensorData;
-    }
+    public Vector<ClusterableDoublePoint> getListOfSensorData(){return listOfSensorData;}
 
     public AccelerationSensor(MainActivity refMain, int period)
     {
@@ -121,6 +122,7 @@ public class AccelerationSensor
                     listOfSensorData.clear();
                     x= 0;
                 }*/
+/*
                   refMain.createChart();
             }
             //Box-Filter-Kernel size 5
@@ -162,3 +164,4 @@ public class AccelerationSensor
         refMain.getmSensorManager().registerListener(accelerationSensorListener, mSensor, updatePeriod);
     }
 }
+*/

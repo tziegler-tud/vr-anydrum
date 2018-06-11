@@ -7,6 +7,7 @@ import com.example.bluefish.anydrum.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import java.util.Vector;
 
@@ -15,27 +16,39 @@ public class LineChart {
     GraphView graph;
     LineGraphSeries<DataPoint> series;
 
-    public LineChart(MainActivity refMain, Vector<ClusterableDoublePoint> listOfSensorData)
+   public LineChart(MainActivity refMain)
     {
         this.refMain = refMain;
         graph = (GraphView) refMain.findViewById(R.id.graph);
         graph.removeAllSeries();
 
-        DataPoint data[] = new DataPoint[100];
-        for (int i=0; i<100; ++i) {
+        DataPoint data[] = new DataPoint[200];
+        for (int i=0; i<200; ++i) {
             data[i] = new DataPoint(0,0);
         }
-        for(int i=0; i<listOfSensorData.size(); ++i)
-        {
-            if(i>=100 || i >=listOfSensorData.size())
-                break;
-            data[i] = new DataPoint(i,  listOfSensorData.get((listOfSensorData.size()-1-i)).getPoint()[1]);//get newest sensordata from back
-        }
+
 
         series = new LineGraphSeries<DataPoint>(data);
         graph.addSeries(series);
-        graph.getViewport().setMinY(-0.001);
-        graph.getViewport().setMaxY(0.001);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(-1);
+        graph.getViewport().setMaxY(1);
         graph.getViewport().setMaxX(100);
+    }
+
+
+   public void appendData(CircularFifoQueue<Float> buffer){
+
+       this.series.resetData(generateData(buffer));
+
+   }
+
+    private DataPoint[] generateData(CircularFifoQueue<Float>buffer) {
+        int count = buffer.size();
+        DataPoint[] values = new DataPoint[count];
+        for (int i=0; i<count; i++) {
+            values[i] = new DataPoint(i, (double)buffer.get(i));
+        }
+        return values;
     }
 }

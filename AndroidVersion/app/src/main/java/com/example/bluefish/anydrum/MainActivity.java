@@ -1,7 +1,7 @@
 package com.example.bluefish.anydrum;
 
 import Learning.DBSCAN;
-import Sensors.AccelerationSensor;
+import Sensors.AccelerationSensorManager;
 import Visualizations.LineChart;
 import android.content.Context;
 import android.view.*;
@@ -19,28 +19,25 @@ import org.puredata.core.utils.IoUtils;
 import java.io.File;
 import java.io.IOException;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private PdUiDispatcher dispatcher;
-    private AccelerationSensor aclSensor;
-    public AccelerationSensor getAclSensor() {
-        return aclSensor;
-    }
+    private AccelerationSensorManager acSensorManager;
+
+    private LineChart chart;
+
     private DBSCAN dbscan;
     public DBSCAN getDbscan() {
         return dbscan;
     }
-    public SensorManager mSensorManager;
-    public SensorManager getmSensorManager() {
-        return mSensorManager;
-    }
 
 
 
-    // Used to load the 'native-lib' library on application startup.
+   /* // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
-    }
+    }*/
 
 
 
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         final Button playHiHatDrum = (Button) findViewById(R.id.btnHiHat);
 
         final Button btnStart = (Button) findViewById(R.id.btnStart);
-
+        /*
         playSnareDrum.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -85,13 +82,19 @@ public class MainActivity extends AppCompatActivity {
                     btnStart.setBackgroundColor(0xff00bb00);
                 else
                     btnStart.setBackgroundColor(0xffeeeeee);
+
             }
         });
+        */
     }
 
-    public void createChart()
+    private void createChart()
     {
-        LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());
+        this.chart = new LineChart(this);
+    }
+
+    public void updateChart(float data){
+        this.chart.appendData(this.acSensorManager.getBuffer());
     }
 
     @Override
@@ -99,15 +102,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Example of a call to a native method
+        /*// Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sensorValue);
         tv.setText(stringFromJNI());
-
+*/
         dbscan = new DBSCAN(0.00002f, 1);
+        createChart();
+        this.acSensorManager = new AccelerationSensorManager(this);
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        aclSensor = new AccelerationSensor(this, 100); //period in ms
-        aclSensor.subscribeToAccelerationSensor();
 
         try {
             initPD();
@@ -162,5 +164,6 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
+
+    //public native String stringFromJNI();
 }

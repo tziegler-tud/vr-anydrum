@@ -10,6 +10,19 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        /*externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11"
+                //arguments "-DCMAKE_C_COMPILER=/usr/bin/clang", "-DCMAKE_CXX_COMPILER=/usr/bin/clang++"
+            }
+        }
+        ndk {
+            // Specifies the ABI configurations of your native
+            // libraries Gradle should build and package with your APK.
+            abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a',
+                    'arm64-v8a'
+        }*/
+
 
     }
     buildTypes {
@@ -18,7 +31,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+   /* externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }*/
 }
 
 dependencies {
@@ -29,6 +46,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:+'
     compile 'org.puredata.android:pd-core:1.0.2'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.0'
 
     testCompile 'junit:junit:4.12'
 }
+
