@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         final Button playHiHatDrum = (Button) findViewById(R.id.btnHiHat);
 
         final Button btnStart = (Button) findViewById(R.id.btnStart);
+        final Button btnCalibrate = (Button) findViewById(R.id.btnCalibrate);
         /*
         playSnareDrum.setOnClickListener(
                 new View.OnClickListener() {
@@ -86,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
+        btnCalibrate.setOnClickListener(  new View.OnClickListener() {
+            public void onClick(View v) {
+                refMain.acSensorManager.startCalibration();
+
+            }
+        });
     }
 
     private void createChart()
@@ -127,6 +134,26 @@ public class MainActivity extends AppCompatActivity {
 
         dispatcher = new PdUiDispatcher();
         PdBase.setReceiver(dispatcher);
+    }
+
+    public void setKnockDetectedTextView(String value){
+        TextView textView = (TextView) findViewById(R.id.viewKnockDetected);
+        textView.setText(value);
+
+    }
+
+    public void setLockStateTextView(String value){
+        TextView textView = (TextView) findViewById(R.id.viewLockState);
+        textView.setText(value);
+
+    }
+
+    public void paintButton(Button btn, int color){
+        btn.setBackgroundColor(color);
+    }
+
+    public void setTextViewContent(TextView txt, String content){
+        txt.setText(content);
     }
 
     private void loadPDPatch() throws  IOException

@@ -22,8 +22,8 @@ public class LineChart {
         graph = (GraphView) refMain.findViewById(R.id.graph);
         graph.removeAllSeries();
 
-        DataPoint data[] = new DataPoint[200];
-        for (int i=0; i<200; ++i) {
+        DataPoint data[] = new DataPoint[100];
+        for (int i=0; i<100; ++i) {
             data[i] = new DataPoint(0,0);
         }
 
@@ -33,6 +33,8 @@ public class LineChart {
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(-1);
         graph.getViewport().setMaxY(1);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(100);
     }
 

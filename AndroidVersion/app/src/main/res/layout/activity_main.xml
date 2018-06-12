@@ -117,6 +117,31 @@
             tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
             app:layout_constraintRight_toRightOf="@+id/graph" android:layout_marginTop="6dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginRight="28dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:id="@+id/viewLockState" android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/graph"
+            android:layout_marginEnd="164dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="43dp" app:layout_constraintStart_toEndOf="@+id/btnCalibrate"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/viewKnockDetected" android:layout_marginTop="14dp"
+            app:layout_constraintTop_toBottomOf="@+id/viewLockState"
+            android:layout_marginEnd="164dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="43dp"
+            app:layout_constraintStart_toEndOf="@+id/btnCalibrate"/>
+    <Button
+            android:text="calibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCalibrate" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="31dp"
+            android:layout_marginTop="15dp" app:layout_constraintTop_toBottomOf="@+id/graph"
+    />
 
 
 </android.support.constraint.ConstraintLayout>
