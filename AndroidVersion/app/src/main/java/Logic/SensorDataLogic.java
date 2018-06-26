@@ -2,6 +2,8 @@ package Logic;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
+import java.util.NoSuchElementException;
+
 public class SensorDataLogic {
 
     private double stdDev;
@@ -19,11 +21,16 @@ public class SensorDataLogic {
 
     public boolean detectKnocks(CircularFifoQueue <Float> buffer){
         int l = buffer.size();
-
-        float currentVal = buffer.get(99);
-        float prevVal = buffer.get(98);
-        if(currentVal>prevVal+10*this.stdDev && currentVal>5*buffer.get(98)){
-            return true;
+        try {
+            float currentVal = buffer.get(l-1);
+            float prevVal = buffer.get(l-2);
+            if(currentVal>prevVal+10*this.stdDev && currentVal>8*prevVal){
+                return true;
+            }
+        }
+        catch (NoSuchElementException e) {
+            System.out.println("buffer not yet filled");
+            return false;
         }
         return false;
 

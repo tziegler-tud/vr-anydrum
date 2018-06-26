@@ -4,12 +4,14 @@ import Learning.DBSCAN;
 import Sensors.AccelerationSensorManager;
 import Visualizations.LineChart;
 import android.content.Context;
+import android.content.Intent;
 import android.view.*;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import com.jjoe64.graphview.GraphView;
 import org.puredata.android.io.AudioParameters;
 import org.puredata.android.io.PdAudio;
 import org.puredata.android.utils.PdUiDispatcher;
@@ -20,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     private PdUiDispatcher dispatcher;
     private AccelerationSensorManager acSensorManager;
@@ -41,6 +43,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public void onGroupItemClick(MenuItem item) {
+
+
+
+    }
+
+    public void showFFTActivity(MenuItem item){
+        Intent intent = new Intent(this, FFTActivity.class);
+
+        startActivity(intent);
+
+    }
 
     private void initGui(){
         final MainActivity refMain = this;
@@ -97,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void createChart()
     {
-        this.chart = new LineChart(this);
+        this.chart = new LineChart(this, (GraphView) findViewById(R.id.graphViewData));
+        this.chart.setManual(-1,1,0,200);
     }
 
     public void updateChart(float data){
@@ -115,7 +137,9 @@ public class MainActivity extends AppCompatActivity {
 */
         dbscan = new DBSCAN(0.00002f, 1);
         createChart();
-        this.acSensorManager = new AccelerationSensorManager(this);
+        this.acSensorManager = new AccelerationSensorManager(this,this, true);
+        startCalibration();
+
 
 
         try {
@@ -128,6 +152,43 @@ public class MainActivity extends AppCompatActivity {
         initGui();
     }
 
+    public void sensorManagerEvent(int id){
+        switch(id) {
+            case 0:
+                return;
+            case 1:
+                this.lock();
+                return;
+            case 2:
+                this.unlock();
+                return;
+            case 3:
+                return;
+            case 4:
+                this.stopCalibration(acSensorManager.getStatistics());
+            case 5:
+                this.knock();
+                return;
+            case 6:
+                this.noKnock();
+                return;
+            default:
+                return;
+
+        }
+    }
+
+    public void startCalibration(){
+        acSensorManager.startCalibration();
+        this.paintButton((Button)this.findViewById(R.id.btnCalibrate),0xff9900);
+
+
+    }
+
+    public void stopCalibration(double[] array){
+
+        setStdDevTextView(array[0]);
+    }
     private void initPD() throws IOException{
         int sampleRate = AudioParameters.suggestSampleRate();
         PdAudio.initAudio(sampleRate,0, 2, 8, true);
@@ -136,16 +197,30 @@ public class MainActivity extends AppCompatActivity {
         PdBase.setReceiver(dispatcher);
     }
 
-    public void setKnockDetectedTextView(String value){
+    private void knock(){
         TextView textView = (TextView) findViewById(R.id.viewKnockDetected);
-        textView.setText(value);
+        textView.setText("Knock detected");
 
     }
 
-    public void setLockStateTextView(String value){
-        TextView textView = (TextView) findViewById(R.id.viewLockState);
-        textView.setText(value);
+    private void noKnock(){
+        TextView textView = (TextView) findViewById(R.id.viewKnockDetected);
+        textView.setText("waiting for knock");
+    }
 
+
+    private void lock(){
+        TextView textView = (TextView) findViewById(R.id.viewLockState);
+        textView.setText("locked");
+    }
+
+    private void unlock(){
+        TextView textView = (TextView) findViewById(R.id.viewLockState);
+        textView.setText("unlocked");
+    }
+
+    private void setStdDevTextView(double stdDev){
+       this.setTextViewContent((TextView)this.findViewById(R.id.viewStdDeviation),Double.toString(stdDev));
     }
 
     public void paintButton(Button btn, int color){

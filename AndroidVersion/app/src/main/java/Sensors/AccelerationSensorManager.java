@@ -7,16 +7,18 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.bluefish.anydrum.MainActivity;
 import com.example.bluefish.anydrum.R;
+import com.example.bluefish.anydrum.SensorActivity;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 public class AccelerationSensorManager implements SensorEventListener {
 
-    private MainActivity refMain;
-
+    private SensorActivity refMain;
+    private Context mContext;
 
 
     private SensorManager mSensorManager;
@@ -26,9 +28,16 @@ public class AccelerationSensorManager implements SensorEventListener {
     private boolean calibrating;
     private int calIndex;
 
-    private boolean detectionLocked;
+    private int knockLength = 60;
+
+    private double[] lastKnock = new double[knockLength+4];
+
+    private boolean currentKnock;
+    private boolean autoUnlock;
+    private boolean knockDetectedState;
+    private boolean lockState;
     private int lockedCount;
-    private CircularFifoQueue<Float> buffer = new CircularFifoQueue<>(100);
+    private CircularFifoQueue<Float> buffer = new CircularFifoQueue<>(200);
 
     /**
      * Invokes new AccelerationSensorManager
@@ -37,18 +46,22 @@ public class AccelerationSensorManager implements SensorEventListener {
      *
      *
      */
-    public AccelerationSensorManager(MainActivity refMain){
+    public AccelerationSensorManager(SensorActivity refMain, Context mContext, boolean autoUnlock){
 
+        this.mContext = mContext;
         this.refMain = refMain;
-        this.mSensorManager = (SensorManager) this.refMain.getSystemService(Context.SENSOR_SERVICE);
-        this.startCalibration();
-        this.unlock();
+        this.mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
+        this.autoUnlock = autoUnlock;
+
+
         this.mSensorDataLogic = new SensorDataLogic(new double[]{0,0,0});
         if(!this.checkHardwareSupport()){
             //abort mission
             return;
         }
         registerAccelerationSensor();
+
+        startCalibration();
 
 
     }
@@ -63,25 +76,26 @@ public class AccelerationSensorManager implements SensorEventListener {
     private void registerAccelerationSensor(){
 
         Sensor accelSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_GAME);
+        this.mSensorManager.registerListener(this,accelSensor,10000);
 
 
     }
     public boolean startCalibration(){
         this.calibrating =  true;
         this.calIndex = 0;
-        refMain.paintButton((Button)refMain.findViewById(R.id.btnCalibrate),0xff9900);
+        refMain.sensorManagerEvent(3);
         return true;
     }
 
     public boolean stopCalibration(){
         this.calibrating = false;
         this.calIndex = 0;
-        refMain.paintButton((Button)refMain.findViewById(R.id.btnCalibrate),0x222222);
+        this.statistics = calcStatistics(this.buffer);
+        refMain.sensorManagerEvent(4);
         return true;
     }
 
-    private void calcStatistics(CircularFifoQueue<Float> buffer){
+    private double[] calcStatistics(CircularFifoQueue<Float> buffer){
 
         DataStatistics mStatistics = new DataStatistics(buffer);
         double variance = mStatistics.getVariance();
@@ -90,59 +104,77 @@ public class AccelerationSensorManager implements SensorEventListener {
 
         double[] array = new double[]{stdDev,variance,mean};
         this.mSensorDataLogic.setStochasticValues(array);
-        refMain.setTextViewContent((TextView)refMain.findViewById(R.id.viewStdDeviation),Double.toString(stdDev));
         this.statistics =  array;
+
+        return array;
 
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
-        System.out.println("zAcl: " + sensorEvent.values[2]);
+        //System.out.println("zAcl: " + sensorEvent.values[2]);
         this.buffer.add(sensorEvent.values[2]);
         refMain.updateChart(sensorEvent.values[2]);
 
         if (this.calibrating) {
             calIndex += 1;
-            if (calIndex >= 100) {
+            if (calIndex >= 200) {
                 stopCalibration();
-                calcStatistics(this.buffer);
             }
         } else {
-            if (!this.detectionLocked) {
+            if (!this.lockState) {
                 if (this.mSensorDataLogic.detectKnocks(this.buffer)) {
                     lock();
-                    this.knockDetected(true);
+                    this.knock();
                 }
             }
             else {
+                 if(currentKnock) this.lastKnock[lockedCount+2]=sensorEvent.values[2];
                  lockedCount += 1;
-                 if(lockedCount >= 15){
-                     unlock();
-                     knockDetected(false);
+                 if(lockedCount >= knockLength){
+                     privateUnlock();
+                     this.noKnock();
                  }
             }
         }
 
     }
 
-    private void knockDetected(boolean state){
-        if (state){
-            refMain.setKnockDetectedTextView("Knock detected");
+
+    private void knock(){
+        this.knockDetectedState=true;
+        refMain.sensorManagerEvent(5);
+
+    }
+
+    private void noKnock(){
+        this.knockDetectedState=false;
+        refMain.sensorManagerEvent(6);
+    }
+
+    private void privateUnlock(){
+        if(this.autoUnlock) {
+            unlock();
         }
-        else refMain.setKnockDetectedTextView("waiting for knock");
+        else {
+            currentKnock=false;
+        }
     }
 
-    private void lock(){
-        this.detectionLocked = true;
+    public void lock(){
+        this.currentKnock=true;
         this.lockedCount = 0;
-
-        refMain.setLockStateTextView("locked");
+        this.lockState=true;
+        refMain.sensorManagerEvent(1);
     }
 
-    private void unlock(){
-        this.detectionLocked = false;
-        refMain.setLockStateTextView("unlocked");
+    public void unlock(){
+        this.lockState = false;
+        refMain.sensorManagerEvent(2);
+        for(int i=0;i<4;i++){
+            this.lastKnock[i] = buffer.get(buffer.size()-knockLength-i-1);
+        }
     }
 
     @Override
@@ -155,5 +187,20 @@ public class AccelerationSensorManager implements SensorEventListener {
 
     }
 
+    public boolean getKnockDetectedState(){
+        return this.knockDetectedState;
+    }
+
+    public boolean getLockState(){
+        return this.lockState;
+    }
+
+    public double[] getStatistics(){
+        return this.statistics;
+    }
+
+    public double[] getLastKnock(){
+        return this.lastKnock;
+    }
 
 }
