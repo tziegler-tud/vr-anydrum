@@ -5,8 +5,9 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.widget.TextView;
-import com.hoho.android.usbserial.driver.UsbSerialDriver;
+
 import com.hoho.android.usbserial.driver.UsbSerialProber;
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public  class ArduinoUSB {
     public  ArduinoUSB(MainActivity refMain)
     {
         this.refMain = refMain;
-        manager = (UsbManager) Context.getSystemService(Context.USB_SERVICE);
+        manager = (UsbManager) refMain.getSystemService(Context.USB_SERVICE);
         List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
         if (availableDrivers.isEmpty()) {
             TextView viewInformation = (TextView) refMain.findViewById(R.id.viewInfo);
