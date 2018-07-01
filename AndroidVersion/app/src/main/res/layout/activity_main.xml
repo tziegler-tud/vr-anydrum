@@ -9,16 +9,15 @@
         tools:layout_editor_absoluteY="81dp" tools:layout_editor_absoluteX="0dp">
 
     <com.jjoe64.graphview.GraphView
-            android:layout_width="0dp"
-            android:layout_height="224dp"
+            android:layout_width="272dp"
+            android:layout_height="0dp"
             android:id="@+id/graph"
             android:visibility="visible"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            android:layout_marginStart="45dp" android:layout_marginEnd="45dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sensorValue" tools:layout_constraintLeft_creator="1"
-            app:layout_constraintLeft_toLeftOf="parent" android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp" app:layout_constraintHorizontal_bias="1.0"/>
+            tools:layout_constraintTop_creator="1" tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/viewInfo" android:layout_marginTop="39dp"
+            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="35dp"
+            app:layout_constraintTop_toTopOf="@+id/sensorValue"
+            app:layout_constraintVertical_bias="0.0" tools:layout_editor_absoluteX="76dp"/>
     <TextView
             android:id="@+id/sensorValue"
             android:layout_width="wrap_content"
@@ -33,9 +32,9 @@
             android:layout_height="0dp"
             android:id="@+id/btnSnareDrum"
             tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="@+id/btnBassDrum"
+            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="@+id/btnHiHat"
             app:layout_constraintRight_toRightOf="parent" tools:layout_constraintLeft_creator="1"
-            app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintTop_toTopOf="@+id/btnBassDrum"/>
+            app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintTop_toTopOf="@+id/btnHiHat"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline" app:layout_constraintGuide_begin="97dp"
                                           android:orientation="horizontal"
@@ -46,30 +45,28 @@
             android:layout_height="50dp"
             android:id="@+id/btnStart"
             android:layout_marginStart="16dp"
-            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toTopOf="@+id/btnSnareDrum"
-            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="25dp"
-            app:layout_constraintLeft_toLeftOf="@+id/btnSnareDrum" android:layout_marginLeft="16dp"/>
+            tools:layout_constraintTop_creator="1" tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/timeHiHat" android:layout_marginTop="78dp"
+            app:layout_constraintTop_toBottomOf="@+id/graph" tools:layout_constraintLeft_creator="1"
+            android:layout_marginBottom="78dp" app:layout_constraintLeft_toLeftOf="@+id/btnSnareDrum"
+            android:layout_marginLeft="16dp"/>
     <Button
             android:text="bass drum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/btnBassDrum"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="10dp"
             tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="38dp" android:layout_marginRight="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/btnSnareDrum" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginBottom="38dp" android:layout_marginRight="10dp"/>
     <Button
             android:text="hihat drum"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:id="@+id/btnHiHat"
-            android:layout_marginEnd="7dp"
-            app:layout_constraintRight_toLeftOf="@+id/btnSnareDrum" tools:layout_constraintRight_creator="1"
-            android:layout_marginRight="7dp" android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent" tools:layout_constraintBottom_creator="1"
-            android:layout_marginStart="8dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="38dp"/>
+            android:layout_marginStart="12dp"
+            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="38dp"
+            app:layout_constraintLeft_toLeftOf="parent" android:layout_marginLeft="12dp"/>
     <TextView
             android:text="learning time"
             android:layout_width="wrap_content"
@@ -102,28 +99,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/viewStdDeviation"
-            android:layout_marginStart="86dp"
-            app:layout_constraintRight_toLeftOf="@+id/viewSensorValuesCount" tools:layout_constraintTop_creator="1"
-            tools:layout_constraintRight_creator="1" android:layout_marginEnd="88dp" android:layout_marginTop="6dp"
+            android:layout_marginStart="56dp"
+            tools:layout_constraintTop_creator="1" android:layout_marginTop="6dp"
             tools:layout_constraintLeft_creator="1" app:layout_constraintLeft_toLeftOf="@+id/graph"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginLeft="86dp"
-            android:layout_marginRight="88dp"/>
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginLeft="56dp"/>
     <TextView
             android:text="count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/viewSensorValuesCount"
-            android:layout_marginEnd="28dp"
+            android:layout_marginEnd="35dp"
             tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            app:layout_constraintRight_toRightOf="@+id/graph" android:layout_marginTop="6dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginRight="28dp"/>
+            android:layout_marginStart="35dp" app:layout_constraintRight_toRightOf="@+id/graph"
+            android:layout_marginTop="6dp" tools:layout_constraintLeft_creator="1"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintLeft_toRightOf="@+id/timeSnare"
+            android:layout_marginLeft="35dp" android:layout_marginRight="35dp"/>
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/viewInfo" tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toTopOf="@+id/btnStart" android:layout_marginStart="14dp"
-            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="-9dp"
-            app:layout_constraintLeft_toLeftOf="@+id/btnStart" android:layout_marginLeft="-250dp"/>
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:id="@+id/viewInfo"
+            android:layout_marginStart="16dp"
+            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="161dp"
+            app:layout_constraintLeft_toLeftOf="parent" android:layout_marginLeft="16dp"/>
 
 
 </android.support.constraint.ConstraintLayout>
