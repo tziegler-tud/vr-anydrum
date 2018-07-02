@@ -22,6 +22,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private PdUiDispatcher dispatcher;
+    private int updatePeriodACL = 100; // in ms
     private AccelerationSensor aclSensor;
     public AccelerationSensor getAclSensor() {
         return aclSensor;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         dbscan = new DBSCAN(0.00002f, 1);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        aclSensor = new AccelerationSensor(this, 100); //period in ms
+        aclSensor = new AccelerationSensor(this, updatePeriodACL); //period in ms
         aclSensor.subscribeToAccelerationSensor();
 
         ArduinoUSB arduinoUSB = new ArduinoUSB(this);
