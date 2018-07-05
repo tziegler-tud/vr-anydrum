@@ -79,7 +79,7 @@ public class AccelerationSensor
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 // More code goes here
-                System.out.println("zAcl: "+ sensorEvent.values[2]);
+//                System.out.println("zAcl: "+ sensorEvent.values[2]);
                 TextView viewCurrentValue = (TextView) refMain.findViewById(R.id.sensorValue);
                 TextView viewDeviation = (TextView) refMain.findViewById(R.id.viewStdDeviation);
                 TextView viewCount = (TextView) refMain.findViewById(R.id.viewSensorValuesCount);

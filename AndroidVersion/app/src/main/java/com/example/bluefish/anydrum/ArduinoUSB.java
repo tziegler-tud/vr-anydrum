@@ -1,7 +1,6 @@
 package com.example.bluefish.anydrum;
 
-import java.io.IOException;
-
+import AsyncTasks.ShowInfoMsgTask;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.Context;
@@ -12,9 +11,6 @@ import android.widget.TextView;
 
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
-import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.util.SerialInputOutputManager;
-import com.hoho.android.usbserial.util.HexDump;
 
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
@@ -27,8 +23,9 @@ public  class ArduinoUSB {
 
     private MainActivity refMain;
     private TextView viewInformation;
+    private int oldByteSize = 0;
     private long oldSystemTime=0;
-    private long updateTimeMS = 30;
+    private long updateTimeMS = 0;
 
     UsbDevice device;
     UsbDeviceConnection usbConnection;
@@ -64,7 +61,7 @@ public  class ArduinoUSB {
 
         if (serial != null) {
             serial.open();
-            serial.setBaudRate(115200);//9600
+            serial.setBaudRate(9600);//115200
             serial.setDataBits(UsbSerialInterface.DATA_BITS_8);
             serial.setParity(UsbSerialInterface.PARITY_ODD);
             serial.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
@@ -147,15 +144,30 @@ public  class ArduinoUSB {
             long time= System.currentTimeMillis();
             if(time-oldSystemTime >= updateTimeMS)
             {
-            float left=0, right=0;
-            if(data.length>2)
-                left = data[data.length-2];
-            right =  data[data.length-1];
-            String arduinoInfo = "rec! "+left+" : "+right;
+                int left=0, right=0;
+                if(data.length >= 4)
+                {
+                    oldByteSize =data.length;
+
+                    left = data[data.length - 2];
+                    left = (byte) (left << 8);
+                    left +=  data[data.length - 1];
 
 
-                oldSystemTime = time;
-                viewInformation.setText(arduinoInfo);
+
+                    right = data[data.length - 1];
+                    right = (byte) (right <<  8);
+                    right += data[data.length - 2];
+                    System.out.println("left: "+left+"  right: "+right);
+                }
+                String arduinoInfo = "left: "+left+"  right: "+right;
+
+
+                    oldSystemTime = time;
+//                    viewInformation.setText(arduinoInfo);
+    //                ShowInfoMsgTask task = new ShowInfoMsgTask();
+    //                task.execute(arduinoInfo);
+
             }
         }
     };
