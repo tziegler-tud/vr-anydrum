@@ -18,6 +18,7 @@ import  org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 
 import com.jjoe64.graphview.series.DataPoint;
+import org.w3c.dom.Text;
 
 import java.util.Vector;
 
@@ -83,9 +84,12 @@ public class AccelerationSensor
                 TextView viewCurrentValue = (TextView) refMain.findViewById(R.id.sensorValue);
                 TextView viewDeviation = (TextView) refMain.findViewById(R.id.viewStdDeviation);
                 TextView viewCount = (TextView) refMain.findViewById(R.id.viewSensorValuesCount);
+                TextView viewInformation = (TextView) refMain.findViewById(R.id.viewInfo);
 
                // viewCurrentValue.setText("Acl_Z: "+formatter.format(sensorEvent.values[2]));
                 viewCount.setText("SensorList: "+listOfSensorData.size());
+
+
                 double x = listOfSensorData.get(listOfSensorData.size()-1).getPoint()[0]+stepX;
 
                 if(listOfSensorData.size()==100)
@@ -97,7 +101,17 @@ public class AccelerationSensor
                     viewDeviation.setText("deviation: "+formatter.format(stdDeviationValue));
                 }
 
-                listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, sensorEvent.values[2]}));
+//                listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, sensorEvent.values[2]}));
+                if(refMain.packetList.size() >1)
+                {
+                    String left = Integer.toString(refMain.packetList.get(refMain.packetList.size()-1).left);
+                    String right = Integer.toString(refMain.packetList.get(refMain.packetList.size()-1).right);
+                    if(refMain.packetList.size()>200000)
+                        refMain.packetList.clear();
+                    viewInformation.setText("left:"+ left + " right: "+right);
+                    listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(left)}));
+                }
+
                 double blockfilterValue = blockFilter(10);
                 if(startUsingClusters && blockfilterValue>(stdDeviationValue/10.0))
                 {

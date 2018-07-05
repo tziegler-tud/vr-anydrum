@@ -7,13 +7,16 @@ import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
+import android.os.AsyncTask;
 import android.widget.TextView;
 
+import com.felhr.utils.HexData;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
+import com.hoho.android.usbserial.util.HexDump;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ public  class ArduinoUSB {
 
     private MainActivity refMain;
     private TextView viewInformation;
-    private int oldByteSize = 0;
+    private int packetOffset = 4;
     private long oldSystemTime=0;
     private long updateTimeMS = 0;
 
@@ -68,71 +71,11 @@ public  class ArduinoUSB {
 
             serial.read(mCallback);
             viewInformation.setText("serial set!");
-        }else
-        {
+        } else {
             viewInformation.setText("serial error!");
         }
-
-//        // Open a connection to the first available driver.
-//        UsbSerialDriver driver = availableDrivers.get(0);
-//        PendingIntent mPermissionIntent = PendingIntent.getBroadcast(refMain.getBaseContext(), 0, new Intent(ACTION_USB_PERMISSION), 0);
-//        manager.requestPermission(driver.getDevice(), mPermissionIntent);
-//
-//        UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
-//        if (connection == null) {
-//            // You probably need to call UsbManager.requestPermission(driver.getDevice(), ..)
-//            viewInformation.setText("UsbManager.requestPermission(...)");
-//            return;
-//        }
-//
-//        final String title = String.format("Vendor %s Product %s", //vendor: 1a86, product:7523
-//                HexDump.toHexString((short) driver.getDevice().getVendorId()),
-//                HexDump.toHexString((short) driver.getDevice().getProductId()));
-//
-//        // Read some data! Most have just one port (port 0).
-//        UsbSerialPort port = driver.getPorts().get(0); //checked, port size is only 1 when arduino is connected
-//        try {
-//            port.open(connection);
-//            port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE); //i: 9600 ; standard: 115200 //BaudRate
-//
-//            byte buffer[] = new byte[32];
-//            int numBytesRead = port.read(buffer, 500);
-//            StringBuilder byteText = new StringBuilder();
-//            for(int i= 16; i<32;++i)
-//            {
-//                byteText.append(buffer[i] +" ");
-//            }
-//            viewInformation.setText("Read16 " + numBytesRead+ " bytes");
-//        } catch (IOException e) {
-//            viewInformation.setText("error read: " + e.getMessage());
-//        } finally {
-//            try {
-//                port.close();
-//            } catch (IOException e2) {
-//                viewInformation.setText("error close port: " + e2.getMessage());
-//            }
-//        }
     }
 
-//
-//    private final SerialInputOutputManager.Listener mListener =
-//            new SerialInputOutputManager.Listener() {
-//
-//                @Override
-//                public void onRunError(Exception e) {
-//                    viewInformation.setText("Runner stopped.");
-//                }
-//
-//                @Override
-//                public void onNewData(final byte[] data) {
-//                    ArduinoUSB.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            ArduinoUSB.this.updateReceivedData(data);
-//                        }
-//                    });
-//                }
-//            };
 
 
     /*if update too fast it crashes app?! */
@@ -145,38 +88,71 @@ public  class ArduinoUSB {
             if(time-oldSystemTime >= updateTimeMS)
             {
                 int left=0, right=0;
-                if(data.length >= 4)
-                {
-                    oldByteSize =data.length;
+//                if(data.length >= packetOffset)
+//                {
+//                    packetOffset += 4;
+//
+//                    left = data[data.length - 4];
+//                    left = (byte) (left << 8);
+//                    left = left |  data[data.length - 3];
+////                    left +=  data[data.length - 3];
+//
+//                    right = data[data.length - 1];
+//                    right = (byte) (right <<  8);
+//                    right = right | data[data.length - 2];
+////                    right += data[data.length - 2];
+////                    System.out.println("bytelength: "+data.length+" pck "+packetOffset);
+////                    System.out.println( "left: "+left+"  right: "+right);
+//
+////                    int dataLO = (data[data.length - 4] >> 8) & 0xF;
+////                    int dataHI = data[data.length - 3]  & 0xF;
+////                    int help =0;
+////                    help = dataHI;
+////                    help = (byte)(dataHI << 8);
+////                    help += dataLO;
+////
+////                    Integer[] integerObjArray = new Integer[2];
+////                    integerObjArray[0] = left;
+////                    integerObjArray[1] = right;
+//
+////                    new SerialTask().execute(integerObjArray);
+//
+                    ArduinoPacket packet = new ArduinoPacket(+data[data.length - 1], +data[data.length - 1]);
+                    refMain.storeArduinoData(packet);
 
-                    left = data[data.length - 2];
-                    left = (byte) (left << 8);
-                    left +=  data[data.length - 1];
+//                    System.out.println("hlp:43 "+data[data.length - 4]+"  "+data[data.length - 3]);
 
-
-
-                    right = data[data.length - 1];
-                    right = (byte) (right <<  8);
-                    right += data[data.length - 2];
-                    System.out.println("left: "+left+"  right: "+right);
-                }
-                String arduinoInfo = "left: "+left+"  right: "+right;
-
-
+                    if(data.length > 200000)
+                        data = null;
+               // }
                     oldSystemTime = time;
-//                    viewInformation.setText(arduinoInfo);
-    //                ShowInfoMsgTask task = new ShowInfoMsgTask();
-    //                task.execute(arduinoInfo);
 
             }
         }
     };
 
-//    private void updateReceivedData(byte[] data) {
-//        final String message = "Read " + data.length + " bytes: \n"
-//                + HexDump.dumpHexString(data) + "\n\n";
-//        viewInformation.setText(message);
-//    }
+
+
+    public class SerialTask extends AsyncTask<Integer[],Integer, Integer> {
+
+        protected Integer doInBackground(Integer[]... data) {
+
+            int left =data[0][0];
+            int right = data[0][1];
+            ArduinoPacket packet = new ArduinoPacket(left, right);
+
+            refMain.storeArduinoData(packet);
+            return 0;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(Integer val) {
+        }
+
+    }
+
 
     @Override
     protected void finalize() throws Throwable {

@@ -18,6 +18,8 @@ import org.puredata.core.utils.IoUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         return mSensorManager;
     }
 
+    public List<ArduinoPacket> packetList;
 
 
     // Used to load the 'native-lib' library on application startup.
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        packetList = new ArrayList<ArduinoPacket>();
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sensorValue);
@@ -162,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void storeArduinoData(ArduinoPacket packet)
+    {
+        packetList.add(packet);
+    }
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
