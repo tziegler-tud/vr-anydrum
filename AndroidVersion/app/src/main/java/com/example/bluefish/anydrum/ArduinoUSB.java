@@ -26,7 +26,6 @@ public  class ArduinoUSB {
 
     private MainActivity refMain;
     private TextView viewInformation;
-    private int packetOffset = 4;
     private long oldSystemTime=0;
     private long updateTimeMS = 0;
 
@@ -84,13 +83,13 @@ public  class ArduinoUSB {
         @Override
         public void onReceivedData(byte[] data)
         {
+            int length = data.length;
             long time= System.currentTimeMillis();
-            if(time-oldSystemTime >= updateTimeMS)
-            {
+//            if(time-oldSystemTime >= updateTimeMS)
+//            {
                 int left=0, right=0;
-//                if(data.length >= packetOffset)
-//                {
-//                    packetOffset += 4;
+                if(data.length % 2 == 0)
+                {
 //
 //                    left = data[data.length - 4];
 //                    left = (byte) (left << 8);
@@ -104,31 +103,32 @@ public  class ArduinoUSB {
 ////                    System.out.println("bytelength: "+data.length+" pck "+packetOffset);
 ////                    System.out.println( "left: "+left+"  right: "+right);
 //
-////                    int dataLO = (data[data.length - 4] >> 8) & 0xF;
-////                    int dataHI = data[data.length - 3]  & 0xF;
-////                    int help =0;
-////                    help = dataHI;
-////                    help = (byte)(dataHI << 8);
-////                    help += dataLO;
-////
-////                    Integer[] integerObjArray = new Integer[2];
-////                    integerObjArray[0] = left;
-////                    integerObjArray[1] = right;
-//
-////                    new SerialTask().execute(integerObjArray);
-//
-                    ArduinoPacket packet = new ArduinoPacket(+data[data.length - 1], +data[data.length - 1]);
-                    refMain.storeArduinoData(packet);
+                if(data.length>1)
+                    left = (data[data.length - 1] << 8) | data[data.length - 2];
+                if(data.length>3)
+                    right =  (data[data.length - 3] << 8) | data[data.length - 4];
+
+
+
+
+                    Integer[] integerObjArray = new Integer[2];
+                    integerObjArray[0] = left;
+                    integerObjArray[1] = right;
+
+                    new SerialTask().execute(integerObjArray);
+
+//                    ArduinoPacket packet = new ArduinoPacket(left, right);
+//                    refMain.storeArduinoData(packet);
 
 //                    System.out.println("hlp:43 "+data[data.length - 4]+"  "+data[data.length - 3]);
 
-                    if(data.length > 200000)
+                    if(data.length > 10000)
                         data = null;
-               // }
+               }
                     oldSystemTime = time;
 
             }
-        }
+//        }
     };
 
 

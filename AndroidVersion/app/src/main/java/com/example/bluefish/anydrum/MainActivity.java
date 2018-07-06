@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createChart()
     {
-        LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());
+        LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());//getListOfSensorData
     }
 
     @Override

@@ -90,12 +90,14 @@ public class AccelerationSensor
                 viewCount.setText("SensorList: "+listOfSensorData.size());
 
 
-                double x = listOfSensorData.get(listOfSensorData.size()-1).getPoint()[0]+stepX;
+                double x =0;
+                if(listOfSensorData.size()>0)
+                    x= listOfSensorData.get(listOfSensorData.size()-1).getPoint()[0]+stepX;
 
-                if(listOfSensorData.size()==100)
+                if(listOfSensorData.size()==1000)
                 {
-                    double[] skalars = new double[100];
-                    for(int i=49; i<100;++i)
+                    double[] skalars = new double[1000];
+                    for(int i=99; i<1000;++i)
                         skalars[i]=listOfSensorData.get(i).getPoint()[1];
                     stdDeviationValue=stdDeviation.evaluate(skalars);
                     viewDeviation.setText("deviation: "+formatter.format(stdDeviationValue));
@@ -106,7 +108,7 @@ public class AccelerationSensor
                 {
                     String left = Integer.toString(refMain.packetList.get(refMain.packetList.size()-1).left);
                     String right = Integer.toString(refMain.packetList.get(refMain.packetList.size()-1).right);
-                    if(refMain.packetList.size()>200000)
+                    if(refMain.packetList.size()>10000)
                         refMain.packetList.clear();
                     viewInformation.setText("left:"+ left + " right: "+right);
                     listOfSensorData.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(left)}));
@@ -118,7 +120,7 @@ public class AccelerationSensor
                     int amount = 2;
                     int start = listOfSensorDataFiltered.size()-1 - amount;
                     int end = listOfSensorDataFiltered.size()-1;
-                    List<ClusterableDoublePoint> subPoints =listOfSensorDataFiltered.subList(start, end);
+                    List<ClusterableDoublePoint> subPoints =listOfSensorDataFiltered.subList(start, end);//listOfSensorData.subList(start, end);//
 
                     for(int i=0; i<subPoints.size(); ++i) {
                         if (subPoints.get(i).getPoint()[1] < (stdDeviationValue / 10.0))
@@ -130,11 +132,11 @@ public class AccelerationSensor
                    // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
                 }
 
-                  /*if(listOfSensorData.size() >= 100)
+                if(listOfSensorData.size() >= 10000)
                 {
                     listOfSensorData.clear();
                     x= 0;
-                }*/
+                }
                   refMain.createChart();
             }
             //Box-Filter-Kernel size 5
