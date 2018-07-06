@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private PdUiDispatcher dispatcher;
     private int updatePeriodACL = 100; // in ms
     private AccelerationSensor aclSensor;
+    public  ArduinoUSB arduinoUSB;
     public AccelerationSensor getAclSensor() {
         return aclSensor;
     }
@@ -85,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean useClusters = aclSensor.isStartUsingClusters()  ? false : true;
                 aclSensor.setStartUsingClusters(useClusters);
+                arduinoUSB.setStartUsingClusters(useClusters);
+
                 if(useClusters)
                     btnStart.setBackgroundColor(0xff00bb00);
                 else
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         aclSensor = new AccelerationSensor(this, updatePeriodACL); //period in ms
         aclSensor.subscribeToAccelerationSensor();
 
-        ArduinoUSB arduinoUSB = new ArduinoUSB(this);
+        arduinoUSB = new ArduinoUSB(this);
 
 
 
