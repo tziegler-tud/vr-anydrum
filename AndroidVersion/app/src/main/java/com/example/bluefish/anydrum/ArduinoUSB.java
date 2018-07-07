@@ -149,6 +149,8 @@ public  class ArduinoUSB {
                     integerObjArray[1] = right;
 
                     ArduinoPacket packet = new ArduinoPacket(left,right);
+                    if(sensorDataRaw.size() != 10000)
+                        sensorDataRaw.clear();
                     sensorDataRaw.add(packet);
                     refMain.updateArduino(packet);
                     new SerialTask().execute(integerObjArray);
@@ -187,25 +189,24 @@ public  class ArduinoUSB {
             listOfSensorDataArduinoR.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(Integer.toString(right))}));
 
 
-            if(listOfSensorDataArduinoL.size()==1000)
-            {
-                double[] skalarsL = new double[1000];
-                double[] skalarsR = new double[1000];
-
-                for(int i=99; i<1000;++i) {
-                    skalarsL[i] = listOfSensorDataArduinoL.get(i).getPoint()[1];
-                    skalarsR[i] = listOfSensorDataArduinoR.get(i).getPoint()[1];
-                }
-
-                stdDeviationValueL=stdDeviation.evaluate(skalarsL);
-                stdDeviationValueR=stdDeviation.evaluate(skalarsR);
-            }
+//            if(listOfSensorDataArduinoL.size()==1000)
+//            {
+//                double[] skalarsL = new double[1000];
+//                double[] skalarsR = new double[1000];
+//
+//                for(int i=99; i<1000;++i) {
+//                    skalarsL[i] = listOfSensorDataArduinoL.get(i).getPoint()[1];
+//                    skalarsR[i] = listOfSensorDataArduinoR.get(i).getPoint()[1];
+//                }
+//
+//                stdDeviationValueL=stdDeviation.evaluate(skalarsL);
+//                stdDeviationValueR=stdDeviation.evaluate(skalarsR);
+//            }
 //            if(startUsingClusters)
 //                evaluateSound(listOfSensorDataArduinoL, listOfSensorDataArduinoR);
 
 
             ArduinoPacket packet = new ArduinoPacket(left, right);
-            refMain.storeArduinoData(packet);
             return 0;
         }
 
