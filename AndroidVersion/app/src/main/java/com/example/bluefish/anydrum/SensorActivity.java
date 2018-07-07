@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 public interface SensorActivity  {
 
 
-    ArduinoUSB getArduinoUsb();
+    ArduinoUSB getArduinoUSB();
 
     void updateChart();
 
