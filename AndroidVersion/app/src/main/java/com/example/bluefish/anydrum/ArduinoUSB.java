@@ -134,7 +134,7 @@ public  class ArduinoUSB {
 //            if(time-oldSystemTime >= updateTimeMS)
 //            {
                 int left=0, right=0;
-                if(data.length % 4 == 0)
+//                if(data.length % 4 == 0)
                 {
                     if(data.length>1)
                         left = (data[data.length - 1] << 8) | data[data.length - 2];
@@ -153,9 +153,8 @@ public  class ArduinoUSB {
                         sensorDataRaw.clear();
                     sensorDataRaw.add(packet);
                     refMain.updateArduino(packet);
-                    new SerialTask().execute(integerObjArray);
+//                    new SerialTask().execute(integerObjArray);
 
-//                    System.out.println("hlp:43 "+data[data.length - 4]+"  "+data[data.length - 3]);
 
                     if(data.length > 10000)data = null;
 
