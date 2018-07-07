@@ -23,8 +23,8 @@ public class LineChart {
         this.graph = graphView;
         graph.removeAllSeries();
 
-        DataPoint data[] = new DataPoint[1000];
-        for (int i=0; i<1000; ++i) {
+        DataPoint data[] = new DataPoint[200];
+        for (int i=0; i<200; ++i) {
             data[i] = new DataPoint(0,0);
         }
 
