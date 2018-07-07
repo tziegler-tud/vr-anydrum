@@ -152,7 +152,6 @@ public  class ArduinoUSB {
                     if(sensorDataRaw.size() != 10000)
                         sensorDataRaw.clear();
                     sensorDataRaw.add(packet);
-                    refMain.updateArduino(packet);
 //                    new SerialTask().execute(integerObjArray);
 
 

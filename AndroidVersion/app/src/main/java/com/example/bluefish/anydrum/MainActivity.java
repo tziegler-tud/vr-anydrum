@@ -30,7 +30,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     private PdUiDispatcher dispatcher;
-    private int updatePeriodACL = 100; // in ms
+    private int updatePeriodACL = 100; // in nano mili sec?
+    private long oldSystemTime=0,updateTimeMS = 100;//ms
+
    // private AccelerationSensor aclSensor;
     public  ArduinoUSB arduinoUSB;
     /*public AccelerationSensor getAclSensor() {
@@ -170,8 +172,13 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         this.chart.setScalingY();
     }
 
-    public void updateChart(){
-        this.chart.appendData(this.arduinoSensorManager.getBufferL(),this.arduinoSensorManager.getBufferR());
+    public void updateChart() {
+        long time = System.currentTimeMillis();
+            if(time-oldSystemTime >= updateTimeMS)
+            {
+                oldSystemTime = time;
+            this.chart.appendData(this.arduinoSensorManager.getBufferL(), this.arduinoSensorManager.getBufferR());
+            }
 
     }
 
