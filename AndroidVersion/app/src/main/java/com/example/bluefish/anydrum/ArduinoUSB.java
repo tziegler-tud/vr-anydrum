@@ -195,7 +195,8 @@ public  class ArduinoUSB {
                 stdDeviationValueL=stdDeviation.evaluate(skalarsL);
                 stdDeviationValueR=stdDeviation.evaluate(skalarsR);
             }
-            evaluateSound(listOfSensorDataArduinoL, listOfSensorDataArduinoR);
+            if(startUsingClusters)
+                evaluateSound(listOfSensorDataArduinoL, listOfSensorDataArduinoR);
 
 
             ArduinoPacket packet = new ArduinoPacket(left, right);
@@ -211,41 +212,41 @@ public  class ArduinoUSB {
             double blockfilterValueR= filter.blockFilter(10, stdDeviationValueR, listOfSensorDataR, refMain);
             Vector<ClusterableDoublePoint> listOfSensorDataFilteredR = filter.getListOfSensorDataFiltered();
 
-//            //left
-//            if(startUsingClusters && blockfilterValueL>(stdDeviationValueL/10.0))
-//            {
-//                int amount = 2;
-//                int start = listOfSensorDataFilteredL.size()-1 - amount;
-//                int end = listOfSensorDataFilteredL.size()-1;
-//                List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredL.subList(start, end);//listOfSensorData.subList(start, end);//
-//
-//                for(int i=0; i<subPoints.size(); ++i) {
-//                    if (subPoints.get(i).getPoint()[1] < (stdDeviationValueL / 10.0))
-//                        subPoints.get(i).getPoint()[1] = 0;
-//                }
-//
-//                refMain.getDbscan().evaluteList(subPoints);
-//
-//                // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
-//            }
-//
-//            //right
-//            if(startUsingClusters && blockfilterValueR>(stdDeviationValueR/10.0))
-//            {
-//                int amount = 2;
-//                int start = listOfSensorDataFilteredR.size()-1 - amount;
-//                int end = listOfSensorDataFilteredR.size()-1;
-//                List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredR.subList(start, end);//listOfSensorData.subList(start, end);//
-//
-//                for(int i=0; i<subPoints.size(); ++i) {
-//                    if (subPoints.get(i).getPoint()[1] < (stdDeviationValueR / 10.0))
-//                        subPoints.get(i).getPoint()[1] = 0;
-//                }
-//
-//                refMain.getDbscan().evaluteList(subPoints);
-//
-//                // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
-//            }
+            //left
+            if(startUsingClusters && blockfilterValueL>(stdDeviationValueL/10.0))
+        {
+            int amount = 2;
+            int start = listOfSensorDataFilteredL.size()-1 - amount;
+            int end = listOfSensorDataFilteredL.size()-1;
+            List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredL.subList(start, end);//listOfSensorData.subList(start, end);//
+
+            for(int i=0; i<subPoints.size(); ++i) {
+                if (subPoints.get(i).getPoint()[1] < (stdDeviationValueL / 10.0))
+                    subPoints.get(i).getPoint()[1] = 0;
+            }
+
+            refMain.getDbscan().evaluteList(subPoints);
+
+            // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
+        }
+
+            //right
+            if(startUsingClusters && blockfilterValueR>(stdDeviationValueR/10.0))
+            {
+                int amount = 2;
+                int start = listOfSensorDataFilteredR.size()-1 - amount;
+                int end = listOfSensorDataFilteredR.size()-1;
+                List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredR.subList(start, end);//listOfSensorData.subList(start, end);//
+
+                for(int i=0; i<subPoints.size(); ++i) {
+                    if (subPoints.get(i).getPoint()[1] < (stdDeviationValueR / 10.0))
+                        subPoints.get(i).getPoint()[1] = 0;
+                }
+
+                refMain.getDbscan().evaluteList(subPoints);
+
+                // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
+            }
         }
 
         protected void onProgressUpdate(Integer... progress) {

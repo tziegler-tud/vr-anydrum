@@ -15,6 +15,10 @@ public class LearningTimer {
 
     public LearningTimer(final TextView refTextView, int seconds, final MainActivity refMain, final EnumDrum enumDrum)
     {
+        final int startACL = refMain.getAclSensor().getListOfSensorDataFiltered().size();
+        final int startArduinoL = refMain.arduinoUSB.getListOfSensorDataArduinoL().size();
+        final int startArduinoR = refMain.arduinoUSB.getListOfSensorDataArduinoR().size();
+
         new CountDownTimer(seconds * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -24,19 +28,23 @@ public class LearningTimer {
 
             public void onFinish() {
                 Vector<ClusterableDoublePoint> listSensorData = new Vector<>();
+                int sizeOfStart = 0;
                 switch (enumDrum)
                 {
                     case HIHAT:
                         listSensorData=refMain.getAclSensor().getListOfSensorDataFiltered();
+                        sizeOfStart = startACL;
                         break;
                     case SNARE:
-                        listSensorData=refMain.arduinoUSB.getListOfSensorDataFilteredArduinoR();
+                        listSensorData=refMain.arduinoUSB.getListOfSensorDataArduinoL();
+                        sizeOfStart = startArduinoR;
                         break;
                     case BASS:
-                        listSensorData=refMain.arduinoUSB.getListOfSensorDataFilteredArduinoL();
+                        listSensorData=refMain.arduinoUSB.getListOfSensorDataArduinoR();
+                        sizeOfStart = startArduinoL;
                         break;
                 }
-                int sizeOfStart = listSensorData.size();
+
 
 
                 int sizeOfEnd = listSensorData.size();

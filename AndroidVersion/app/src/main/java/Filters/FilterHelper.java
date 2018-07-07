@@ -47,8 +47,8 @@ public class FilterHelper {
         filteredValue /= size;
 
         double highpassFilteredY = highpassFilter(stdDeviationValue/10.0, filteredValue); //stdDeviationValue around 0.0002f
-        TextView viewCurrentValue = (TextView) refMain.findViewById(R.id.sensorValue);
-        viewCurrentValue.setText(formatter.format(highpassFilteredY));
+//        TextView viewCurrentValue = (TextView) refMain.findViewById(R.id.sensorValue);
+//        viewCurrentValue.setText(formatter.format(highpassFilteredY));
         this.listOfSensorDataFiltered.add(new ClusterableDoublePoint(new double[]{listOfSensorData.get(listOfSensorData.size()-1).getPoint()[0], highpassFilteredY}));
 
         this.listOfSensorData = listOfSensorData;
