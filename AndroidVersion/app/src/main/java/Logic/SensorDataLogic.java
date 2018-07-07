@@ -19,7 +19,7 @@ public class SensorDataLogic {
 
     }
 
-    public boolean detectKnocks(CircularFifoQueue <Float> buffer){
+    public boolean detectKnocks(CircularFifoQueue <Integer> buffer){
         int l = buffer.size();
         try {
             float currentVal = buffer.get(l-1);

@@ -2,6 +2,7 @@ package com.example.bluefish.anydrum;
 
 import Learning.DBSCAN;
 import Sensors.AccelerationSensorManager;
+import Sensors.ArduinoSensorManager;
 import Visualizations.LineChart;
 import android.content.Context;
 import android.content.Intent;
@@ -30,11 +31,13 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     private PdUiDispatcher dispatcher;
     private int updatePeriodACL = 100; // in ms
-    private AccelerationSensor aclSensor;
+   // private AccelerationSensor aclSensor;
     public  ArduinoUSB arduinoUSB;
-    public AccelerationSensor getAclSensor() {
+    /*public AccelerationSensor getAclSensor() {
         return aclSensor;
-    }
+    }*/
+
+    private ArduinoSensorManager arduinoSensorManager;
     private AccelerationSensorManager acSensorManager;
 
     private LineChart chart;
@@ -171,8 +174,9 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         this.chart.setManual(-1,1,0,200);
     }
 
-    public void updateChart(float data){
-        this.chart.appendData(this.acSensorManager.getBuffer());
+    public void updateChart(){
+        this.chart.appendData(this.arduinoSensorManager.getBufferL(),this.arduinoSensorManager.getBufferR());
+
     }
 
     @Override
@@ -188,15 +192,15 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         dbscan = new DBSCAN(0.00002f, 1);
         createChart();
         this.mFFTRealTimeAnalyzer = new FFTRealTimeAnalyzer();
-        this.acSensorManager = new AccelerationSensorManager(this,this, true);
+//        this.acSensorManager = new AccelerationSensorManager(this,this, true);
         initInstruments();
-        startCalibration();
+        this.arduinoSensorManager = new ArduinoSensorManager(this,this,true);
 
-
+/*
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         aclSensor = new AccelerationSensor(this, updatePeriodACL); //period in ms
         aclSensor.subscribeToAccelerationSensor();
-
+*/
 
         arduinoUSB = new ArduinoUSB(this);
 

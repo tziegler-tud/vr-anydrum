@@ -115,7 +115,7 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
         fftChart.setMaxX(32);
     }
 
-    public void updateChart(float data){
+    public void updateChart(){
 
     }
 

@@ -1,5 +1,6 @@
 package Visualizations;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import com.example.bluefish.anydrum.MainActivity;
 import com.example.bluefish.anydrum.FFTActivity;
@@ -13,7 +14,8 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 public class LineChart {
     AppCompatActivity refMain;
     GraphView graph;
-    LineGraphSeries<DataPoint> series;
+    LineGraphSeries<DataPoint> seriesL;
+    LineGraphSeries<DataPoint> seriesR;
 
    public LineChart(AppCompatActivity refMain, GraphView graphView)
     {
@@ -27,8 +29,11 @@ public class LineChart {
         }
 
 
-        series = new LineGraphSeries<DataPoint>(data);
-        graph.addSeries(series);
+        seriesL = new LineGraphSeries<DataPoint>(data);
+        seriesL.setColor(Color.GREEN);
+        seriesR = new LineGraphSeries<DataPoint>(data);
+        graph.addSeries(seriesL);
+        graph.addSeries(seriesR);
 
     }
 
@@ -63,17 +68,23 @@ public class LineChart {
         graph.getViewport().setMinX(minX);
         graph.getViewport().setMaxX(maxX);
     }
-   public void appendData(CircularFifoQueue<Float> buffer){
+   public void appendData(CircularFifoQueue<Integer> bufferL,CircularFifoQueue<Integer> bufferR){
 
-       this.series.resetData(generateData(buffer));
+       this.seriesL.resetData(generateData(bufferL));
+       this.seriesR.resetData(generateData(bufferR));
+
 
    }
+    public void appendData(double[] data){
 
-   public void appendData(double[] data){
-       this.series.resetData(generateData(data));
-   }
+        this.seriesL.resetData(generateData(data));
 
-    private DataPoint[] generateData(CircularFifoQueue<Float>buffer) {
+
+    }
+
+
+
+    private DataPoint[] generateData(CircularFifoQueue<Integer>buffer) {
         int count = buffer.size();
         DataPoint[] values = new DataPoint[count];
         for (int i=0; i<count; i++) {

@@ -6,7 +6,7 @@ public interface SensorActivity  {
 
 
 
-    void updateChart(float value);
+    void updateChart();
 
     void sensorManagerEvent(int id);
     /*

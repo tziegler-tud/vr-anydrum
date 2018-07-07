@@ -5,10 +5,10 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 public class DataStatistics {
 
-        private CircularFifoQueue<Float> data;
+        private CircularFifoQueue<Integer> data;
         private int size;
 
-        public DataStatistics(CircularFifoQueue<Float> data) {
+        public DataStatistics(CircularFifoQueue<Integer> data) {
             this.data = data;
             size = data.size();
         }
