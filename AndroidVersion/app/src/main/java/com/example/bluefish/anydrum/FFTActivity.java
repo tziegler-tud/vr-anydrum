@@ -50,6 +50,7 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
         createCharts();
         this.acSensorManager = new AccelerationSensorManager(this,this, false);
+        this.acSensorManager.startCalibration();
 
         final Button btnCalibrate = (Button) findViewById(R.id.BtnUnlock);
         btnCalibrate.setOnClickListener(  new View.OnClickListener() {
@@ -63,9 +64,14 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
         btnFFT.setOnClickListener(  new View.OnClickListener() {
             public void onClick(View v) {
                 FFTLogic mFFTLogic = new FFTLogic();
+                FFTRealTimeAnalyzer mFTR = new FFTRealTimeAnalyzer();
                 double[] data = mFFTLogic.transform(acSensorManager.getLastKnock());
 
                 fftChart.appendData(data);
+                TextView text = (TextView) findViewById(R.id.viewMaxima);
+                mFTR.addCluster("test",acSensorManager.getLastKnock());
+                text.setText(mFTR.getMaxima("test").toString());
+
 
 
 
@@ -102,7 +108,11 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
         this.dataChart.setManual(-1,1,0,64);
 
         this.fftChart = new LineChart(this, (GraphView) findViewById(R.id.graphViewFFT));
-        fftChart.setManual(-5,5,0,64);
+        //fftChart.setManual(-5,5,0,64);
+        fftChart.setScaling();
+        fftChart.setXAxisBoundsManual(true);
+        fftChart.setMinX(0);
+        fftChart.setMaxX(32);
     }
 
     public void updateChart(float data){

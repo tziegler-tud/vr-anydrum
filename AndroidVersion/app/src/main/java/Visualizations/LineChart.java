@@ -35,6 +35,9 @@ public class LineChart {
     public void setMaxX(int x){
        this.graph.getViewport().setMaxX(x);
     }
+    public void setMinX(int x){
+        this.graph.getViewport().setMinX(x);
+    }
     public void setMaxY(int y){
         this.graph.getViewport().setMaxY(y);
     }

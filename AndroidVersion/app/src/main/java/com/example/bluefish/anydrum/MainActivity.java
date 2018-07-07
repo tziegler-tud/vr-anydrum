@@ -20,6 +20,8 @@ import org.puredata.core.utils.IoUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements SensorActivity {
@@ -30,6 +32,16 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private LineChart chart;
 
     private DBSCAN dbscan;
+
+    private boolean knockLengthLearned = false;
+
+    private FFTRealTimeAnalyzer mFFTRealTimeAnalyzer;
+
+    private boolean learning;
+
+    private List<VirtualInstrument> instruments = new LinkedList<>();
+
+
     public DBSCAN getDbscan() {
         return dbscan;
     }
@@ -63,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     }
 
+
+
     private void initGui(){
         final MainActivity refMain = this;
         final Button playSnareDrum = (Button) findViewById(R.id.btnSnareDrum);
@@ -71,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
         final Button btnStart = (Button) findViewById(R.id.btnStart);
         final Button btnCalibrate = (Button) findViewById(R.id.btnCalibrate);
+
+        learning=false;
+        TextView textView = (TextView) findViewById(R.id.ViewLearningState);
+        textView.setText("Learning requiered");
         /*
         playSnareDrum.setOnClickListener(
                 new View.OnClickListener() {
@@ -106,14 +124,33 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     btnStart.setBackgroundColor(0xffeeeeee);
 
             }
-        });
-        */
+        });*/
+        btnStart.setOnClickListener(  new View.OnClickListener() {
+                                          public void onClick(View v) {
+                                              startLearning();
+                                          }
+                                      });
+
+
         btnCalibrate.setOnClickListener(  new View.OnClickListener() {
             public void onClick(View v) {
                 refMain.acSensorManager.startCalibration();
 
             }
         });
+    }
+
+    private void initInstruments(){
+        VirtualInstrument v1,v2,v3;
+
+        v1 = new VirtualInstrument("Hi-Hat");
+        v2 = new VirtualInstrument("Base");
+        v3 = new VirtualInstrument("TomTom");
+
+        instruments.add(v1);
+        instruments.add(v2);
+        instruments.add(v3);
+
     }
 
     private void createChart()
@@ -137,7 +174,9 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 */
         dbscan = new DBSCAN(0.00002f, 1);
         createChart();
+        this.mFFTRealTimeAnalyzer = new FFTRealTimeAnalyzer();
         this.acSensorManager = new AccelerationSensorManager(this,this, true);
+        initInstruments();
         startCalibration();
 
 
@@ -172,6 +211,9 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
             case 6:
                 this.noKnock();
                 return;
+            case 7:
+                this.match();
+                return;
             default:
                 return;
 
@@ -201,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         TextView textView = (TextView) findViewById(R.id.viewKnockDetected);
         textView.setText("Knock detected");
 
+
     }
 
     private void noKnock(){
@@ -217,6 +260,22 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private void unlock(){
         TextView textView = (TextView) findViewById(R.id.viewLockState);
         textView.setText("unlocked");
+    }
+
+    private void match(){
+        if(learning){
+
+            if(learnPattern(acSensorManager.getLastKnock())){
+
+            }
+            else {
+                stopLearning();
+            }
+        }
+
+        String matchedInstrument = mFFTRealTimeAnalyzer.matchData(acSensorManager.getLastKnock());
+        System.out.println("matched: " + matchedInstrument);
+
     }
 
     private void setStdDevTextView(double stdDev){
@@ -243,6 +302,42 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         PdBase.openPatch(pdPatchSnareDrum.getAbsolutePath());
         PdBase.openPatch(pdPatchBassDrum.getAbsolutePath());
         PdBase.openPatch(pdPatchHiHatDrum.getAbsolutePath());
+    }
+
+    private void startLearning(){
+        TextView textView = (TextView) findViewById(R.id.ViewLearningState);
+        textView.setText("Learning... Waiting for Knock");
+        mFFTRealTimeAnalyzer.clearCluster();
+        for(VirtualInstrument v:instruments){
+            v.setLearned(false);
+        }
+        this.learning=true;
+
+
+    }
+
+    private void stopLearning(){
+        TextView textView = (TextView) findViewById(R.id.ViewLearningState);
+        textView.setText("learning completed!");
+        this.learning=false;
+
+    }
+
+    /* returns true if succesfull, false if failed */
+    private boolean learnPattern(double[] d) {
+
+        for (VirtualInstrument v : instruments) {
+            if (!v.learned()) {
+                mFFTRealTimeAnalyzer.addCluster(v.getName(), d);
+                v.setLearned(true);
+                System.out.println("instrument " + v.getName() + " learned");
+                return true;
+            }
+
+
+        }
+        System.out.println("all instruments learned, returning false...");
+        return false;
     }
 
 

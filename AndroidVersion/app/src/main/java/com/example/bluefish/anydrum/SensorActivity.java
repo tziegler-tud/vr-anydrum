@@ -18,6 +18,7 @@ public interface SensorActivity  {
     4   calibration stopped
     5   knock detected
     6   waiting for knock
+    7   knock completed
      */
 
 

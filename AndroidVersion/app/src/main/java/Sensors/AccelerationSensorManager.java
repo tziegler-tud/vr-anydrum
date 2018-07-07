@@ -15,6 +15,9 @@ import com.example.bluefish.anydrum.R;
 import com.example.bluefish.anydrum.SensorActivity;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+
 public class AccelerationSensorManager implements SensorEventListener {
 
     private SensorActivity refMain;
@@ -28,9 +31,10 @@ public class AccelerationSensorManager implements SensorEventListener {
     private boolean calibrating;
     private int calIndex;
 
-    private int knockLength = 60;
+    private int knockLength = 62;
 
-    private double[] lastKnock = new double[knockLength+4];
+
+    private double[] lastKnock = new double[knockLength+2];
 
     private boolean currentKnock;
     private boolean autoUnlock;
@@ -76,7 +80,7 @@ public class AccelerationSensorManager implements SensorEventListener {
     private void registerAccelerationSensor(){
 
         Sensor accelSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        this.mSensorManager.registerListener(this,accelSensor,10000);
+        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_FASTEST);
 
 
     }
@@ -133,6 +137,7 @@ public class AccelerationSensorManager implements SensorEventListener {
                  if(currentKnock) this.lastKnock[lockedCount+2]=sensorEvent.values[2];
                  lockedCount += 1;
                  if(lockedCount >= knockLength){
+                     this.knockCompleted();
                      privateUnlock();
                      this.noKnock();
                  }
@@ -153,6 +158,10 @@ public class AccelerationSensorManager implements SensorEventListener {
         refMain.sensorManagerEvent(6);
     }
 
+    private void knockCompleted(){
+        refMain.sensorManagerEvent(7);
+    }
+
     private void privateUnlock(){
         if(this.autoUnlock) {
             unlock();
@@ -170,10 +179,15 @@ public class AccelerationSensorManager implements SensorEventListener {
     }
 
     public void unlock(){
-        this.lockState = false;
-        refMain.sensorManagerEvent(2);
-        for(int i=0;i<4;i++){
-            this.lastKnock[i] = buffer.get(buffer.size()-knockLength-i-1);
+        if(this.calibrating){
+
+        }
+        else {
+            this.lockState = false;
+            refMain.sensorManagerEvent(2);
+            for (int i = 0; i < 2; i++) {
+                this.lastKnock[i] = buffer.get(buffer.size() - knockLength - i - 1);
+            }
         }
     }
 
@@ -201,6 +215,17 @@ public class AccelerationSensorManager implements SensorEventListener {
 
     public double[] getLastKnock(){
         return this.lastKnock;
+    }
+
+    public void setAutoUnlock(boolean b){
+        this.autoUnlock = b;
+    }
+
+    public void setKnockLength(int knockLength){
+        this.knockLength = knockLength;
+    }
+    public int getKnockLength(){
+        return this.knockLength;
     }
 
 }
