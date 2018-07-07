@@ -16,10 +16,12 @@ import com.example.bluefish.anydrum.R;
 import com.example.bluefish.anydrum.SensorActivity;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
+import java.util.Vector;
+
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 
-public class ArduinoSensorManager{
+public class ArduinoSensorManager implements SensorEventListener {
 
     private SensorActivity refMain;
     private Context mContext;
@@ -62,10 +64,28 @@ public class ArduinoSensorManager{
 
         this.mSensorDataLogic = new SensorDataLogic(new double[]{0,0,0});
 
+        this.mSensorDataLogic = new SensorDataLogic(new double[]{0,0,0});
+        if(!this.checkHardwareSupport()){
+            //abort mission
+            return;
+        }
+        registerAccelerationSensor();
 
 
         startCalibration();
 
+
+    }
+    private void registerAccelerationSensor(){
+
+        Sensor accelSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_FASTEST);
+
+   }
+
+    private boolean checkHardwareSupport(){
+
+        return this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null;
 
     }
 
@@ -99,6 +119,16 @@ public class ArduinoSensorManager{
 
         return array;
 
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Vector<ArduinoPacket> list =  refMain.getArduinoUsb().sensorDataRaw;
+        dataInput(list.get(list.size()-1));
     }
 
     public void dataInput(ArduinoPacket packet) {

@@ -92,8 +92,8 @@ public class LineChart {
 
        //this.seriesL.resetData(generateData(bufferL));
        //this.seriesR.resetData(generateData(bufferR));
-       this.seriesL.appendData(generateDataPoint(bufferL.get(bufferL.size())),true,200);
-       this.seriesR.appendData(generateDataPoint(bufferR.get(bufferR.size())),true,200);
+       this.seriesL.appendData(generateDataPoint(bufferL.get(bufferL.size()-1)),true,200);
+       this.seriesR.appendData(generateDataPoint(bufferR.get(bufferR.size()-1)),true,200);
 
 
    }
