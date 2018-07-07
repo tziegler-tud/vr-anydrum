@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     public void updateArduino(ArduinoPacket packet){
         arduinoSensorManager.dataInput(packet);
-        System.out.println("packet: " + packet.left + "/" + packet.right);
+
     }
 
     /**
