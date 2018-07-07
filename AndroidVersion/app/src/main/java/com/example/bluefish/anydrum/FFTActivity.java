@@ -105,7 +105,7 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
     private void createCharts()
     {
-        this.dataChart = new LineChart(this, (GraphView) findViewById(R.id.graphViewData));
+        this.dataChart = new LineChart(this, (GraphView) findViewById(R.id.graph));
         this.dataChart.setManual(-1,1,0,64);
 
         this.fftChart = new LineChart(this, (GraphView) findViewById(R.id.graphViewFFT));

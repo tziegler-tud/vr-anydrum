@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         return dbscan;
     }
 
-    public List<ArduinoPacket> packetList;
 
 
     // Used to load the 'native-lib' library on application startup.
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private void createChart()
     {
 //        LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());//getListOfSensorData
-        this.chart = new LineChart(this, (GraphView) findViewById(R.id.graphViewData));
+        this.chart = new LineChart(this, (GraphView) findViewById(R.id.graph));
         this.chart.setManual(-1,1,0,1000);
         this.chart.setScalingY();
     }
@@ -178,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        packetList = new ArrayList<ArduinoPacket>();
 
         /*// Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sensorValue);
@@ -375,12 +373,6 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     {
         super.onPause();
         PdAudio.stopAudio();
-    }
-
-
-    public void storeArduinoData(ArduinoPacket packet)
-    {
-        packetList.add(packet);
     }
 
     public void updateArduino(ArduinoPacket packet){
