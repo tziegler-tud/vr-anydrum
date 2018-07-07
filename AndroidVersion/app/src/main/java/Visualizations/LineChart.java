@@ -23,8 +23,8 @@ public class LineChart {
         this.graph = graphView;
         graph.removeAllSeries();
 
-        DataPoint data[] = new DataPoint[200];
-        for (int i=0; i<200; ++i) {
+        DataPoint data[] = new DataPoint[1000];
+        for (int i=0; i<1000; ++i) {
             data[i] = new DataPoint(0,0);
         }
 
@@ -59,6 +59,26 @@ public class LineChart {
         graph.getViewport().setYAxisBoundsManual(false);
         graph.getViewport().setScalableY(true);
     }
+    public void setScalingY(){
+        graph.getViewport().setYAxisBoundsManual(false);
+        graph.getViewport().setScalableY(true);
+    }
+    public void setScalingX(){
+        graph.getViewport().setXAxisBoundsManual(false);
+        graph.getViewport().setYAxisBoundsManual(false);
+    }
+    public void setManualX(int minX, int maxX){
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(minX);
+        graph.getViewport().setMaxX(maxX);
+    }
+    public void setManualY(int minY, int maxY){
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(minY);
+        graph.getViewport().setMaxY(maxY);
+    }
+
 
     public void setManual(int minY, int maxY, int minX, int maxX){
         graph.getViewport().setYAxisBoundsManual(true);
