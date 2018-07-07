@@ -128,6 +128,8 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
     private void drawChart(){
         this.dataChart.appendData(this.arduinoSensorManager.getLastKnock());
     }
-
+    public ArduinoUSB getArduinoUsb(){
+        return null;
+    }
 
 }
