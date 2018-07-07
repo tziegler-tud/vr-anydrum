@@ -1,4 +1,4 @@
-package Sensors;
+/*package Sensors;
 
 import Filters.FilterHelper;
 import Learning.ClusterableDoublePoint;
@@ -159,3 +159,4 @@ public class AccelerationSensor
         refMain.getmSensorManager().registerListener(accelerationSensorListener, mSensor, updatePeriod);
     }
 }
+*/

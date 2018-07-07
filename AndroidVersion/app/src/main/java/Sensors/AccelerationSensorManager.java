@@ -1,4 +1,4 @@
-package Sensors;
+/*package Sensors;
 
 import Logic.*;
 
@@ -50,6 +50,7 @@ public class AccelerationSensorManager implements SensorEventListener {
      *
      *
      */
+/*
     public AccelerationSensorManager(SensorActivity refMain, Context mContext, boolean autoUnlock){
 
         this.mContext = mContext;
@@ -229,3 +230,4 @@ public class AccelerationSensorManager implements SensorEventListener {
     }
 
 }
+*/

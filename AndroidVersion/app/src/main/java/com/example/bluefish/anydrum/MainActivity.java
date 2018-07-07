@@ -1,8 +1,7 @@
 package com.example.bluefish.anydrum;
 
 import Learning.DBSCAN;
-import Sensors.AccelerationSensor;
-import Sensors.AccelerationSensorManager;
+
 import Sensors.ArduinoSensorManager;
 import Visualizations.LineChart;
 import android.content.Context;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     }*/
 
     private ArduinoSensorManager arduinoSensorManager;
-    private AccelerationSensorManager acSensorManager;
+    //private AccelerationSensorManager acSensorManager;
 
     private LineChart chart;
 
@@ -226,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
             case 3:
                 return;
             case 4:
-                this.stopCalibration(acSensorManager.getStatistics());
+                this.stopCalibration(arduinoSensorManager.getStatistics());
             case 5:
                 this.knock();
                 return;
@@ -240,6 +239,12 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 return;
 
         }
+    }
+
+    public void startCalibration(){
+        arduinoSensorManager.startCalibration();
+
+
     }
 
 
@@ -281,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private void match(){
         if(learning){
 
-            if(learnPattern(acSensorManager.getLastKnock())){
+            if(learnPattern(arduinoSensorManager.getLastKnock())){
 
             }
             else {
@@ -289,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
             }
         }
 
-        String matchedInstrument = mFFTRealTimeAnalyzer.matchData(acSensorManager.getLastKnock());
+        String matchedInstrument = mFFTRealTimeAnalyzer.matchData(arduinoSensorManager.getLastKnock());
         System.out.println("matched: " + matchedInstrument);
 
     }
