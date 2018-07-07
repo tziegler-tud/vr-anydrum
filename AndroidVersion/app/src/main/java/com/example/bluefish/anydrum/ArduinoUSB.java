@@ -38,6 +38,7 @@ public  class ArduinoUSB {
     UsbDevice device;
     UsbDeviceConnection usbConnection;
     UsbSerialDevice serial;
+    public Vector<ArduinoPacket> sensorDataRaw;
 
     //Data
     private FilterHelper filter;
@@ -69,6 +70,7 @@ public  class ArduinoUSB {
 
 
     public ArduinoUSB(MainActivity refMain) {
+        sensorDataRaw = new Vector<>();
         filter = new FilterHelper();
         listOfSensorDataArduinoL= new Vector<ClusterableDoublePoint>();
         listOfSensorDataArduinoR= new Vector<ClusterableDoublePoint>();
@@ -146,6 +148,7 @@ public  class ArduinoUSB {
                     integerObjArray[0] = left;
                     integerObjArray[1] = right;
 
+                    sensorDataRaw.add(new ArduinoPacket(left,right));
                     new SerialTask().execute(integerObjArray);
 
 //                    System.out.println("hlp:43 "+data[data.length - 4]+"  "+data[data.length - 3]);

@@ -1,6 +1,7 @@
 package com.example.bluefish.anydrum;
 
 import Learning.DBSCAN;
+import Sensors.AccelerationSensor;
 import Sensors.AccelerationSensorManager;
 import Sensors.ArduinoSensorManager;
 import Visualizations.LineChart;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     // Used to load the 'native-lib' library on application startup.
    static {
         System.loadLibrary("native-lib");
-    }*/
+    }
 
 
 
@@ -96,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         final Button playHiHatDrum = (Button) findViewById(R.id.btnHiHat);
 
         final Button btnStart = (Button) findViewById(R.id.btnStart);
-        final Button btnCalibrate = (Button) findViewById(R.id.btnCalibrate);
 
         learning=false;
         TextView textView = (TextView) findViewById(R.id.ViewLearningState);
@@ -146,12 +146,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                                       });
 
 
-        btnCalibrate.setOnClickListener(  new View.OnClickListener() {
-            public void onClick(View v) {
-                refMain.acSensorManager.startCalibration();
 
-            }
-        });
     }
 
     private void initInstruments(){
@@ -194,7 +189,9 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         this.mFFTRealTimeAnalyzer = new FFTRealTimeAnalyzer();
 //        this.acSensorManager = new AccelerationSensorManager(this,this, true);
         initInstruments();
+
         this.arduinoSensorManager = new ArduinoSensorManager(this,this,true);
+
 
 /*
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -245,12 +242,6 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         }
     }
 
-    public void startCalibration(){
-        acSensorManager.startCalibration();
-        this.paintButton((Button)this.findViewById(R.id.btnCalibrate),0xff9900);
-
-
-    }
 
     public void stopCalibration(double[] array){
 
