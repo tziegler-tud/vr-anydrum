@@ -148,7 +148,9 @@ public  class ArduinoUSB {
                     integerObjArray[0] = left;
                     integerObjArray[1] = right;
 
-                    sensorDataRaw.add(new ArduinoPacket(left,right));
+                    ArduinoPacket packet = new ArduinoPacket(left,right);
+                    sensorDataRaw.add(packet);
+                    refMain.updateArduino(packet);
                     new SerialTask().execute(integerObjArray);
 
 //                    System.out.println("hlp:43 "+data[data.length - 4]+"  "+data[data.length - 3]);
