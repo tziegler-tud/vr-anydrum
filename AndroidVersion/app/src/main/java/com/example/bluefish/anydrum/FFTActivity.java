@@ -122,6 +122,7 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
     public void unlock(){
         this.arduinoSensorManager.unlock();
+
     }
 
     private void drawChart(){

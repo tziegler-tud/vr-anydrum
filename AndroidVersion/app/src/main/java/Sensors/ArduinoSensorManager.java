@@ -42,8 +42,8 @@ public class ArduinoSensorManager{
     private boolean knockDetectedState;
     private boolean lockState;
     private int lockedCount;
-    private CircularFifoQueue<Integer> bufferL = new CircularFifoQueue<>(1000);
-    private CircularFifoQueue<Integer> bufferR = new CircularFifoQueue<>(1000);
+    private CircularFifoQueue<Integer> bufferL = new CircularFifoQueue<>(200);
+    private CircularFifoQueue<Integer> bufferR = new CircularFifoQueue<>(200);
 
     /**
      * Invokes new AccelerationSensorManager

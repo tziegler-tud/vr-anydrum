@@ -164,8 +164,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private void createChart()
     {
 //        LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());//getListOfSensorData
-        this.chart = new LineChart(this, (GraphView) findViewById(R.id.graphViewData));
-        this.chart.setManual(-1,1,0,1000);
+        this.chart = new LineChart(this, (GraphView) findViewById(R.id.graph));
+        this.chart.setManual(-1,1,0,200);
         this.chart.setScalingY();
     }
 
@@ -385,6 +385,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     public void updateArduino(ArduinoPacket packet){
         arduinoSensorManager.dataInput(packet);
+        System.out.println("packet: " + packet.left + "/" + packet.right);
     }
 
     /**
