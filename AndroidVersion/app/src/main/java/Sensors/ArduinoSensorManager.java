@@ -79,7 +79,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     private void registerAccelerationSensor(){
 
         Sensor accelSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_FASTEST);
+        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_GAME);
 
    }
 
@@ -127,7 +127,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Vector<ArduinoPacket> list =  refMain.getArduinoUsb().sensorDataRaw;
+        Vector<ArduinoPacket> list =  refMain.getArduinoUSB().sensorDataRaw;
         dataInput(list.get(list.size()-1));
     }
 

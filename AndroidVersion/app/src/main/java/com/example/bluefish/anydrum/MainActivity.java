@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         return dbscan;
     }
 
-
+    public ArduinoUSB getArduinoUSB() {
+        return arduinoUSB;
+    }
 
     // Used to load the 'native-lib' library on application startup.
 //   static {
