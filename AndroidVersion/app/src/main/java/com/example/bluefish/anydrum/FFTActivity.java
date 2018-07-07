@@ -2,7 +2,7 @@ package com.example.bluefish.anydrum;
 
 import Logic.FFTLogic;
 
-import Sensors.AccelerationSensorManager;
+//import Sensors.AccelerationSensorManager;
 import Visualizations.LineChart;
 import android.content.Context;
 import android.view.*;
@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
-    private AccelerationSensorManager acSensorManager;
+//    private AccelerationSensorManager acSensorManager;
 
     private LineChart dataChart;
     private LineChart fftChart;

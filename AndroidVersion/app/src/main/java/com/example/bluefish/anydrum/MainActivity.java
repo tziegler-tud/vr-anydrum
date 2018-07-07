@@ -1,8 +1,8 @@
 package com.example.bluefish.anydrum;
 
 import Learning.DBSCAN;
-import Sensors.AccelerationSensor;
-import Sensors.AccelerationSensorManager;
+//import Sensors.AccelerationSensor;
+//import Sensors.AccelerationSensorManager;
 import Sensors.ArduinoSensorManager;
 import Visualizations.LineChart;
 import android.content.Context;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     }*/
 
     private ArduinoSensorManager arduinoSensorManager;
-    private AccelerationSensorManager acSensorManager;
+//    private AccelerationSensorManager acSensorManager;
 
     private LineChart chart;
 
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
             case 3:
                 return;
             case 4:
-                this.stopCalibration(acSensorManager.getStatistics());
+//                this.stopCalibration(acSensorManager.getStatistics());
             case 5:
                 this.knock();
                 return;
@@ -279,18 +279,18 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     }
 
     private void match(){
-        if(learning){
+//        if(learning){
+//
+//            if(learnPattern(acSensorManager.getLastKnock())){
+//
+//            }
+//            else {
+//                stopLearning();
+//            }
+//        }
 
-            if(learnPattern(acSensorManager.getLastKnock())){
-
-            }
-            else {
-                stopLearning();
-            }
-        }
-
-        String matchedInstrument = mFFTRealTimeAnalyzer.matchData(acSensorManager.getLastKnock());
-        System.out.println("matched: " + matchedInstrument);
+//        String matchedInstrument = mFFTRealTimeAnalyzer.matchData(acSensorManager.getLastKnock());
+//        System.out.println("matched: " + matchedInstrument);
 
     }
 
