@@ -90,8 +90,10 @@ public class LineChart {
     }
    public void appendData(CircularFifoQueue<Integer> bufferL,CircularFifoQueue<Integer> bufferR){
 
-       this.seriesL.resetData(generateData(bufferL));
-       this.seriesR.resetData(generateData(bufferR));
+       //this.seriesL.resetData(generateData(bufferL));
+       //this.seriesR.resetData(generateData(bufferR));
+       this.seriesL.appendData(generateDataPoint(bufferL.get(bufferL.size())),true,200);
+       this.seriesR.appendData(generateDataPoint(bufferR.get(bufferR.size())),true,200);
 
 
    }
@@ -120,5 +122,10 @@ public class LineChart {
             values[i] = new DataPoint(i, data[i]);
         }
         return values;
+    }
+
+    private DataPoint generateDataPoint(int data){
+       return new DataPoint(200,data);
+
     }
 }
