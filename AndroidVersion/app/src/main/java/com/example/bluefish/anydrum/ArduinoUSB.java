@@ -198,8 +198,8 @@ public  class ArduinoUSB {
                 stdDeviationValueL=stdDeviation.evaluate(skalarsL);
                 stdDeviationValueR=stdDeviation.evaluate(skalarsR);
             }
-            if(startUsingClusters)
-                evaluateSound(listOfSensorDataArduinoL, listOfSensorDataArduinoR);
+//            if(startUsingClusters)
+//                evaluateSound(listOfSensorDataArduinoL, listOfSensorDataArduinoR);
 
 
             ArduinoPacket packet = new ArduinoPacket(left, right);

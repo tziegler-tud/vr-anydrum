@@ -3,6 +3,7 @@ package com.example.bluefish.anydrum;
 import Logic.FFTLogic;
 
 //import Sensors.AccelerationSensorManager;
+import Sensors.ArduinoSensorManager;
 import Visualizations.LineChart;
 import android.content.Context;
 import android.view.*;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
-//    private AccelerationSensorManager acSensorManager;
+    private ArduinoSensorManager arduinoSensorManager;
 
     private LineChart dataChart;
     private LineChart fftChart;
@@ -49,13 +50,13 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
     private void init(){
 
         createCharts();
-        this.acSensorManager = new AccelerationSensorManager(this,this, false);
-        this.acSensorManager.startCalibration();
+        this.arduinoSensorManager = new ArduinoSensorManager(this,this, false);
+        this.arduinoSensorManager.startCalibration();
 
         final Button btnCalibrate = (Button) findViewById(R.id.BtnUnlock);
         btnCalibrate.setOnClickListener(  new View.OnClickListener() {
             public void onClick(View v) {
-                acSensorManager.unlock();
+                arduinoSensorManager.unlock();
 
             }
         });
@@ -65,11 +66,11 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
             public void onClick(View v) {
                 FFTLogic mFFTLogic = new FFTLogic();
                 FFTRealTimeAnalyzer mFTR = new FFTRealTimeAnalyzer();
-                double[] data = mFFTLogic.transform(acSensorManager.getLastKnock());
+                double[] data = mFFTLogic.transform(arduinoSensorManager.getLastKnock());
 
                 fftChart.appendData(data);
                 TextView text = (TextView) findViewById(R.id.viewMaxima);
-                mFTR.addCluster("test",acSensorManager.getLastKnock());
+                mFTR.addCluster("test",arduinoSensorManager.getLastKnock());
                 text.setText(mFTR.getMaxima("test").toString());
 
 
@@ -120,11 +121,11 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
     }
 
     public void unlock(){
-        this.acSensorManager.unlock();
+        this.arduinoSensorManager.unlock();
     }
 
     private void drawChart(){
-        this.dataChart.appendData(this.acSensorManager.getLastKnock());
+        this.dataChart.appendData(this.arduinoSensorManager.getLastKnock());
     }
 
 
