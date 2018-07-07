@@ -382,6 +382,10 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         packetList.add(packet);
     }
 
+    public void updateArduino(ArduinoPacket packet){
+        arduinoSensorManager.dataInput(packet);
+    }
+
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
