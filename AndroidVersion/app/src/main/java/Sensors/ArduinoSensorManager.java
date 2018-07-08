@@ -26,7 +26,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private SensorDataLogic mSensorDataLogic;
-    private double[] statistics;
+    private double[] statistics = {0,0,0};
 
     private boolean calibrating;
     private int calIndex;
@@ -136,7 +136,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
 
         int data =  packet.left;
-        int dataL = data - (int) statistics[3];
+        int dataL = data - (int) statistics[2];
         //int dataR = packet.right;
 
         //System.out.println("zAcl: " + sensorEvent.values[2]);
