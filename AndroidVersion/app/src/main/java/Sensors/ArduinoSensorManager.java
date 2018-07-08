@@ -79,7 +79,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     private void registerAccelerationSensor(){
 
         Sensor accelSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_FASTEST);
+        this.mSensorManager.registerListener(this,accelSensor,5000);
 
    }
 
