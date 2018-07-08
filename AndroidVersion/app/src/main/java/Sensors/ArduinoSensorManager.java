@@ -134,7 +134,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
     public void dataInput(ArduinoPacket packet) {
 
-        System.out.println("packet: " + packet.left + "/" + packet.right);
+//        System.out.println("packet: " + packet.left + "/" + packet.right);
         int dataL =  packet.left;
         int dataR = packet.right;
 
