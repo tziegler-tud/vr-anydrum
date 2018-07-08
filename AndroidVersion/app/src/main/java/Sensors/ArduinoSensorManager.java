@@ -26,7 +26,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private SensorDataLogic mSensorDataLogic;
-    private double[] statistics = {0,0,0};
+    private double[] statistics;
 
     private boolean calibrating;
     private int calIndex;
@@ -61,6 +61,11 @@ public class ArduinoSensorManager implements SensorEventListener {
         this.autoUnlock = autoUnlock;
 
         this.arduinoUSB = refMain.getArduinoUSB();
+
+        this.statistics[0] = 0;
+        this.statistics[1] = 0;
+        this.statistics[2] = 0;
+
 
 
         this.mSensorDataLogic = new SensorDataLogic(new double[]{0,0,0});
