@@ -6,12 +6,12 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 public class DataStatistics {
 
-        private CircularFifoQueue<Integer> data;
+        private CircularFifoQueue<Double> data;
         private int size;
 
         double mean,variance,stdDev;
 
-        public DataStatistics(CircularFifoQueue<Integer> data) {
+        public DataStatistics(CircularFifoQueue<Double> data) {
             this.data = data;
             size = data.size();
             this.mean = calcMean();
@@ -21,7 +21,7 @@ public class DataStatistics {
 
         private double calcMean() {
             double sum = 0.0;
-            for(int a : data)
+            for(double a : data)
                 sum += a;
             mean =  sum/size;
             return mean;

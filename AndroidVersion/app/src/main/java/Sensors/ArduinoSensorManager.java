@@ -43,8 +43,10 @@ public class ArduinoSensorManager implements SensorEventListener {
     private boolean knockDetectedState;
     private boolean lockState;
     private int lockedCount;
-    private CircularFifoQueue<Integer> bufferL = new CircularFifoQueue<>(1000);
-    private CircularFifoQueue<Integer> bufferR = new CircularFifoQueue<>(1000);
+
+    private boolean kncompl;
+    private CircularFifoQueue<Double> bufferL = new CircularFifoQueue<>(1000);
+    private CircularFifoQueue<Double> bufferR = new CircularFifoQueue<>(1000);
 
     /**
      * Invokes new AccelerationSensorManager
@@ -63,6 +65,8 @@ public class ArduinoSensorManager implements SensorEventListener {
         this.autoUnlock = autoUnlock;
 
         this.arduinoUSB = refMain.getArduinoUSB();
+
+        this.kncompl = false;
 
         this.statistics[0] = 0;
         this.statistics[1] = 0;
@@ -114,7 +118,7 @@ public class ArduinoSensorManager implements SensorEventListener {
         return true;
     }
 
-    private double[] calcStatistics(CircularFifoQueue<Integer> buffer){
+    private double[] calcStatistics(CircularFifoQueue<Double> buffer){
 
         DataStatistics mStatistics = new DataStatistics(buffer);
         double variance = mStatistics.getVariance();
@@ -143,7 +147,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
 
         int data =  packet.left;
-        int dataL = data - (int) statistics[2];
+        double dataL = data - statistics[2];
         //int dataR = packet.right;
 
         //System.out.println("zAcl: " + sensorEvent.values[2]);
@@ -166,7 +170,7 @@ public class ArduinoSensorManager implements SensorEventListener {
             else {
                 if(currentKnock) this.lastKnock[lockedCount+13]=dataL;
                 lockedCount += 1;
-                if(lockedCount >= knockLength){
+                if(lockedCount >= knockLength && !kncompl){
                     this.knockCompleted();
 
                 }
@@ -186,6 +190,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     }
 
     private void noKnock(){
+        this.kncompl = false;
         this.knockDetectedState=false;
         refMain.sensorManagerEvent(6);
     }
@@ -193,6 +198,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     private void knockCompleted(){
         currentKnock=false;
         refMain.sensorManagerEvent(7);
+        kncompl = true;
     }
 
     private void privateUnlock(){
@@ -225,12 +231,12 @@ public class ArduinoSensorManager implements SensorEventListener {
     }
 
 
-    public CircularFifoQueue<Integer> getBufferL(){
+    public CircularFifoQueue<Double> getBufferL(){
         return this.bufferL;
 
     }
 
-    public CircularFifoQueue<Integer> getBufferR(){
+    public CircularFifoQueue<Double> getBufferR(){
         return this.bufferR;
 
     }

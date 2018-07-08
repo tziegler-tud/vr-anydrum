@@ -1,5 +1,6 @@
 package com.example.bluefish.anydrum;
 
+import Learning.ClusterableDoublePoint;
 import Learning.DBSCAN;
 
 import Learning.LearningCounter;
@@ -300,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     }
 
     private void match(){
-        if(learning){
+        /*if(learning){
 
             if(learnPattern(arduinoSensorManager.getLastKnock())){
 
@@ -309,10 +310,21 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 stopLearning();
             }
         }
+    */
 
-        String matchedInstrument = mFFTRealTimeAnalyzer.matchData(arduinoSensorManager.getLastKnock());
-        System.out.println("matched: " + matchedInstrument);
+        List<Integer> list = mFFTRealTimeAnalyzer.calcMaxima(arduinoSensorManager.getLastKnock());
+        ClusterableDoublePoint cp = new ClusterableDoublePoint(convertToDoubleArray(list),4);
+    }
 
+    private double[] convertToDoubleArray(List<Integer> list){
+        int size = list.size();
+        double[] data = new double[size];
+        for(int i=0;i<size;i++){
+            data[i] = list.get(i);
+        }
+
+
+        return data;
     }
 
     private void setStdDevTextView(double stdDev){
