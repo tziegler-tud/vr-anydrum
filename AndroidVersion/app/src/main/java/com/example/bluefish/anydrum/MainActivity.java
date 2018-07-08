@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 //        this.acSensorManager = new AccelerationSensorManager(this,this, true);
         initInstruments();
 
+        arduinoUSB = new ArduinoUSB(this);
         this.arduinoSensorManager = new ArduinoSensorManager(this,this,true);
 
 
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         aclSensor.subscribeToAccelerationSensor();
 */
 
-        arduinoUSB = new ArduinoUSB(this);
+
 
 
 
