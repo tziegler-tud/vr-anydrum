@@ -460,7 +460,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 v.getTxtView().setText(Integer.toString(v.getLearncounter()));
 
                 if (v.learned()) {
-                    mFFTRealTimeAnalyzer.addCluster(v.getName(), v.getMaxima());
+                    //mFFTRealTimeAnalyzer.addCluster(v.getName(), v.getMaxima());
                     stopLearning();
                 }
                 return true;

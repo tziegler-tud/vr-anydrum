@@ -24,6 +24,7 @@ public class VirtualInstrument {
         this.maximaList = new LinkedList<>();
 
         learncounter = 10;
+        this.learned = false;
 
         this.txtView = null;
     }
