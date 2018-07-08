@@ -153,7 +153,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
         if (this.calibrating) {
             calIndex += 1;
-            if (calIndex >= 1000) {
+            if (calIndex >= 1500) {
                 stopCalibration();
             }
         } else {

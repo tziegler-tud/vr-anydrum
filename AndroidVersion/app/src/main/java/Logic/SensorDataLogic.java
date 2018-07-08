@@ -22,7 +22,7 @@ public class SensorDataLogic {
     public boolean detectKnocks(int currentVal, int prevVal){
 
             if(currentVal>prevVal+5*this.stdDev){
-                System.out.println(currentVal+"/"+prevVal+"/"+stdDev);
+
                 return true;
             }
         return false;
