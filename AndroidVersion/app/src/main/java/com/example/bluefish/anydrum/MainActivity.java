@@ -342,10 +342,13 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
             switch (name) {
                 case "Hi-Hat":
                     playSound(EnumDrum.HIHAT);
+                    break;
                 case "Snare":
                     playSound(EnumDrum.SNARE);
+                    break;
                 case "Base":
                     playSound(EnumDrum.BASS);
+                    break;
             }
         }
 
@@ -458,6 +461,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
                 if (v.learned()) {
                     mFFTRealTimeAnalyzer.addCluster(v.getName(), v.getMaxima());
+                    stopLearning();
                 }
                 return true;
             }
