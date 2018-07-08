@@ -185,8 +185,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         TextView textView3 = (TextView) findViewById(R.id.timeBass);
 
         v1.setTxtView(textView1);
-        v1.setTxtView(textView2);
-        v1.setTxtView(textView3);
+        v2.setTxtView(textView2);
+        v3.setTxtView(textView3);
 
 
         instruments.add(v1);
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 //            dbscan.evaluatePoint(cp);
 
 
-    }
+
     private void playSound(EnumDrum  drumsound)
     {
         //playsound
