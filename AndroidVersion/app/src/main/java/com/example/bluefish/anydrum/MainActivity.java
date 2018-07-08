@@ -334,7 +334,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private void match(){
         if(learning){
 
-            if(learnPattern(currentInstrument,arduinoSensorManager.getLastKnock())){
+            if(currentInstrument)
+                if(learnPattern(currentInstrument,arduinoSensorManager.getLastKnock())){
 
             }
             else {
