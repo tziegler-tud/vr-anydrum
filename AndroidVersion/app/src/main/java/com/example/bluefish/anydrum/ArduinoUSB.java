@@ -22,6 +22,7 @@ import com.hoho.android.usbserial.util.HexDump;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import  org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
+import org.w3c.dom.Text;
 
 
 import java.nio.ByteBuffer;
@@ -164,17 +165,15 @@ public  class ArduinoUSB {
                     String[] splitted = test.split(",");
 
 
+                    TextView help = (TextView) refMain.findViewById(R.id.timeSnare);
 
-
-                    new SerialStringToIntTask().execute(splitted);
-
-
-
-
-                    Integer[] integerObjArray = new Integer[2];
-                    integerObjArray[0] = lastPacket.left;
-                    integerObjArray[1] = lastPacket.right;
-                    new SerialTask().execute(integerObjArray);
+                    if(help.getText().toString().equals("1") == false) {
+                        new SerialStringToIntTask().execute(splitted);
+                        Integer[] integerObjArray = new Integer[2];
+                        integerObjArray[0] = lastPacket.left;
+                        integerObjArray[1] = lastPacket.right;
+                        new SerialTask().execute(integerObjArray);
+                    }
 
                 }
 
