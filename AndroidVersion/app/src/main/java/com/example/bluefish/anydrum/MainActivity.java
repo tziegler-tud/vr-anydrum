@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private boolean learning;
     private boolean matchingEnabled;
 
-    private List<VirtualInstrument> instruments = new LinkedList<>();
+    private List<VirtualInstrument> instruments;
 
     private VirtualInstrument currentInstrument;
 
@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instruments = new LinkedList<>();
         viewInformation = (TextView) findViewById(R.id.viewInfo);
         setContentView(R.layout.activity_main);
 

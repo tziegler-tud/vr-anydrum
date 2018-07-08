@@ -23,7 +23,7 @@ public class VirtualInstrument {
         this.maxima = new LinkedList<>();
         this.maximaList = new LinkedList<>();
 
-        learncounter = 10;
+        learncounter = 3;
 
         this.txtView = null;
     }
@@ -53,13 +53,13 @@ public class VirtualInstrument {
         }
         else {
             this.learned = true;
-            int[] sum = {0,0,0,0};
+            int[] sum = new int[]{0,0,0,0};
             for(List<Integer> int_list:maximaList){
-                for(int i=0;i<4;i++){
+                for(int i=0;i<sum.length;i++){
                     sum[i] += int_list.get(i);
                 }
             }
-            for(int i=0;i<4;i++){
+            for(int i=0;i<sum.length;i++){
                 maxima.add(sum[i]/4);
             }
             return true;
