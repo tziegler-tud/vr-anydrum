@@ -10,10 +10,7 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
-import com.example.bluefish.anydrum.ArduinoPacket;
-import com.example.bluefish.anydrum.MainActivity;
-import com.example.bluefish.anydrum.R;
-import com.example.bluefish.anydrum.SensorActivity;
+import com.example.bluefish.anydrum.*;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import java.util.Vector;
@@ -39,6 +36,8 @@ public class ArduinoSensorManager implements SensorEventListener {
 
     private double[] lastKnock = new double[knockLength+2];
 
+    private ArduinoUSB arduinoUSB;
+
     private boolean currentKnock;
     private boolean autoUnlock;
     private boolean knockDetectedState;
@@ -60,6 +59,8 @@ public class ArduinoSensorManager implements SensorEventListener {
         this.refMain = refMain;
         this.mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         this.autoUnlock = autoUnlock;
+
+        this.arduinoUSB = refMain.getArduinoUSB();
 
 
         this.mSensorDataLogic = new SensorDataLogic(new double[]{0,0,0});
@@ -127,10 +128,8 @@ public class ArduinoSensorManager implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Vector<ArduinoPacket> list =  refMain.getArduinoUSB().sensorDataRaw;
-        if(list.size() >0)
-         dataInput(list.get(list.size()-1));
-    }
+        ArduinoPacket pack =  arduinoUSB.lastPacket;
+        this.dataInput(packet);
 
     public void dataInput(ArduinoPacket packet) {
 

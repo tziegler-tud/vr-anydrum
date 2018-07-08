@@ -178,12 +178,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     }
 
     public void updateChart() {
-        long time = System.currentTimeMillis();
-            if(time-oldSystemTime >= updateTimeMS)
-            {
-                oldSystemTime = time;
+
             this.chart.appendData(this.arduinoSensorManager.getBufferL(), this.arduinoSensorManager.getBufferR());
-            }
 
     }
 
