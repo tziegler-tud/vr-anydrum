@@ -1,4 +1,4 @@
-/*
+
 
 package com.example.bluefish.anydrum;
 
@@ -18,7 +18,7 @@ public class LearningTimer {
 
     public LearningTimer(final TextView refTextView, int seconds, final MainActivity refMain, final EnumDrum enumDrum)
     {
-        final int startACL = refMain.getAclSensor().getListOfSensorDataFiltered().size();
+//        final int startACL = refMain.getAclSensor().getListOfSensorDataFiltered().size();
         final int startArduinoL = refMain.arduinoUSB.getListOfSensorDataArduinoL().size();
         final int startArduinoR = refMain.arduinoUSB.getListOfSensorDataArduinoR().size();
 
@@ -35,8 +35,8 @@ public class LearningTimer {
                 switch (enumDrum)
                 {
                     case HIHAT:
-                        listSensorData=refMain.getAclSensor().getListOfSensorDataFiltered();
-                        sizeOfStart = startACL;
+//                        listSensorData=refMain.getAclSensor().getListOfSensorDataFiltered();
+//                        sizeOfStart = startACL;
                         break;
                     case SNARE:
                         listSensorData=refMain.arduinoUSB.getListOfSensorDataArduinoL();
@@ -81,4 +81,3 @@ public class LearningTimer {
     }
 }
 
-*/

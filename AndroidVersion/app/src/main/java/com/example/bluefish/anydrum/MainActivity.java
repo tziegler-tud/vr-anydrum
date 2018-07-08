@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         learning=false;
         TextView textView = (TextView) findViewById(R.id.ViewLearningState);
         textView.setText("Learning requiered");
-        /*
+
         playSnareDrum.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         );
         btnStart.setOnClickListener(  new View.OnClickListener() {
             public void onClick(View v) {
-                boolean useClusters = aclSensor.isStartUsingClusters()  ? false : true;
-                aclSensor.setStartUsingClusters(useClusters);
+                boolean useClusters = arduinoUSB.isStartUsingClusters()  ? false : true;
+//                aclSensor.setStartUsingClusters(useClusters);
                 arduinoUSB.setStartUsingClusters(useClusters);
 
                 if(useClusters)
@@ -143,12 +143,12 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     btnStart.setBackgroundColor(0xffeeeeee);
 
             }
-        });*/
-        btnStart.setOnClickListener(  new View.OnClickListener() {
-                                          public void onClick(View v) {
-                                              startLearning();
-                                          }
-                                      });
+        });
+//        btnStart.setOnClickListener(  new View.OnClickListener() {
+//                                          public void onClick(View v) {
+//                                              startLearning();
+//                                          }
+//                                      });
 
 
 

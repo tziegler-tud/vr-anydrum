@@ -52,6 +52,9 @@ public  class ArduinoUSB {
     private FilterHelper filter;
     private double stepX = 1;
     private boolean startUsingClusters=false;
+    public boolean isStartUsingClusters() {
+        return startUsingClusters;
+    }
     public void setStartUsingClusters(boolean startUsingClusters) {
         this.startUsingClusters = startUsingClusters;
     }
@@ -149,16 +152,6 @@ public  class ArduinoUSB {
             {
             int left = 0, right = 0;
 
-//            byte[] dest = new byte[DEFAULT_READ_BUFFER_SIZE];
-//                int readAmt = Math.min(dest.length, data.length);
-//            int bytesRead = usbConnection.bulkTransfer(device.getInterface(0).getEndpoint(0), data, readAmt, 100);
-//            System.arraycopy(data, 0, dest, 0, bytesRead);
-//                Byte[] byteObjects = new Byte[data.length];
-//                int i=0;
-//                for(byte b: data)
-//                    byteObjects[i++] = b;
-//            new SerialStringToIntTask().execute(byteObjects);
-
                 String test = new String(data, charset);
 //                System.out.println("packet: "+test );
 //                System.out.flush();
@@ -174,34 +167,15 @@ public  class ArduinoUSB {
 
 
                     new SerialStringToIntTask().execute(splitted);
-//                    if (splitted.length < 2) {
-//                        strleft = "0";
-//                        strright = "0";
-//                    } else {
-//                        strleft = splitted[0];
-//                        strright = splitted[1];
-//                    }
-//                    try{
-//                        left = Integer.valueOf(strleft);
-//                    }
-//                    catch (NumberFormatException e)
-//                    {
-//                        left = 0;
-//                    }
-//
-//                    try{
-//                        right = Integer.valueOf(strright);
-//                    }
-//                    catch (NumberFormatException e)
-//                    {
-//                        right = 0;
-//                    }
-//
-//
-//                    ArduinoPacket packet = new ArduinoPacket(left, right);
-//                    if (sensorDataRaw.size() >= 10000)
-//                        sensorDataRaw.clear();
-//                    sensorDataRaw.add(packet);
+
+
+
+
+                    Integer[] integerObjArray = new Integer[2];
+                    integerObjArray[0] = lastPacket.left;
+                    integerObjArray[1] = lastPacket.right;
+                    new SerialTask().execute(integerObjArray);
+
                 }
 
 
@@ -212,10 +186,10 @@ public  class ArduinoUSB {
 //            if (sensorDataRaw.size() != 10000)
 //                sensorDataRaw.clear();
 //            sensorDataRaw.add(packet);
-
-            Integer[] integerObjArray = new Integer[2];
-            integerObjArray[0] = left;
-            integerObjArray[1] = right;
+//
+//            Integer[] integerObjArray = new Integer[2];
+//            integerObjArray[0] = left;
+//            integerObjArray[1] = right;
 //                    new SerialTask().execute(integerObjArray);
 
 
