@@ -9,32 +9,23 @@
         tools:layout_editor_absoluteY="81dp" tools:layout_editor_absoluteX="0dp">
 
     <com.jjoe64.graphview.GraphView
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:id="@+id/graph"
             android:visibility="visible"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toTopOf="@+id/viewInfo" android:layout_marginTop="39dp"
-            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="35dp"
-            app:layout_constraintTop_toTopOf="@+id/sensorValue"
-            app:layout_constraintVertical_bias="0.0" tools:layout_constraintRight_creator="1"
-            android:layout_height="250dp"/>
+            android:layout_height="172dp"
+            tools:layout_editor_absoluteY="112dp" tools:layout_editor_absoluteX="67dp"/>
     <TextView
             android:id="@+id/sensorValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
-            tools:layout_constraintTop_creator="1" android:layout_marginTop="6dp"
-            tools:layout_constraintLeft_creator="1" app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            tools:layout_editor_absoluteY="6dp" tools:layout_editor_absoluteX="0dp"/>
     <Button
             android:text="Snare Drum"
             android:layout_width="120dp"
             android:layout_height="0dp"
             android:id="@+id/btnSnareDrum"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="@+id/btnHiHat"
-            app:layout_constraintRight_toRightOf="parent" tools:layout_constraintLeft_creator="1"
-            app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintTop_toTopOf="@+id/btnHiHat"/>
+            tools:layout_editor_absoluteY="425dp" tools:layout_editor_absoluteX="132dp"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline" app:layout_constraintGuide_begin="97dp"
                                           android:orientation="horizontal"
@@ -45,109 +36,81 @@
             android:layout_height="50dp"
             android:id="@+id/btnStart"
             android:layout_marginStart="16dp"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toTopOf="@+id/btnSnareDrum" android:layout_marginTop="43dp"
-            app:layout_constraintTop_toBottomOf="@+id/ViewLearningState" tools:layout_constraintLeft_creator="1"
-            android:layout_marginBottom="43dp" app:layout_constraintLeft_toLeftOf="@+id/btnSnareDrum"
-            android:layout_marginLeft="16dp" app:layout_constraintVertical_bias="1.0"/>
+            tools:layout_editor_absoluteY="332dp" tools:layout_editor_absoluteX="148dp"/>
     <Button
             android:text="bass drum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/btnBassDrum"
             android:layout_marginEnd="9dp"
-            tools:layout_constraintRight_creator="1" tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="38dp" android:layout_marginRight="9dp"/>
+            tools:layout_editor_absoluteY="425dp" tools:layout_editor_absoluteX="274dp"/>
     <Button
             android:text="hihat drum"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:id="@+id/btnHiHat"
             android:layout_marginStart="12dp"
-            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="38dp"
-            app:layout_constraintLeft_toLeftOf="parent" android:layout_marginLeft="12dp"/>
+            tools:layout_editor_absoluteY="425dp" tools:layout_editor_absoluteX="12dp"/>
     <TextView
             android:text="learning time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timeHiHat"
             android:layout_marginEnd="3dp"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            app:layout_constraintRight_toRightOf="@+id/btnHiHat" android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnHiHat" android:layout_marginRight="3dp"/>
+            tools:layout_editor_absoluteY="478dp" tools:layout_editor_absoluteX="38dp"/>
     <TextView
             android:text="learning time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timeSnare"
             android:layout_marginEnd="10dp"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            app:layout_constraintRight_toRightOf="@+id/btnSnareDrum" android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnSnareDrum" android:layout_marginRight="10dp"/>
+            tools:layout_editor_absoluteY="477dp" tools:layout_editor_absoluteX="162dp"/>
     <TextView
             android:text="learning time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timeBass"
             android:layout_marginEnd="12dp"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            app:layout_constraintRight_toRightOf="parent" android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnBassDrum" android:layout_marginRight="12dp"/>
+            tools:layout_editor_absoluteY="478dp" tools:layout_editor_absoluteX="292dp"/>
     <TextView
             android:text="deviation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/viewStdDeviation"
             android:layout_marginStart="54dp"
-            tools:layout_constraintTop_creator="1" android:layout_marginTop="16dp"
-            tools:layout_constraintLeft_creator="1" app:layout_constraintLeft_toLeftOf="@+id/graph"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginLeft="54dp"/>
+            tools:layout_editor_absoluteY="16dp" tools:layout_editor_absoluteX="54dp"/>
     <TextView
             android:text="count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/viewSensorValuesCount"
             android:layout_marginStart="38dp"
-            tools:layout_constraintTop_creator="1" android:layout_marginTop="16dp"
-            tools:layout_constraintLeft_creator="1" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/viewStdDeviation" android:layout_marginLeft="38dp"/>
+            tools:layout_editor_absoluteY="16dp" tools:layout_editor_absoluteX="149dp"/>
     <TextView
             android:layout_width="0dp"
             android:layout_height="43dp"
             android:id="@+id/viewInfo"
             android:layout_marginStart="16dp"
-            app:layout_constraintRight_toLeftOf="@+id/viewKnockDetected" tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="21dp" tools:layout_constraintLeft_creator="1" android:layout_marginBottom="161dp"
-            app:layout_constraintLeft_toLeftOf="parent" android:layout_marginLeft="16dp"
-            android:layout_marginRight="21dp"/>
+            android:layout_marginEnd="21dp"
+            tools:layout_editor_absoluteY="307dp" tools:layout_editor_absoluteX="16dp"/>
     <TextView
             android:text="-"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/viewKnockDetected" android:layout_marginStart="38dp"
-            tools:layout_constraintTop_creator="1" android:layout_marginTop="128dp"
-            app:layout_constraintTop_toBottomOf="@+id/graph" tools:layout_constraintLeft_creator="1"
-            tools:layout_editor_absoluteX="16dp"/>
+            tools:layout_editor_absoluteX="16dp" tools:layout_editor_absoluteY="423dp"/>
     <TextView
             android:text="-"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/viewLockState"
             android:layout_marginEnd="56dp"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toBottomOf="@+id/graph"
-            android:layout_marginRight="61dp" android:layout_marginTop="78dp"
-            app:layout_constraintLeft_toRightOf="@+id/btnStart" android:layout_marginLeft="8dp"/>
+            tools:layout_editor_absoluteY="373dp" tools:layout_editor_absoluteX="280dp"/>
     <TextView
             android:text="-"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ViewLearningState"
-            tools:layout_constraintTop_creator="1" tools:layout_constraintRight_creator="1"
-            app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toBottomOf="@+id/graph"
-            tools:layout_constraintLeft_creator="1" app:layout_constraintLeft_toLeftOf="parent"/>
+            tools:layout_editor_absoluteY="295dp" tools:layout_editor_absoluteX="190dp"/>
 
 
 </android.support.constraint.ConstraintLayout>
