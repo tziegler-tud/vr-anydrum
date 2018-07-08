@@ -465,6 +465,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 System.out.println("im here!");
                 v.setLearned(v.learn(mFFTRealTimeAnalyzer.calcMaxima(d)));
                 System.out.println("cp2");
+                System.out.println(Boolean.toString(v.learned()));
 
                 v.getTxtView().setText(Integer.toString(v.getLearncounter()));
                 System.out.println("cp3");
