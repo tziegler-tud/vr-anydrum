@@ -135,8 +135,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/viewKnockDetected" android:layout_marginStart="4dp"
             tools:layout_constraintBottom_creator="1" app:layout_constraintBottom_toBottomOf="@+id/btnHiHat"
-            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="33dp"
-            app:layout_constraintLeft_toLeftOf="@+id/btnHiHat" android:layout_marginLeft="4dp"/>
+            tools:layout_constraintLeft_creator="1" android:layout_marginBottom="65dp"
+            app:layout_constraintLeft_toLeftOf="@+id/btnHiHat" android:layout_marginLeft="21dp"/>
     <TextView
             android:text="-"
             android:layout_width="wrap_content"

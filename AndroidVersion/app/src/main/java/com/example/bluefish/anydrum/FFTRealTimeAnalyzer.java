@@ -54,6 +54,7 @@ public class FFTRealTimeAnalyzer {
                 if(e<error){
                     error = e;
                     name = names.get(i);
+                    index = i;
                 }
             }
             catch (IndexOutOfBoundsException e){

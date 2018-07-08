@@ -1,5 +1,7 @@
 package com.example.bluefish.anydrum;
 
+import android.widget.TextView;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +14,8 @@ public class VirtualInstrument {
     private boolean learned;
     private int learncounter;
 
+    private TextView txtView;
+
     public VirtualInstrument(String name){
         this.name = name;
 
@@ -20,6 +24,8 @@ public class VirtualInstrument {
         this.maximaList = new LinkedList<>();
 
         learncounter = 10;
+
+        this.txtView = null;
     }
 
 
@@ -81,6 +87,18 @@ public class VirtualInstrument {
 
     public boolean learned(){
         return this.learned;
+    }
+
+    public int getLearncounter(){
+        return learncounter;
+    }
+
+    public void setTxtView(TextView t){
+        txtView = t;
+    }
+
+    public TextView getTxtView(){
+        return this.txtView;
     }
 
 
