@@ -135,7 +135,8 @@ public class ArduinoSensorManager implements SensorEventListener {
     public void dataInput(ArduinoPacket packet) {
 
 
-        int dataL =  packet.left;
+        int data =  packet.left;
+        int dataL = data - (int) statistics[3];
         //int dataR = packet.right;
 
         //System.out.println("zAcl: " + sensorEvent.values[2]);
