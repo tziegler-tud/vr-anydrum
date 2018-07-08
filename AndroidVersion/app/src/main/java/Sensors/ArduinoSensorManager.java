@@ -55,6 +55,8 @@ public class ArduinoSensorManager implements SensorEventListener {
      */
     public ArduinoSensorManager(SensorActivity refMain, Context mContext, boolean autoUnlock){
 
+        this.statistics = new double[3];
+
         this.mContext = mContext;
         this.refMain = refMain;
         this.mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
