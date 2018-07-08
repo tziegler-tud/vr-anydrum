@@ -50,6 +50,7 @@ public class VirtualInstrument {
         if(learncounter>0){
             this.maximaList.add(data);
             --learncounter;
+            System.out.println("cp-A: "+learncounter);
 
             return false;
         }
