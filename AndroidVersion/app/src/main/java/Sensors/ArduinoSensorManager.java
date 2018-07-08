@@ -129,7 +129,8 @@ public class ArduinoSensorManager implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         ArduinoPacket pack =  arduinoUSB.lastPacket;
-        this.dataInput(packet);
+        dataInput(pack);
+    }
 
     public void dataInput(ArduinoPacket packet) {
 
@@ -144,7 +145,7 @@ public class ArduinoSensorManager implements SensorEventListener {
 
         if (this.calibrating) {
             calIndex += 1;
-            if (calIndex >= 200) {
+            if (calIndex >= 1000) {
                 stopCalibration();
             }
         } else {
