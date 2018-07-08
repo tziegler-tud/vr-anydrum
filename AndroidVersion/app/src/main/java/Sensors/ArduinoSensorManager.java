@@ -34,7 +34,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     private boolean calibrating;
     private int calIndex;
 
-    private int knockLength = 62;
+    private int knockLength = 300;
 
 
     private double[] lastKnock = new double[knockLength+2];
@@ -44,8 +44,8 @@ public class ArduinoSensorManager implements SensorEventListener {
     private boolean knockDetectedState;
     private boolean lockState;
     private int lockedCount;
-    private CircularFifoQueue<Integer> bufferL = new CircularFifoQueue<>(200);
-    private CircularFifoQueue<Integer> bufferR = new CircularFifoQueue<>(200);
+    private CircularFifoQueue<Integer> bufferL = new CircularFifoQueue<>(1000);
+    private CircularFifoQueue<Integer> bufferR = new CircularFifoQueue<>(1000);
 
     /**
      * Invokes new AccelerationSensorManager
