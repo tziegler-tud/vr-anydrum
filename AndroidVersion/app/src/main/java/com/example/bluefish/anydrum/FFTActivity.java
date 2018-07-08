@@ -70,8 +70,8 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
                 fftChart.appendData(data);
                 TextView text = (TextView) findViewById(R.id.viewMaxima);
-                mFTR.addCluster("test",arduinoSensorManager.getLastKnock());
-                text.setText(mFTR.getMaxima("test").toString());
+//                mFTR.addCluster("test",arduinoSensorManager.getLastKnock());
+//                text.setText(mFTR.getMaxima("test").toString());
 
 
 

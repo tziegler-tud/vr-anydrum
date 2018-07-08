@@ -53,8 +53,11 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private FFTRealTimeAnalyzer mFFTRealTimeAnalyzer;
 
     private boolean learning;
+    private boolean matchingEnabled;
 
     private List<VirtualInstrument> instruments = new LinkedList<>();
+
+    private VirtualInstrument currentInstrument;
 
 
     public DBSCAN getDbscan() {
@@ -112,7 +115,10 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     public void onClick(View v) {
                         PdBase.sendBang("bangSnareDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
-                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
+
+//                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 2, refMain, EnumDrum.SNARE);
+                        startLearning(instruments.get(1));
+
                     }
                 }
         );
@@ -121,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     public void onClick(View v) {
                         PdBase.sendBang("bangBassDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeBass), 10, refMain, EnumDrum.BASS);
-                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 5, refMain, EnumDrum.BASS);
+//                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 5, refMain, EnumDrum.BASS);
+                        startLearning(instruments.get(2));
                     }
                 }
         );
@@ -130,20 +137,22 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     public void onClick(View v) {
                         PdBase.sendBang("bangHiHatDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain, EnumDrum.HIHAT);
-                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 5, refMain, EnumDrum.HIHAT);
+//                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 5, refMain, EnumDrum.HIHAT);
+                        startLearning(instruments.get(0));
                     }
                 }
         );
         btnStart.setOnClickListener(  new View.OnClickListener() {
             public void onClick(View v) {
-                boolean useClusters = arduinoUSB.isStartUsingClusters()  ? false : true;
-//                aclSensor.setStartUsingClusters(useClusters);
-                arduinoUSB.setStartUsingClusters(useClusters);
-
-                if(useClusters)
-                    btnStart.setBackgroundColor(0xff00bb00);
-                else
-                    btnStart.setBackgroundColor(0xffeeeeee);
+//                boolean useClusters = arduinoUSB.isStartUsingClusters()  ? false : true;
+////                aclSensor.setStartUsingClusters(useClusters);
+//                arduinoUSB.setStartUsingClusters(useClusters);
+//
+//                if(useClusters)
+//                    btnStart.setBackgroundColor(0xff00bb00);
+//                else
+//                    btnStart.setBackgroundColor(0xffeeeeee);
+                toggleMatching();
 
             }
         });
@@ -161,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         VirtualInstrument v1,v2,v3;
 
         v1 = new VirtualInstrument("Hi-Hat");
-        v2 = new VirtualInstrument("Base");
-        v3 = new VirtualInstrument("TomTom");
+        v2 = new VirtualInstrument("Snare");
+        v3 = new VirtualInstrument("Base");
 
         instruments.add(v1);
         instruments.add(v2);
@@ -205,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         this.mFFTRealTimeAnalyzer = new FFTRealTimeAnalyzer();
 //        this.acSensorManager = new AccelerationSensorManager(this,this, true);
         initInstruments();
+        this.matchingEnabled = false;
 
         arduinoUSB = new ArduinoUSB(this);
         this.arduinoSensorManager = new ArduinoSensorManager(this,this,true);
@@ -302,23 +312,27 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     }
 
     private void match(){
-        /*if(learning){
+        if(learning){
 
-            if(learnPattern(arduinoSensorManager.getLastKnock())){
+            if(learnPattern(currentInstrument,arduinoSensorManager.getLastKnock())){
 
             }
             else {
                 stopLearning();
             }
         }
-    */
+        if(matchingEnabled){
+            mFFTRealTimeAnalyzer.matchData(arduinoSensorManager.getLastKnock());
+        }
 
+        /*
         List<Integer> list = mFFTRealTimeAnalyzer.calcMaxima(arduinoSensorManager.getLastKnock());
         ClusterableDoublePoint cp = new ClusterableDoublePoint(convertToDoubleArray(list),4);
         if(counter!=null && counter.isLearned == false)
              counter.reduceCounter(cp);
-        if(arduinoUSB.isStartUsingClusters())
-            dbscan.evaluatePoint(cp);
+        */
+//        if(arduinoUSB.isStartUsingClusters())
+//            dbscan.evaluatePoint(cp);
 
     }
 
@@ -360,13 +374,11 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     }
 
-    private void startLearning(){
+    private void startLearning(VirtualInstrument v){
         TextView textView = (TextView) findViewById(R.id.ViewLearningState);
-        textView.setText("Learning... Waiting for Knock");
-        mFFTRealTimeAnalyzer.clearCluster();
-        for(VirtualInstrument v:instruments){
-            v.setLearned(false);
-        }
+        textView.setText("Learning...");
+        v.forget();
+        currentInstrument = v;
         this.learning=true;
 
 
@@ -376,25 +388,32 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         TextView textView = (TextView) findViewById(R.id.ViewLearningState);
         textView.setText("learning completed!");
         this.learning=false;
+        this.currentInstrument = null;
 
     }
 
     /* returns true if succesfull, false if failed */
-    private boolean learnPattern(double[] d) {
+    private boolean learnPattern(VirtualInstrument v, double[] d) {
 
-        for (VirtualInstrument v : instruments) {
+        if (v != null) {
+
+
             if (!v.learned()) {
-                mFFTRealTimeAnalyzer.addCluster(v.getName(), d);
-                v.setLearned(true);
-                System.out.println("instrument " + v.getName() + " learned");
+                v.setLearned(v.learn(mFFTRealTimeAnalyzer.calcMaxima(d)));
+                if (v.learned()) {
+                    mFFTRealTimeAnalyzer.addCluster(v.getName(), v.getMaxima());
+                }
                 return true;
             }
 
-
+            System.out.println("all instruments learned, returning false...");
+            return false;
         }
-        System.out.println("all instruments learned, returning false...");
-        return false;
+        else {
+            return false;
+        }
     }
+
 
 
     @Override
@@ -409,6 +428,15 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     {
         super.onPause();
         PdAudio.stopAudio();
+    }
+
+    private void toggleMatching(){
+        if(this.matchingEnabled){
+            this.matchingEnabled=false;
+        }
+        else{
+            this.matchingEnabled=true;
+        }
     }
 
     public void updateArduino(ArduinoPacket packet){
