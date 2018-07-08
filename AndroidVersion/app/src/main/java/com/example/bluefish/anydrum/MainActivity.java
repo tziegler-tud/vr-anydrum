@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private void match(){
         if(learning){
 
-            if(currentInstrument)
+            if(currentInstrument != null && arduinoSensorManager.getLastKnock() != null)
                 if(learnPattern(currentInstrument,arduinoSensorManager.getLastKnock())){
 
             }
@@ -462,13 +462,19 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
 
             if (!v.learned()) {
+                System.out.println("im here!");
                 v.setLearned(v.learn(mFFTRealTimeAnalyzer.calcMaxima(d)));
+                System.out.println("cp2");
 
                 v.getTxtView().setText(Integer.toString(v.getLearncounter()));
-
+                System.out.println("cp3");
                 if (v.learned()) {
+
+                    System.out.println("cp4");
                     mFFTRealTimeAnalyzer.addCluster(v.getName(), v.getMaxima());
+                    System.out.println("cp5");
                     stopLearning();
+                    System.out.println("cp6");
                 }
                 return true;
             }
