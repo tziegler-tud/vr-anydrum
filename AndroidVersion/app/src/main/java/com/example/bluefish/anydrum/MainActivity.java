@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 //        LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());//getListOfSensorData
         this.chart = new LineChart(this, (GraphView) findViewById(R.id.graph));
 
-        this.chart.setManual(-1,1,0,200);
+        this.chart.setManual(-1,1,0,1000);
 
         this.chart.setScalingY();
     }
