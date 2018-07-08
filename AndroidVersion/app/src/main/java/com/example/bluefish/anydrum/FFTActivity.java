@@ -106,14 +106,14 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
     private void createCharts()
     {
         this.dataChart = new LineChart(this, (GraphView) findViewById(R.id.graph));
-        this.dataChart.setManual(-1,1,0,64);
+        this.dataChart.setManual(-1,1,0,500);
 
         this.fftChart = new LineChart(this, (GraphView) findViewById(R.id.graphViewFFT));
         //fftChart.setManual(-5,5,0,64);
         fftChart.setScaling();
         fftChart.setXAxisBoundsManual(true);
         fftChart.setMinX(0);
-        fftChart.setMaxX(32);
+        fftChart.setMaxX(250);
     }
 
     public void updateChart(){

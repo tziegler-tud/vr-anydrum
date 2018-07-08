@@ -31,10 +31,10 @@ public class ArduinoSensorManager implements SensorEventListener {
     private boolean calibrating;
     private int calIndex;
 
-    private int knockLength = 300;
+    private int knockLength = 115;
 
 
-    private double[] lastKnock = new double[knockLength+2];
+    private double[] lastKnock = new double[knockLength+13];
 
     private ArduinoUSB arduinoUSB;
 
@@ -168,6 +168,8 @@ public class ArduinoSensorManager implements SensorEventListener {
                 lockedCount += 1;
                 if(lockedCount >= knockLength){
                     this.knockCompleted();
+                }
+                if(lockedCount >= knockLength+300) {
                     privateUnlock();
                     this.noKnock();
                 }
