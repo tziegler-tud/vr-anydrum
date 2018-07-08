@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
 //                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 2, refMain, EnumDrum.SNARE);
                         startLearning(instruments.get(1));
+                        playSnareDrum.setBackgroundColor(0xff00bb00);
 
                     }
                 }
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                         PdBase.sendBang("bangBassDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeBass), 10, refMain, EnumDrum.BASS);
                         startLearning(instruments.get(2));
+                        playBassDrum.setBackgroundColor(0xff00bb00);
                     }
                 }
         );
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                         PdBase.sendBang("bangHiHatDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain, EnumDrum.HIHAT);
                         startLearning(instruments.get(0));
+                        playHiHatDrum.setBackgroundColor(0xff00bb00);
 
 
                     }
@@ -153,6 +156,10 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 //                else
 //                    btnStart.setBackgroundColor(0xffeeeeee);
                 toggleMatching();
+                if(matchingEnabled)
+                    btnStart.setBackgroundColor(0xff00bb00);
+                else
+                    btnStart.setBackgroundColor(0xffeeeeee);
 
             }
         });
@@ -172,6 +179,15 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         v1 = new VirtualInstrument("Hi-Hat");
         v2 = new VirtualInstrument("Snare");
         v3 = new VirtualInstrument("Base");
+
+        TextView textView1 = (TextView) findViewById(R.id.timeHiHat);
+        TextView textView2 = (TextView) findViewById(R.id.timeSnare);
+        TextView textView3 = (TextView) findViewById(R.id.timeBass);
+
+        v1.setTxtView(textView1);
+        v1.setTxtView(textView2);
+        v1.setTxtView(textView3);
+
 
         instruments.add(v1);
         instruments.add(v2);
@@ -321,8 +337,18 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 stopLearning();
             }
         }
-        if(matchingEnabled){
-            mFFTRealTimeAnalyzer.matchData(arduinoSensorManager.getLastKnock());
+        if(matchingEnabled) {
+            String name = mFFTRealTimeAnalyzer.matchData(arduinoSensorManager.getLastKnock());
+            switch (name) {
+                case "Hi-Hat":
+                    playSound(EnumDrum.HIHAT);
+                case "Snare":
+                    playSound(EnumDrum.SNARE);
+                case "Base":
+                    playSound(EnumDrum.BASS);
+            }
+        }
+
         }
 
         /*
@@ -338,6 +364,23 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
 
     }
+    private void playSound(EnumDrum  drumsound)
+    {
+        //playsound
+        switch (drumsound)
+        {
+            case HIHAT:
+                PdBase.sendBang("bangHiHatDrum");
+                break;
+            case SNARE:
+                PdBase.sendBang("bangSnareDrum");
+                break;
+            case BASS:
+                PdBase.sendBang("bangBassDrum");
+                break;
+        }
+    }
+
 
     private double[] convertToDoubleArray(List<Integer> list){
         int size = list.size();
@@ -381,6 +424,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         TextView textView = (TextView) findViewById(R.id.ViewLearningState);
         textView.setText("Learning...");
         v.forget();
+
         currentInstrument = v;
         this.learning=true;
 
@@ -390,6 +434,12 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private void stopLearning(){
         TextView textView = (TextView) findViewById(R.id.ViewLearningState);
         textView.setText("learning completed!");
+        Button btn = (Button) findViewById(R.id.btnSnareDrum);
+        btn.setBackgroundColor(0xffeeeeee);
+        btn = (Button) findViewById(R.id.btnHiHat);
+        btn.setBackgroundColor(0xffeeeeee);
+        btn = (Button) findViewById(R.id.btnBassDrum);
+        btn.setBackgroundColor(0xffeeeeee);
         this.learning=false;
         this.currentInstrument = null;
 
@@ -403,6 +453,9 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
             if (!v.learned()) {
                 v.setLearned(v.learn(mFFTRealTimeAnalyzer.calcMaxima(d)));
+
+                v.getTxtView().setText(Integer.toString(v.getLearncounter()));
+
                 if (v.learned()) {
                     mFFTRealTimeAnalyzer.addCluster(v.getName(), v.getMaxima());
                 }
