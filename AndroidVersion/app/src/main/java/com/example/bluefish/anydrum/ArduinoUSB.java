@@ -23,17 +23,21 @@ import com.hoho.android.usbserial.util.HexDump;
 import  org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Vector;
 
 
 public  class ArduinoUSB {
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+    public static final int DEFAULT_READ_BUFFER_SIZE = 16 * 1024;
+    public final Charset charset = Charset.forName("UTF-8");
 
     private MainActivity refMain;
     private TextView viewInformation;
     private long oldSystemTime=0;
-    private long updateTimeMS = 0;
+    private long updateTimeMS = 10;
 
     UsbDevice device;
     UsbDeviceConnection usbConnection;
@@ -109,10 +113,13 @@ public  class ArduinoUSB {
 
         if (serial != null) {
             serial.open();
-            serial.setBaudRate(9600);//115200
+            serial.setBaudRate(9600);//9600  115200
             serial.setDataBits(UsbSerialInterface.DATA_BITS_8);
-            serial.setParity(UsbSerialInterface.PARITY_ODD);
+            serial.setParity(UsbSerialInterface.PARITY_NONE);
+            serial.setStopBits(UsbSerialInterface.STOP_BITS_1);
             serial.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
+            serial.setDTR(false);
+            serial.setRTS(false);
 
             serial.read(mCallback);
             viewInformation.setText("serial set!");
@@ -130,42 +137,93 @@ public  class ArduinoUSB {
         public void onReceivedData(byte[] data)
         {
             int length = data.length;
+//            System.out.println("length: "+length);
+
             long time= System.currentTimeMillis();
 //            if(time-oldSystemTime >= updateTimeMS)
-//            {
-                int left=0, right=0;
-                if(data.length % 4 == 0)
+            {
+            int left = 0, right = 0;
+
+//            byte[] dest = new byte[DEFAULT_READ_BUFFER_SIZE];
+//                int readAmt = Math.min(dest.length, data.length);
+//            int bytesRead = usbConnection.bulkTransfer(device.getInterface(0).getEndpoint(0), data, readAmt, 100);
+//            System.arraycopy(data, 0, dest, 0, bytesRead);
+//                Byte[] byteObjects = new Byte[data.length];
+//                int i=0;
+//                for(byte b: data)
+//                    byteObjects[i++] = b;
+//            new SerialStringToIntTask().execute(byteObjects);
+
+                String test = new String(data, charset);
+//                System.out.println("packet: "+test );
+//                System.out.flush();
+
+//                String[] valuePairs = test.split("#");
+//                for(int pair = 0; pair<valuePairs.length; ++pair)
                 {
-                    if(data.length>1)
-                        left = (data[data.length - 1] << 8) | data[data.length - 2];
-                    if(data.length>3)
-                        right =  (data[data.length - 3] << 8) | data[data.length - 4];
+
+//                    String[] splitted = valuePairs[pair].split(",");
+                    String[] splitted = test.split(",");
 
 
 
 
-                    Integer[] integerObjArray = new Integer[2];
-                    integerObjArray[0] = left;
-                    integerObjArray[1] = right;
-
-                    ArduinoPacket packet = new ArduinoPacket(left,right);
-                    if(sensorDataRaw.size() != 10000)
-                        sensorDataRaw.clear();
-                    sensorDataRaw.add(packet);
-                    refMain.updateArduino(packet);
-                    new SerialTask().execute(integerObjArray);
-
-//                    System.out.println("hlp:43 "+data[data.length - 4]+"  "+data[data.length - 3]);
-
-                    if(data.length > 10000)data = null;
-
+                    new SerialStringToIntTask().execute(splitted);
+//                    if (splitted.length < 2) {
+//                        strleft = "0";
+//                        strright = "0";
+//                    } else {
+//                        strleft = splitted[0];
+//                        strright = splitted[1];
+//                    }
+//                    try{
+//                        left = Integer.valueOf(strleft);
+//                    }
+//                    catch (NumberFormatException e)
+//                    {
+//                        left = 0;
+//                    }
+//
+//                    try{
+//                        right = Integer.valueOf(strright);
+//                    }
+//                    catch (NumberFormatException e)
+//                    {
+//                        right = 0;
+//                    }
+//
+//
+//                    ArduinoPacket packet = new ArduinoPacket(left, right);
+//                    if (sensorDataRaw.size() >= 10000)
+//                        sensorDataRaw.clear();
+//                    sensorDataRaw.add(packet);
                 }
-                oldSystemTime = time;
+
+
+//                    System.out.println("packet: "+test + "  L: "+strleft+"  R: "+strright);
+
+
+//            ArduinoPacket packet = new ArduinoPacket(left, right);
+//            if (sensorDataRaw.size() != 10000)
+//                sensorDataRaw.clear();
+//            sensorDataRaw.add(packet);
+
+            Integer[] integerObjArray = new Integer[2];
+            integerObjArray[0] = left;
+            integerObjArray[1] = right;
+//                    new SerialTask().execute(integerObjArray);
+
+
+            oldSystemTime = time;
 
             }
-//        }
+        }
     };
 
+    // packing an array of 4 bytes to an int, big endian
+    int fromByteArray(byte[] bytes) {
+        return bytes[0] << 24 | (bytes[1] & 0xFF) << 16 | (bytes[2] & 0xFF) << 8 | (bytes[3] & 0xFF);
+    }
 
 
     public class SerialTask extends AsyncTask<Integer[],Integer, Integer> {
@@ -220,21 +278,21 @@ public  class ArduinoUSB {
 
             //left
             if(startUsingClusters && blockfilterValueL>(stdDeviationValueL/10.0))
-        {
-            int amount = 2;
-            int start = listOfSensorDataFilteredL.size()-1 - amount;
-            int end = listOfSensorDataFilteredL.size()-1;
-            List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredL.subList(start, end);//listOfSensorData.subList(start, end);//
+            {
+                int amount = 2;
+                int start = listOfSensorDataFilteredL.size()-1 - amount;
+                int end = listOfSensorDataFilteredL.size()-1;
+                List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredL.subList(start, end);//listOfSensorData.subList(start, end);//
 
-            for(int i=0; i<subPoints.size(); ++i) {
-                if (subPoints.get(i).getPoint()[1] < (stdDeviationValueL / 10.0))
-                    subPoints.get(i).getPoint()[1] = 0;
+                for(int i=0; i<subPoints.size(); ++i) {
+                    if (subPoints.get(i).getPoint()[1] < (stdDeviationValueL / 10.0))
+                        subPoints.get(i).getPoint()[1] = 0;
+                }
+
+                refMain.getDbscan().evaluteList(subPoints);
+
+                // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
             }
-
-            refMain.getDbscan().evaluteList(subPoints);
-
-            // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
-        }
 
             //right
             if(startUsingClusters && blockfilterValueR>(stdDeviationValueR/10.0))
@@ -253,6 +311,52 @@ public  class ArduinoUSB {
 
                 // refMain.getDbscan().evaluatePoint(new ClusterableDoublePoint(new double[]{0, blockfilterValue}));
             }
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(Integer val) {
+        }
+
+    }
+
+    public class SerialStringToIntTask extends AsyncTask<String[],Integer, Integer> {
+
+        protected Integer doInBackground(String[]... data) {
+            int left=0, right=0;
+
+            String strleft="", strright="";
+
+            for(int split =0; split<data[0].length; ++split)
+            {
+                strleft = data[0][split];
+                strright = data[0][split];
+
+                try{
+                    left = Integer.valueOf(strleft);
+                }
+                catch (NumberFormatException e)
+                {
+                    left = 0;
+                }
+
+                try{
+                    right = Integer.valueOf(strright);
+                }
+                catch (NumberFormatException e)
+                {
+                    right = 0;
+                }
+
+
+                ArduinoPacket packet = new ArduinoPacket(left, right);
+//                if (sensorDataRaw.size() >= 100000)
+//                    sensorDataRaw.clear();
+                sensorDataRaw.add(packet);
+            }
+
+            return 0;
         }
 
         protected void onProgressUpdate(Integer... progress) {
