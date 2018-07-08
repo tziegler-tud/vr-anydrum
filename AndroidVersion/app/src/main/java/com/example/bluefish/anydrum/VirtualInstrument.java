@@ -46,7 +46,7 @@ public class VirtualInstrument {
     }
 
     public boolean learn(List<Integer> data){
-        if(learncounter>0){
+        if(learncounter>1){
             this.maximaList.add(data);
             --learncounter;
             System.out.println("cp-A: "+learncounter);
