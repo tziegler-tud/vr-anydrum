@@ -42,10 +42,10 @@ public class FFTRealTimeAnalyzer {
 
     public String matchData(double[] data){
         //List<Double> dist = new ArrayList<>();
-        double dist = 1000;
+
         String name = "default";
         int index = 0;
-        int error = 1000;
+        int error = 10000;
         List<Integer> maxima = findLocalMaxima(data);
         //List<Integer> minima = findLocalMinima(data);
         for(int i=0;i<clusterMaxima.size();i++){
@@ -90,15 +90,15 @@ public class FFTRealTimeAnalyzer {
     }
 
     private List<Integer> findLocalMaxima(double[] data){
-        int window_size = 5;
-        int maxima_amount = 3;
+        int window_size = 10;
+        int maxima_amount = 5;
         List<Integer> localMaxima = new LinkedList<>();
         List<Integer> maxima = new LinkedList<>();
         Integer[] max = new Integer[maxima_amount];
 
         for(int i=2;i<data.length-2;i++){
 
-            if(data[i]>=data[i-1]&& data[i]>=data[i-2] && data[i]>=data[i+1]&& data[i]>=data[i+2]){
+            if(data[i]>=data[i-1]&& data[i]>=data[i-2]&& data[i]>=data[i-3]&& data[i]>=data[i-4]&& data[i]>=data[i-5] && data[i]>=data[i+1]&& data[i]>=data[i+2]&& data[i]>=data[i+3]&& data[i]>=data[i+4]&& data[i]>=data[i+5]){
                 localMaxima.add(i);
             }
 

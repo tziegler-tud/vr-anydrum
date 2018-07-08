@@ -31,7 +31,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     private boolean calibrating;
     private int calIndex;
 
-    private int knockLength = 300;
+    private int knockLength = 400;
 
 
     private double[] lastKnock = new double[knockLength+2];
