@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     public void onClick(View v) {
                         PdBase.sendBang("bangBassDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeBass), 10, refMain, EnumDrum.BASS);
+                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 5, refMain, EnumDrum.BASS);
                     }
                 }
         );
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     public void onClick(View v) {
                         PdBase.sendBang("bangHiHatDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain, EnumDrum.HIHAT);
-                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 3, refMain, EnumDrum.HIHAT);
+                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 5, refMain, EnumDrum.HIHAT);
                     }
                 }
         );

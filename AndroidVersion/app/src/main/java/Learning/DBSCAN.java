@@ -67,7 +67,7 @@ public class DBSCAN {
         double averageHihat = statHihat.getSum()/statHihat.getValues().length;
         distanceHihat = medianHihat -pointSum;
         if(distanceHihat < 0) distanceHihat *= -1;
-        drumSound = drumSound.HIHAT;
+            drumSound = drumSound.HIHAT;
 
         //is part of snare?
         double medianSnare = statSnare.getMean();
@@ -84,6 +84,7 @@ public class DBSCAN {
         if(distanceBass < 0) distanceBass *= -1;
         if(distanceBass < distanceSnare || distanceBass < distanceHihat)
             drumSound = EnumDrum.BASS;
+
 
         playSound(drumSound);
 
