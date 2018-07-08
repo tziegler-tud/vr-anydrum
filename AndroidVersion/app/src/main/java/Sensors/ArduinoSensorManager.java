@@ -164,10 +164,11 @@ public class ArduinoSensorManager implements SensorEventListener {
                 }
             }
             else {
-                if(currentKnock) this.lastKnock[lockedCount+2]=dataL;
+                if(currentKnock) this.lastKnock[lockedCount+13]=dataL;
                 lockedCount += 1;
                 if(lockedCount >= knockLength){
                     this.knockCompleted();
+
                 }
                 if(lockedCount >= knockLength+300) {
                     privateUnlock();
@@ -191,6 +192,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     }
 
     private void knockCompleted(){
+        currentKnock=false;
         refMain.sensorManagerEvent(7);
     }
 
@@ -217,7 +219,7 @@ public class ArduinoSensorManager implements SensorEventListener {
         else {
             this.lockState = false;
             refMain.sensorManagerEvent(2);
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 13; i++) {
                 this.lastKnock[i] = bufferL.get(bufferL.size() - knockLength - i - 1);
             }
         }
