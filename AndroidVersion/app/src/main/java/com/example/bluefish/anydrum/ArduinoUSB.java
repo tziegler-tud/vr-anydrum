@@ -20,12 +20,14 @@ import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
 import com.hoho.android.usbserial.util.HexDump;
 
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 import  org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Queue;
 import java.util.Vector;
 
 
@@ -43,6 +45,8 @@ public  class ArduinoUSB {
     UsbDeviceConnection usbConnection;
     UsbSerialDevice serial;
     public Vector<ArduinoPacket> sensorDataRaw;
+    public ArduinoPacket lastPacket;
+
 
     //Data
     private FilterHelper filter;
@@ -74,6 +78,7 @@ public  class ArduinoUSB {
 
 
     public ArduinoUSB(MainActivity refMain) {
+        lastPacket = new ArduinoPacket(0,0);
         sensorDataRaw = new Vector<>();
         filter = new FilterHelper();
         listOfSensorDataArduinoL= new Vector<ClusterableDoublePoint>();
@@ -354,6 +359,7 @@ public  class ArduinoUSB {
 //                if (sensorDataRaw.size() >= 100000)
 //                    sensorDataRaw.clear();
                 sensorDataRaw.add(packet);
+                lastPacket = packet;
             }
 
             return 0;
