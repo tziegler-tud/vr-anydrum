@@ -46,7 +46,7 @@ public class DBSCAN {
             sumY += points.get(i).getPoint()[1];
         }
         //averageY = sumY/points.size();
-        ClusterableDoublePoint doublePoint = new ClusterableDoublePoint(new double[]{0, sumY});
+        ClusterableDoublePoint doublePoint = new ClusterableDoublePoint(new double[]{0, sumY},2);
 
         return evaluatePoint(doublePoint);
     }

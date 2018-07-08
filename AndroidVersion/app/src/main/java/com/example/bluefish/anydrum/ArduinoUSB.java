@@ -92,8 +92,8 @@ public  class ArduinoUSB {
         listOfSensorDataFilteredArduinoL = new Vector<ClusterableDoublePoint>();
         listOfSensorDataFilteredArduinoR = new Vector<ClusterableDoublePoint>();
 
-        listOfSensorDataArduinoL.add(new ClusterableDoublePoint(new double[]{0.0f, 0.0f}));
-        listOfSensorDataArduinoR.add(new ClusterableDoublePoint(new double[]{0.0f, 0.0f}));
+        listOfSensorDataArduinoL.add(new ClusterableDoublePoint(new double[]{0.0f, 0.0f}, 2));
+        listOfSensorDataArduinoR.add(new ClusterableDoublePoint(new double[]{0.0f, 0.0f}, 2));
 
         this.refMain = refMain;
         this.viewInformation = (TextView) refMain.findViewById(R.id.viewInfo);
@@ -168,7 +168,7 @@ public  class ArduinoUSB {
 
                     TextView help = (TextView) refMain.findViewById(R.id.timeSnare);
 
-                    if(help.getText().toString().equals("1") == false) {
+                    if(help.getText().toString().equals("0") == false) {
                         new SerialStringToIntTask().execute(splitted);
                         Integer[] integerObjArray = new Integer[2];
                         integerObjArray[0] = lastPacket.left;
@@ -222,8 +222,8 @@ public  class ArduinoUSB {
 //                x= 0;
 //            }
 
-            listOfSensorDataArduinoL.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(Integer.toString(left))}));
-            listOfSensorDataArduinoR.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(Integer.toString(right))}));
+            listOfSensorDataArduinoL.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(Integer.toString(left))},2 ));
+            listOfSensorDataArduinoR.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(Integer.toString(right))},2));
 
 
             if(listOfSensorDataArduinoL.size()==1000)

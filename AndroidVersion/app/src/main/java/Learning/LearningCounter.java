@@ -23,6 +23,7 @@ public class LearningCounter {
     private MainActivity refMain;
     private int startArduinoL, startArduinoR ;
     private Vector<ClusterableDoublePoint> listSnsorData;
+    public boolean isLearned = false;
 
     public LearningCounter(TextView refTextView, int counts,  MainActivity refMain, final EnumDrum enumDrum)
     {
@@ -48,6 +49,7 @@ public class LearningCounter {
     }
 
     private void onFinish() {
+        isLearned = true;
 //        switch (enumDrum)
 //        {
 //            case HIHAT:

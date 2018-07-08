@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     public void onClick(View v) {
                         PdBase.sendBang("bangSnareDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
-                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
+                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 2, refMain, EnumDrum.SNARE);
                     }
                 }
         );
@@ -244,7 +244,6 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 this.stopCalibration(arduinoSensorManager.getStatistics());
             case 5:
                 this.knock();
-//                counter.reduceCounter();
                 return;
             case 6:
                 this.noKnock();
@@ -314,6 +313,9 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
         List<Integer> list = mFFTRealTimeAnalyzer.calcMaxima(arduinoSensorManager.getLastKnock());
         ClusterableDoublePoint cp = new ClusterableDoublePoint(convertToDoubleArray(list),4);
+        if(counter!=null && counter.isLearned == false)
+             counter.reduceCounter(cp);
+
     }
 
     private double[] convertToDoubleArray(List<Integer> list){
