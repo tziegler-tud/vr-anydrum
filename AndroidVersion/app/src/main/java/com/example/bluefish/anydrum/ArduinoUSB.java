@@ -82,6 +82,7 @@ public  class ArduinoUSB {
 
 
     public ArduinoUSB(MainActivity refMain) {
+        stdDeviation = new StandardDeviation();
         lastPacket = new ArduinoPacket(0,0);
         sensorDataRaw = new Vector<>();
         filter = new FilterHelper();
@@ -214,32 +215,36 @@ public  class ArduinoUSB {
             double x =0;
             x= listOfSensorDataArduinoL.get(listOfSensorDataArduinoL.size()-1).getPoint()[0]+stepX;
 
-            if(listOfSensorDataArduinoL.size() >= 10000)
-            {
-                listOfSensorDataArduinoL.clear();
-                listOfSensorDataArduinoR.clear();
-                x= 0;
-            }
+//            if(listOfSensorDataArduinoL.size() >= 10000)
+//            {
+//                listOfSensorDataArduinoL.clear();
+//                listOfSensorDataArduinoR.clear();
+//                x= 0;
+//            }
 
             listOfSensorDataArduinoL.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(Integer.toString(left))}));
             listOfSensorDataArduinoR.add(new ClusterableDoublePoint(new double[]{(float)x, Double.parseDouble(Integer.toString(right))}));
 
 
-//            if(listOfSensorDataArduinoL.size()==1000)
-//            {
-//                double[] skalarsL = new double[1000];
-//                double[] skalarsR = new double[1000];
-//
-//                for(int i=99; i<1000;++i) {
-//                    skalarsL[i] = listOfSensorDataArduinoL.get(i).getPoint()[1];
-//                    skalarsR[i] = listOfSensorDataArduinoR.get(i).getPoint()[1];
-//                }
-//
-//                stdDeviationValueL=stdDeviation.evaluate(skalarsL);
-//                stdDeviationValueR=stdDeviation.evaluate(skalarsR);
-//            }
-//            if(startUsingClusters)
-//                evaluateSound(listOfSensorDataArduinoL, listOfSensorDataArduinoR);
+            if(listOfSensorDataArduinoL.size()==1000)
+            {
+                double[] skalarsL = new double[1000];
+                double[] skalarsR = new double[1000];
+
+                for(int i=0; i<skalarsL.length;++i) {
+                    skalarsL[i] = listOfSensorDataArduinoL.get(i).getPoint()[0];
+                    skalarsR[i] = listOfSensorDataArduinoR.get(i).getPoint()[1];
+                }
+
+                    stdDeviationValueL=stdDeviation.evaluate(skalarsL);
+                    stdDeviationValueR=stdDeviation.evaluate(skalarsR);
+            }
+            if(startUsingClusters) {
+                Vector<ClusterableDoublePoint> sublistL = new Vector<>(listOfSensorDataArduinoL.subList(listOfSensorDataArduinoL.size()-100,listOfSensorDataArduinoL.size()-1));
+                Vector<ClusterableDoublePoint> sublistR =  new Vector<>(listOfSensorDataArduinoR.subList(listOfSensorDataArduinoR.size()-100,listOfSensorDataArduinoR.size()-1));
+
+                evaluateSound(sublistL, sublistR);
+            }
 
 
             ArduinoPacket packet = new ArduinoPacket(left, right);
@@ -257,7 +262,9 @@ public  class ArduinoUSB {
             //left
             if(startUsingClusters && blockfilterValueL>(stdDeviationValueL/10.0))
             {
-                int amount = 2;
+                int amount = 10;
+                if(amount >= listOfSensorDataFilteredL.size())
+                    amount = listOfSensorDataFilteredL.size()-1;
                 int start = listOfSensorDataFilteredL.size()-1 - amount;
                 int end = listOfSensorDataFilteredL.size()-1;
                 List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredL.subList(start, end);//listOfSensorData.subList(start, end);//
@@ -275,7 +282,9 @@ public  class ArduinoUSB {
             //right
             if(startUsingClusters && blockfilterValueR>(stdDeviationValueR/10.0))
             {
-                int amount = 2;
+                int amount = 10;
+                if(amount >= listOfSensorDataFilteredR.size())
+                    amount = listOfSensorDataFilteredR.size()-1;
                 int start = listOfSensorDataFilteredR.size()-1 - amount;
                 int end = listOfSensorDataFilteredR.size()-1;
                 List<ClusterableDoublePoint> subPoints =listOfSensorDataFilteredR.subList(start, end);//listOfSensorData.subList(start, end);//
