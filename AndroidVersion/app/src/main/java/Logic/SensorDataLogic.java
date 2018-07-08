@@ -19,19 +19,11 @@ public class SensorDataLogic {
 
     }
 
-    public boolean detectKnocks(CircularFifoQueue <Integer> buffer){
-        int l = buffer.size();
-        try {
-            float currentVal = buffer.get(l-1);
-            float prevVal = buffer.get(l-2);
-            if(currentVal>prevVal+10*this.stdDev && currentVal>8*prevVal){
+    public boolean detectKnocks(int currentVal, int prevVal){
+
+            if(currentVal>prevVal+10*this.stdDev && currentVal>4*prevVal){
                 return true;
             }
-        }
-        catch (NoSuchElementException e) {
-            System.out.println("buffer not yet filled");
-            return false;
-        }
         return false;
 
 

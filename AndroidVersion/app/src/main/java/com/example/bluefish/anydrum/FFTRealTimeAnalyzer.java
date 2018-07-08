@@ -27,7 +27,7 @@ public class FFTRealTimeAnalyzer {
         double[] fft_data = mFFTLogic.transform(data);
         clusters.add(fft_data);
         clusterMaxima.add(findLocalMaxima(fft_data));
-        clusterMinima.add(findLocalMinima(fft_data));
+        //clusterMinima.add(findLocalMinima(fft_data));
         names.add(name);
 
     }

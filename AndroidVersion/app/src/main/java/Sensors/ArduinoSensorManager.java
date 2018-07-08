@@ -136,11 +136,11 @@ public class ArduinoSensorManager implements SensorEventListener {
 
 
         int dataL =  packet.left;
-        int dataR = packet.right;
+        //int dataR = packet.right;
 
         //System.out.println("zAcl: " + sensorEvent.values[2]);
         this.bufferL.add(dataL);
-        this.bufferR.add(dataR);
+        //this.bufferR.add(dataR);
         refMain.updateChart();
 
         if (this.calibrating) {
@@ -150,7 +150,7 @@ public class ArduinoSensorManager implements SensorEventListener {
             }
         } else {
             if (!this.lockState) {
-                if (this.mSensorDataLogic.detectKnocks(this.bufferL)) {
+                if (this.mSensorDataLogic.detectKnocks(dataL,this.bufferL.get(bufferL.size()-2))) {
                     lock();
                     this.knock();
                 }
