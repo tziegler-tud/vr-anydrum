@@ -170,10 +170,10 @@ public  class ArduinoUSB {
 
                     if(help.getText().toString().equals("0") == false) {
                         new SerialStringToIntTask().execute(splitted);
-                        Integer[] integerObjArray = new Integer[2];
-                        integerObjArray[0] = lastPacket.left;
-                        integerObjArray[1] = lastPacket.right;
-                        new SerialTask().execute(integerObjArray);
+//                        Integer[] integerObjArray = new Integer[2];
+//                        integerObjArray[0] = lastPacket.left;
+//                        integerObjArray[1] = lastPacket.right;
+//                        new SerialTask().execute(integerObjArray);
                     }
 
                 }

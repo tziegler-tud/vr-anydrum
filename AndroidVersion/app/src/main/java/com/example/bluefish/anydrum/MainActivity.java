@@ -115,8 +115,10 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     public void onClick(View v) {
                         PdBase.sendBang("bangSnareDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
+
 //                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 2, refMain, EnumDrum.SNARE);
                         startLearning(instruments.get(1));
+
                     }
                 }
         );
@@ -135,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                         PdBase.sendBang("bangHiHatDrum");
 //                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain, EnumDrum.HIHAT);
                         startLearning(instruments.get(0));
+
+
                     }
                 }
         );
@@ -326,7 +330,13 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         ClusterableDoublePoint cp = new ClusterableDoublePoint(convertToDoubleArray(list),4);
         if(counter!=null && counter.isLearned == false)
              counter.reduceCounter(cp);
+<<<<<<< HEAD
         */
+=======
+        if(arduinoUSB.isStartUsingClusters())
+            dbscan.evaluatePoint(cp);
+
+>>>>>>> d3f6cc4b658150da4da2aaaa048ad71786d27850
     }
 
     private double[] convertToDoubleArray(List<Integer> list){
