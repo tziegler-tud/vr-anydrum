@@ -53,7 +53,7 @@ public class LearningTimer {
                 int sizeOfEnd = listSensorData.size();
                 int numberOfNewValues = sizeOfEnd-sizeOfStart;
 
-                List<ClusterableDoublePoint> sublist = listSensorData.subList(sizeOfStart-1, sizeOfEnd-1);
+                final List<ClusterableDoublePoint> sublist = listSensorData.subList(sizeOfStart-1, sizeOfEnd-1);
                 for(int i = 0; i<sublist.size(); ++i)
                     sublist.get(i).getPoint()[0] = 0;
 

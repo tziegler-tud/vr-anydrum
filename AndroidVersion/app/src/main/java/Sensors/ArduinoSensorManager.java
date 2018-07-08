@@ -34,7 +34,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     private int knockLength = 300;
 
 
-    private double[] lastKnock ;
+    private double[] lastKnock = new double[knockLength+2];
 
     private ArduinoUSB arduinoUSB;
 
@@ -55,7 +55,8 @@ public class ArduinoSensorManager implements SensorEventListener {
      */
     public ArduinoSensorManager(SensorActivity refMain, Context mContext, boolean autoUnlock){
 
-        this.statistics= new double[knockLength+2];
+        this.statistics = new double[3];
+
         this.mContext = mContext;
         this.refMain = refMain;
         this.mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
