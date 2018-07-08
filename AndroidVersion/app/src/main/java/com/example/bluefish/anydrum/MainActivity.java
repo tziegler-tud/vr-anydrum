@@ -468,6 +468,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                     stopLearning();
                     System.out.println("cp6");
                 }
+                System.out.println("cp4-1");
                 return true;
             }
 
