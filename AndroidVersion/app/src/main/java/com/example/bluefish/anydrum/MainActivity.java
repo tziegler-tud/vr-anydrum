@@ -188,8 +188,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         TextView textView3 = (TextView) findViewById(R.id.timeBass);
 
         v1.setTxtView(textView1);
-        v1.setTxtView(textView2);
-        v1.setTxtView(textView3);
+        v2.setTxtView(textView2);
+        v3.setTxtView(textView3);
 
 
         instruments.add(v1);
@@ -358,7 +358,6 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         ClusterableDoublePoint cp = new ClusterableDoublePoint(convertToDoubleArray(list),4);
         if(counter!=null && counter.isLearned == false)
              counter.reduceCounter(cp);
-<<<<<<< HEAD
         */
 //        if(arduinoUSB.isStartUsingClusters())
 //            dbscan.evaluatePoint(cp);
@@ -369,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
 
 //    }
+
     private void playSound(EnumDrum  drumsound)
     {
         //playsound
