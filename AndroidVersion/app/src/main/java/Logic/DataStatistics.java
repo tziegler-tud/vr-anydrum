@@ -3,24 +3,31 @@ package Logic;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 
+
 public class DataStatistics {
 
         private CircularFifoQueue<Integer> data;
         private int size;
 
+        double mean,variance,stdDev;
+
         public DataStatistics(CircularFifoQueue<Integer> data) {
             this.data = data;
             size = data.size();
+            this.mean = calcMean();
+            this.variance = calcVariance();
+            this.stdDev = calcStdDev();
         }
 
-        public double getMean() {
+        private double calcMean() {
             double sum = 0.0;
-            for(double a : data)
+            for(int a : data)
                 sum += a;
-            return sum/size;
+            mean =  sum/size;
+            return mean;
         }
 
-        public double getVariance() {
+        private double calcVariance() {
             double mean = getMean();
             double temp = 0;
             for(double a :data)
@@ -28,8 +35,20 @@ public class DataStatistics {
             return temp/(size-1);
         }
 
-        public double getStdDev() {
+        private double calcStdDev() {
             return Math.sqrt(getVariance());
+        }
+
+        public double getMean(){
+            return mean;
+        }
+
+        public double getVariance(){
+            return variance;
+        }
+
+        public double getStdDev(){
+            return stdDev;
         }
 
 
