@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     private PdUiDispatcher dispatcher;
     public  TextView viewInformation;
 
-    private int updatePeriodACL = 100; // in nano mili sec?
+    private int updatePeriodACL = 200; // in nano mili sec?
     private long oldSystemTime=0,updateTimeMS = 100;//ms
 
    // private AccelerationSensor aclSensor;
@@ -178,8 +178,12 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     }
 
     public void updateChart() {
+        long time= System.currentTimeMillis();
+            if(time-oldSystemTime >= updateTimeMS) {
 
-            this.chart.appendData(this.arduinoSensorManager.getBufferL(), this.arduinoSensorManager.getBufferR());
+                this.chart.appendData(this.arduinoSensorManager.getBufferL(), this.arduinoSensorManager.getBufferR());
+                oldSystemTime=System.currentTimeMillis();
+            }
 
     }
 
