@@ -30,6 +30,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SensorActivity {
 
     private PdUiDispatcher dispatcher;
+    public  TextView viewInformation;
+
     private int updatePeriodACL = 100; // in nano mili sec?
     private long oldSystemTime=0,updateTimeMS = 100;//ms
 
@@ -59,9 +61,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         return dbscan;
     }
 
-    public ArduinoUSB getArduinoUSB() {
-        return arduinoUSB;
-    }
+
+
 
     // Used to load the 'native-lib' library on application startup.
 //   static {
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewInformation = (TextView) findViewById(R.id.viewInfo);
         setContentView(R.layout.activity_main);
 
         /*// Example of a call to a native method
@@ -390,7 +392,13 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         arduinoSensorManager.dataInput(packet);
 
     }
+    public void setViewInfo(String info) {
+        viewInformation.setText(info);
+    }
 
+    public ArduinoUSB getArduinoUSB() {
+        return arduinoUSB;
+     }
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.

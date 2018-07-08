@@ -23,6 +23,8 @@ import com.hoho.android.usbserial.util.HexDump;
 import  org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Vector;
 
@@ -109,10 +111,13 @@ public  class ArduinoUSB {
 
         if (serial != null) {
             serial.open();
-            serial.setBaudRate(9600);//115200
+            serial.setBaudRate(9600);//9600  115200
             serial.setDataBits(UsbSerialInterface.DATA_BITS_8);
-            serial.setParity(UsbSerialInterface.PARITY_ODD);
+            serial.setParity(UsbSerialInterface.PARITY_NONE);
+            serial.setStopBits(UsbSerialInterface.STOP_BITS_1);
             serial.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
+            serial.setDTR(false);
+            serial.setRTS(false);
 
             serial.read(mCallback);
             viewInformation.setText("serial set!");
@@ -130,40 +135,50 @@ public  class ArduinoUSB {
         public void onReceivedData(byte[] data)
         {
             int length = data.length;
+//            System.out.println("length: "+length);
+
             long time= System.currentTimeMillis();
 //            if(time-oldSystemTime >= updateTimeMS)
 //            {
-                int left=0, right=0;
-//                if(data.length % 4 == 0)
-                {
-                    if(data.length>1)
-                        left = (data[data.length - 1] << 8) | data[data.length - 2];
-                    if(data.length>3)
-                        right =  (data[data.length - 3] << 8) | data[data.length - 4];
+            int left = 0, right = 0;
+            int bytesRead = usbConnection.bulkTransfer(device.getInterface(0).getEndpoint(0), data, length - 1, 100);
 
 
+            Charset set = Charset.forName("UTF-8");
+            String test = new String(data, set);
+            String[] splitted = test.split(",");
+
+            String strleft = splitted[0];
+            String strright = splitted[1];
+
+            left = Integer.valueOf(strleft);
+            right = Integer.valueOf(strright);
 
 
-                    Integer[] integerObjArray = new Integer[2];
-                    integerObjArray[0] = left;
-                    integerObjArray[1] = right;
+//                    System.out.println("packet: "+test + "  L: "+strleft+"  R: "+strright);
 
-                    ArduinoPacket packet = new ArduinoPacket(left,right);
-                    if(sensorDataRaw.size() != 10000)
-                        sensorDataRaw.clear();
-                    sensorDataRaw.add(packet);
+
+            ArduinoPacket packet = new ArduinoPacket(left, right);
+            if (sensorDataRaw.size() != 10000)
+                sensorDataRaw.clear();
+            sensorDataRaw.add(packet);
+
+            Integer[] integerObjArray = new Integer[2];
+            integerObjArray[0] = left;
+            integerObjArray[1] = right;
 //                    new SerialTask().execute(integerObjArray);
 
 
-                    if(data.length > 10000)data = null;
-
-                }
-                oldSystemTime = time;
+            oldSystemTime = time;
 
             }
 //        }
     };
 
+    // packing an array of 4 bytes to an int, big endian
+    int fromByteArray(byte[] bytes) {
+        return bytes[0] << 24 | (bytes[1] & 0xFF) << 16 | (bytes[2] & 0xFF) << 8 | (bytes[3] & 0xFF);
+    }
 
 
     public class SerialTask extends AsyncTask<Integer[],Integer, Integer> {

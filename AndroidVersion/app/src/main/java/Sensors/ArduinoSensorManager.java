@@ -128,13 +128,13 @@ public class ArduinoSensorManager implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Vector<ArduinoPacket> list =  refMain.getArduinoUSB().sensorDataRaw;
-        dataInput(list.get(list.size()-1));
+        if(list.size() >0)
+         dataInput(list.get(list.size()-1));
     }
 
     public void dataInput(ArduinoPacket packet) {
 
         System.out.println("packet: " + packet.left + "/" + packet.right);
-
         int dataL =  packet.left;
         int dataR = packet.right;
 
