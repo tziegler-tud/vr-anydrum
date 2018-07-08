@@ -30,10 +30,12 @@ public class LineChart {
 
 
         seriesL = new LineGraphSeries<DataPoint>(data);
-        seriesL.setColor(Color.GREEN);
+
         seriesR = new LineGraphSeries<DataPoint>(data);
+        seriesR.setColor(Color.GREEN);
         graph.addSeries(seriesL);
-        graph.addSeries(seriesR);
+
+        //graph.addSeries(seriesR);
 
     }
 
@@ -88,7 +90,7 @@ public class LineChart {
         graph.getViewport().setMinX(minX);
         graph.getViewport().setMaxX(maxX);
     }
-   public void appendData(CircularFifoQueue<Integer> bufferL,CircularFifoQueue<Integer> bufferR){
+   public void appendData(CircularFifoQueue<Double> bufferL,CircularFifoQueue<Double> bufferR){
 
        this.seriesL.resetData(generateData(bufferL));
        this.seriesL.resetData(generateData(bufferL));
@@ -106,7 +108,7 @@ public class LineChart {
 
 
 
-    private DataPoint[] generateData(CircularFifoQueue<Integer>buffer) {
+    private DataPoint[] generateData(CircularFifoQueue<Double>buffer) {
         int count = buffer.size();
         DataPoint[] values = new DataPoint[count];
         for (int i=0; i<count; i++) {

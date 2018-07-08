@@ -19,7 +19,7 @@ public class SensorDataLogic {
 
     }
 
-    public boolean detectKnocks(int currentVal, int prevVal){
+    public boolean detectKnocks(double currentVal, double prevVal){
 
             if(currentVal>prevVal+6*this.stdDev){
 
