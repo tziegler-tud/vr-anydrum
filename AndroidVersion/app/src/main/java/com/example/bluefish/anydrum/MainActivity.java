@@ -21,6 +21,8 @@ import org.puredata.core.utils.IoUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import java.util.LinkedList;
@@ -326,6 +328,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         PdBase.openPatch(pdPatchSnareDrum.getAbsolutePath());
         PdBase.openPatch(pdPatchBassDrum.getAbsolutePath());
         PdBase.openPatch(pdPatchHiHatDrum.getAbsolutePath());
+
     }
 
     private void startLearning(){

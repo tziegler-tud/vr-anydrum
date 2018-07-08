@@ -79,7 +79,7 @@ public class ArduinoSensorManager implements SensorEventListener {
     private void registerAccelerationSensor(){
 
         Sensor accelSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_GAME);
+        this.mSensorManager.registerListener(this,accelSensor,SensorManager.SENSOR_DELAY_FASTEST);
 
    }
 
@@ -132,8 +132,6 @@ public class ArduinoSensorManager implements SensorEventListener {
     }
 
     public void dataInput(ArduinoPacket packet) {
-
-        System.out.println("packet: " + packet.left + "/" + packet.right);
 
         int dataL =  packet.left;
         int dataR = packet.right;
