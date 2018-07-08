@@ -1,11 +1,13 @@
 
 
-package com.example.bluefish.anydrum;
+package Learning;
 
 
 import Learning.ClusterableDoublePoint;
 import android.os.CountDownTimer;
 import android.widget.TextView;
+import com.example.bluefish.anydrum.EnumDrum;
+import com.example.bluefish.anydrum.MainActivity;
 import org.apache.commons.math3.ml.clustering.Cluster;
 import org.puredata.core.PdBase;
 

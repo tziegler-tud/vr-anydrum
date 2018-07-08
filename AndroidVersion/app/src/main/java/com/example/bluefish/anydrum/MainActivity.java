@@ -2,12 +2,12 @@ package com.example.bluefish.anydrum;
 
 import Learning.DBSCAN;
 
+import Learning.LearningCounter;
+import Learning.LearningTimer;
 import Sensors.ArduinoSensorManager;
 import Visualizations.LineChart;
-import android.content.Context;
 import android.content.Intent;
 import android.view.*;
-import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -21,9 +21,6 @@ import org.puredata.core.utils.IoUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
     public DBSCAN getDbscan() {
         return dbscan;
     }
+
+    public LearningCounter counter;
 
 
 
@@ -111,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         PdBase.sendBang("bangSnareDrum");
-                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
+//                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
+                        counter = new LearningCounter((TextView) findViewById(R.id.timeSnare), 10, refMain, EnumDrum.SNARE);
                     }
                 }
         );
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         PdBase.sendBang("bangBassDrum");
-                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeBass), 10, refMain, EnumDrum.BASS);
+//                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeBass), 10, refMain, EnumDrum.BASS);
                     }
                 }
         );
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         PdBase.sendBang("bangHiHatDrum");
-                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain, EnumDrum.HIHAT);
+//                        LearningTimer timer = new LearningTimer((TextView) findViewById(R.id.timeHiHat), 10, refMain, EnumDrum.HIHAT);
                     }
                 }
         );
@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
                 this.stopCalibration(arduinoSensorManager.getStatistics());
             case 5:
                 this.knock();
+//                counter.reduceCounter();
                 return;
             case 6:
                 this.noKnock();

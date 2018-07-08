@@ -183,7 +183,6 @@ public class ArduinoSensorManager implements SensorEventListener {
     private void knock(){
         this.knockDetectedState=true;
         refMain.sensorManagerEvent(5);
-
     }
 
     private void noKnock(){
