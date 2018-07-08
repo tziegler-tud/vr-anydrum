@@ -1,26 +1,64 @@
 package com.example.bluefish.anydrum;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class VirtualInstrument {
 
     private String name;
     private double[] pattern;
-    private Integer[] maxima;
+    private List<Integer> maxima;
+    private List<List<Integer>> maximaList;
     private boolean learned;
+    private int learncounter;
 
     public VirtualInstrument(String name){
         this.name = name;
+
+        this.pattern = new double[]{};
+        this.maxima = new LinkedList<>();
+        this.maximaList = new LinkedList<>();
+
+        learncounter = 10;
     }
 
 
-    public VirtualInstrument(String name, double[] pattern, Integer[] maxima){
+    public VirtualInstrument(String name, double[] pattern, List<Integer> maxima){
         this.name = name;
         this.pattern = pattern;
-        this. maxima = maxima;
+        this.maxima = maxima;
+
+        this.maximaList = new LinkedList<>();
+
+        this.learncounter = 10;
 
     }
 
     public void setLearned(boolean learned){
         this.learned = learned;
+    }
+
+    public boolean learn(List<Integer> data){
+        if(learncounter>0){
+            this.maximaList.add(data);
+            --learncounter;
+
+            return false;
+        }
+        else {
+            this.learned = true;
+            int[] sum = {0,0,0,0};
+            for(List<Integer> int_list:maximaList){
+                for(int i=0;i<4;i++){
+                    sum[i] += int_list.get(i);
+                }
+            }
+            for(int i=0;i<4;i++){
+                maxima.add(sum[i]/4);
+            }
+            return true;
+        }
+
     }
 
     public String getName() {
@@ -32,8 +70,13 @@ public class VirtualInstrument {
 
     }
 
-    public Integer[] getMaxima(){
+    public List<Integer> getMaxima(){
         return this.maxima;
+    }
+
+    public void forget(){
+        this.learned = false;
+        this.maximaList.clear();
     }
 
     public boolean learned(){

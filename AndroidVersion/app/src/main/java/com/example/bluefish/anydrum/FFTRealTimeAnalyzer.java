@@ -14,7 +14,7 @@ public class FFTRealTimeAnalyzer {
 
     private List<double[]> clusters = new LinkedList<>();
     private List<List<Integer>> clusterMaxima = new LinkedList<>();
-    private List<List<Integer>> clusterMinima = new LinkedList<>();
+
 
     private List<String> names = new LinkedList<>();
     public FFTRealTimeAnalyzer(){
@@ -22,12 +22,10 @@ public class FFTRealTimeAnalyzer {
 
     }
 
-    public void addCluster(String name, double[] data){
+    public void addCluster(String name, List<Integer> data){
 
-        double[] fft_data = mFFTLogic.transform(data);
-        clusters.add(fft_data);
-        clusterMaxima.add(findLocalMaxima(fft_data));
-        //clusterMinima.add(findLocalMinima(fft_data));
+
+        clusterMaxima.add(data);
         names.add(name);
 
     }
@@ -35,7 +33,6 @@ public class FFTRealTimeAnalyzer {
     public boolean clearCluster(){
         clusters.clear();
         clusterMaxima.clear();
-        clusterMinima.clear();
         names.clear();
         return true;
     }
@@ -51,7 +48,6 @@ public class FFTRealTimeAnalyzer {
         for(int i=0;i<clusterMaxima.size();i++){
             try {
                 List<Integer> max = clusterMaxima.get(i);
-                List<Integer> min = clusterMinima.get(i);
                 //dist.add(calcDistance(data,d));
                 int e = matchMaxima(maxima, max);
                 System.out.println("error for instrument "+names.get(i) +": " + e);
