@@ -330,13 +330,13 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
         ClusterableDoublePoint cp = new ClusterableDoublePoint(convertToDoubleArray(list),4);
         if(counter!=null && counter.isLearned == false)
              counter.reduceCounter(cp);
-<<<<<<< HEAD
-        */
-=======
-        if(arduinoUSB.isStartUsingClusters())
-            dbscan.evaluatePoint(cp);
 
->>>>>>> d3f6cc4b658150da4da2aaaa048ad71786d27850
+        */
+
+//        if(arduinoUSB.isStartUsingClusters())
+//            dbscan.evaluatePoint(cp);
+
+
     }
 
     private double[] convertToDoubleArray(List<Integer> list){
