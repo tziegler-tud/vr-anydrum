@@ -96,7 +96,7 @@ public class FFTRealTimeAnalyzer {
         List<Integer> maxima = new LinkedList<>();
         Integer[] max = new Integer[maxima_amount];
 
-        for(int i=2;i<data.length-2;i++){
+        for(int i=5;i<data.length-5;i++){
 
             if(data[i]>=data[i-1]&& data[i]>=data[i-2]&& data[i]>=data[i-3]&& data[i]>=data[i-4]&& data[i]>=data[i-5] && data[i]>=data[i+1]&& data[i]>=data[i+2]&& data[i]>=data[i+3]&& data[i]>=data[i+4]&& data[i]>=data[i+5]){
                 localMaxima.add(i);
