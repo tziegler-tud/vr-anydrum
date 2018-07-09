@@ -1,1 +1,22 @@
 \section{Konzept}
+
+Wird eine Tischplatte an einer Position angeschlagen, führt diese eine Eigenschwingung aus.
+Je nach Material, Lagerung, Obejekte auf der Oberfläche, etc... unterscheiden sich verschiedene Tischplatten in ihrer Impulsantwort.
+Außerdem unterscheidet sich die ausgeführte Schwingung je nach Position und Art der Erregung: 
+Ein Schlag mit den Fingerknochen erzeugt eine andere Schwingung als ein Schlag mit der flachen Hand - dies lässt sich leicht anhand des entstehenden Geräusches verifizieren.
+Ebenso erzeugt ein Schlag auf die Tischkante eine andere Schwingung als ein Schlag in die Tischmitte - dies zeigt sich vor allem in unterschiedlichen Nachhallzeiten.
+
+Gewisse charackteristische Eigenschaften sind bauartbedingt durch den Tisch vorgegeben. 
+Diese können vom Anwender nicht beeinflusst werden, folglich muss die Software in der Lage sein, diese Unterschiede in der Verarbeitung zu berücksichtigen. 
+Trotzdem hat der Anwender gewisse Möglichkeiten, die Schwingung der Tischplatte zu beeinflussen, beispielsweise durch Anbringen von Massen, Dämpfern, etc... 
+Dies kann und soll bewusst eingesetzt werden, um die Schwingungscharakteristiken der Anschlagspositionen möglichst unterschiedlich zu gestalten.  
+
+Um eine hohe Flexibilität in der Anwendung zu liefern, soll auf die Verwenung eines PCs/Laptops verzichtet werden. Stattdessen soll die softwareseitige Umsetzung mittels eines Smartphones erfolgen.
+
+Zur Aufnahme der Schwingung wurden verschiedene Möglichkeiten erprobt:
+\begin{itemize}
+	\item Verwendung eines Piezzosensors
+	\item Verwendung des internen Beschleunigungssensors des Smartphones
+	\item Verwenung eines Arduino Mikrocontrollers mit Beschleunigungssensoren  
+\end{itemize}
+
