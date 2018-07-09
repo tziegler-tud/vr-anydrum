@@ -236,7 +236,7 @@
 \rfoot{}%
 \makeatletter
 \fancyfoot[LE]{\footerfont\textbf{\thepage}\hspace{7pt}|\hspace{7pt}\@ifundefined{@doi}{}{\@doi}}
-\fancyfoot[RO]{\footerfont evirtuelle Realität\hspace{7pt}|\hspace{7pt}\textbf{\myformat\today}\hspace{7pt}|\hspace{7pt}Gamification\hspace{7pt}|\hspace{7pt}\textbf{\thepage}}
+\fancyfoot[RO]{\footerfont Virtuelle Realität\hspace{7pt}|\hspace{7pt}\textbf{\myformat\today}\hspace{7pt}|\hspace{7pt}\textbf{\thepage}}
 \fancyfoot[RE,LO]{\footerfont\@ifundefined{@leadauthor}{}{\@leadauthor}\ifnum \value{authors} > 1\hspace{5pt}\textit{}\fi}
 
 % Use footer routine for line numbers
