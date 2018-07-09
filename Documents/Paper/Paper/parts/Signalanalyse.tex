@@ -15,22 +15,19 @@ Zum Erlernen
 
 
 
+Eine Möglichkeit um das meiste Rauschen zu unterdrücken ist die Nutzung eines Grenzwertes, um schwache Erschütterungen zu unterdrücken.
+Die Sensordaten könnten weiter geglättet werden durch Verwendung eines Box- oder Gauss-Filters.
 
-After basic filtering, we use ... to decide where the bang is coming from and what sound to play.
+Anstelle von timbreID, welches laut Entwickler \cite{timbreID} Cluster benutzt und Merkmale sortiert, haben wir den DBSCAN-Algorithmus getetest.
 
-Instead of timbreID, which clusters and order features,we use ... \cite{timbreID}
+Elbatta und Ashour untersuchen verschiedene Clustering Ansätze und stellen in ihrer Arbeit \cite{Elbatta2013ADM} einen verbesserten DBSCAN-Algorithmus vor.
+DBSCAN ist ein  dichtebasierter Cluster-Algorithmus, der als Parameter einen Radius und eine Mindestanzahl an Punkte pro Cluster benötigt.
+Im Gegensatz zu partitionierungsbasierten Cluster-Algorithmen, wie zum Beispiel K-Means, besitzt DBSCAN dne Vorteil, dass es freie Formen von Clustern erkennen kann und sich besonders gut für Daten mit Rauschen eignet.
+Der Algorithmus startet mit einem zufälligen Punkt.
+Befinden sich die Mindestanzahl an Nachbarpunkten um den gewählten Punkt im gegebenen Radius, wird ein Cluster mit allen gefunden Punkten gebildet.
+Ist die Anzahl Nachbarpunkte kleiner als die Mindestanzahl wird dies als Rauschen markiert.
+Es wird rekursiv mit dem nächsten freien Punkt verfahren, der noch nicht zu einem Cluster gehört und noch nicht bewertet wurde.
 
-DBSCAN is a density based cluster algorithm, which "cluster based on core and ...."
-In contrary to .... algorithm, such as K-Means, it has the advantage to detect arbritrary forms of cluster and filter out noise\cite{Elbatta2013ADM}
+Der DBSCAN-Algorithmus könnte somit verwendet werden, um besondere Merkmale von festzustellen und diese von Rauschen zu unterscheiden.
 
-In fact, that we have much noise in our velocity data, we decided to use DBSCAN, which is easy to implement. 
-To further increase accuracy and the unknown fact of epsilon, we further used ARCADE, which is a ... to .... [cite]
-
-Using 3 sensors, we had .... results, while 2 ... .and 1 was unsatisfacory.
-
-For 3 sensors we used barycentric interpolation, for 2 linear interpolation, for one we approximated by time/force? 
-
-
-Graph shows comparison between .... and the number of sensors used.
-
-TODO
+Ein Clustering mit DBSCAN zeigte bei uns keine guten Ergebnisse, da wohl die Merkmale
