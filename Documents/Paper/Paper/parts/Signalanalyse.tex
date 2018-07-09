@@ -1,8 +1,20 @@
 \section*{Signalanalyse}
+\subsection*{Anschlagserkennung}
+Zur Erkennung von von Anschlägen und Abgrenzung von Hintergrundrauschen werden die Messdaten in Echtzeit geprüft. Hierzu werden die jeweils letzten beiden Messwerte miteinander verglichen. Ein Anschlag wird erkannt, wenn der aktuellere Wert den vorherigen Wert um ein bestimmtes Vielfaches der Standartabweichung übersteigt. Der Faktor sollte dabei auf das zu erwartende Rauschen abgestimmt werden - höhere Werte neigen weniger dazu, Ausschläge im Rauschen bzw. unabsichtliche Behrührungen der Oberfläsche als Anschlag zu erkennen, niedrigere Werte erlauben dagegen, auch sanfte Anschläge zu erkennen. In unseren Tests hat sich ein Faktor von 6 als guter Kompromiss erwiesen.
 
-We use simple highpass filtering to sort out most of the noise and only let stronger vibrations from the surface pass the sensors... 
+Wurde ein Anschlag erkannt, so beginnt ein Zeitfenster von ca. 500ms, in dem eingehende Messwerte gepuffert werden. Nach Ablauf des Zeitfensters wird dem Programm signalisiert, dass ein Schlag aufgenommen wurde. Zusätzlich werden die Messwerte bis ca. 20ms vor dem erkannten Anschlag in die Zeitreihe aufgenommen.
 
-To further smooth our data, we use boxfilter/ Gauss filter.
+\subsection*{Analyse der Beschleunigungsdaten}
+Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, die Spektrale Leistungssdichte der Zeitreihe bestimmt.
+In der aktuellen Implementierung konnten Abtastraten von ca. 200Hz erreicht werden. Für ein Zeitfenster von ca. 500ms ergeben sich somit 128 Messwerte. Nach Anwendung der Fouriertransformation erhält man somit 64 diskrete Frequenzgruppen mit einem Abstand von ca. 2Hz.
+
+\subsection*{Lernphase}
+Zum Erlernen
+
+\subsection*{Echtzeit-Klassifizierung}
+
+
+
 
 After basic filtering, we use ... to decide where the bang is coming from and what sound to play.
 
