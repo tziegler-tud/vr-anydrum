@@ -5,7 +5,7 @@ Zur Erkennung von von Anschlägen und Abgrenzung von Hintergrundrauschen werden 
 Wurde ein Anschlag erkannt, so beginnt ein Zeitfenster von ca. 500ms, in dem eingehende Messwerte gepuffert werden. Nach Ablauf des Zeitfensters wird dem Programm signalisiert, dass ein Schlag aufgenommen wurde. Zusätzlich werden die Messwerte bis ca. 20ms vor dem erkannten Anschlag in die Zeitreihe aufgenommen.
 
 \subsection*{Analyse der Beschleunigungsdaten}
-Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, die Spektrale Leistungssdichte der Zeitreihe bestimmt.
+Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, und die Spektrale Leistungssdichte der Zeitreihe bestimmt.
 In der aktuellen Implementierung konnten Abtastraten von ca. 200Hz erreicht werden. 
 Für ein Zeitfenster von ca. 500ms ergeben sich somit 128 Messwerte. 
 Nach Anwendung der Fouriertransformation erhält man somit 64 diskrete Frequenzgruppen mit einer Trennschärfe von ca. 2Hz.
