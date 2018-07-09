@@ -24,7 +24,7 @@ public class VirtualInstrument {
         this.maximaList = new LinkedList<>();
 
 
-        learncounter = 3;
+        learncounter = 10;
         this.learned = false;
 
         this.txtView = null;
@@ -47,11 +47,7 @@ public class VirtualInstrument {
     }
 
     public boolean learn(List<Integer> data){
-<<<<<<< HEAD
         if(learncounter>=0){
-=======
-        if(learncounter>1){
->>>>>>> 114a2207e0a2af5af99905a6fc96640424c9ada6
             this.maximaList.add(data);
             --learncounter;
             System.out.println("cp-A: "+learncounter);
