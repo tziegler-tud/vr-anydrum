@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
             }
         }
 
-        }
+    }
 
         /*
         List<Integer> list = mFFTRealTimeAnalyzer.calcMaxima(arduinoSensorManager.getLastKnock());
