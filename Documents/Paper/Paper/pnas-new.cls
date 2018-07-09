@@ -34,7 +34,7 @@
 
 %% Fonts and language
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[english]{babel}
+\RequirePackage[ngerman]{babel}
 \RequirePackage{amsmath,amsfonts,amssymb}
 \RequirePackage{lmodern}
 \RequirePackage[scaled]{helvet}
