@@ -1,0 +1,54 @@
+  \section*{Zetiplan}
+ \begin{landscape}
+ 	
+\newgantttimeslotformat{stardate}{
+	\def\decomposestardate##1.##2\relax{\def\stardateyear{##1}\def\stardateday{##2}
+	}
+	
+	\decomposestardate#1\relax
+	\pgfcalendardatetojulian{
+	\stardateyear-01-01}{#2}
+	\advance#2 by-1\relax
+	\advance#2 by\stardateday\relax
+	}
+%April
+\begin{ganttchart}[hgrid,vgrid,time slot format=stardate, inline,
+	milestone inline label node/.append style={left=5mm}]
+	{2018.99}{2018.120}
+	\gantttitlecalendar{, month=name, day}\\
+	\ganttgroup{Einführung}{2018.99}{2018.106}\\
+	\ganttbar{Signalerfassung und DrumSounds}{2018.107}{2018.120}
+\end{ganttchart}
+%Mai
+\begin{ganttchart}[hgrid,vgrid,time slot format=stardate, inline,
+	milestone inline label node/.append style={left=5mm}]
+	{2018.121}{2018.151}
+	\gantttitlecalendar{, month=name, week} \\
+	\ganttbar{Prototyp Singnaleinbindung}{2018.121}{2018.134}\\
+	\ganttbar{Prototyp Testen}{2018.136}{2018.145}\\
+	\ganttmilestone{Zwischenpräsentation}{2018.146} \\
+	\ganttbar{Verbessern}{2018.147}{2018.151}
+	\ganttlink{elem0}{elem1}
+	\ganttlink{elem1}{elem2}
+	\ganttlink{elem2}{elem3}	
+\end{ganttchart}
+%Juni - Juli
+\begin{ganttchart}[hgrid,vgrid,time slot format=stardate, inline,
+	milestone inline label node/.append style={left=5mm}]
+	{2018.152}{2018.195}
+	\gantttitlecalendar{, month=name, week}\\
+	\ganttbar{Erweitern \& verfeinern}{2018.152}{2018.171}\\
+	\ganttbar{Testen}{2018.172}{2018.179}\\
+	\ganttbar{Präsentation vorbereiten}{2018.175}{2018.182}\\
+	\ganttbar{Puffer}{2018.182}{2018.188}\\
+	\ganttmilestone{Endpräsentation}{2018.189} 
+	\ganttlink{elem0}{elem1}
+	\ganttlink{elem1}{elem2}	
+
+	\ganttlink{elem2}{elem3}
+	
+	\ganttlink{elem3}{elem4}
+\end{ganttchart}
+
+\end{landscape}
+
