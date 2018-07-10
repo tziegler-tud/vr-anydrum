@@ -1,17 +1,17 @@
-\section{Arduino}
+\subsection*{Arduino}
 \label{sec:Arduino}
 
-\subsection*{Arduino Mikrocontroller}
-Für die Umsetzung wurde ein "Arduino Nano" Mikrocontroller mit Prozessor ATmega328P verwendet. Dieser führt selbst keine Datenverarbeitung aus, sondern bietet lediglich die Kommunikationsschnittstelle zwischen Smartphone und Sensoren. Die Kommunikation zum Smartphone erfolgt über die Serielle Schnittstelle, die Kommunikation zum Sensor über den I$^2$C-Bus. 
+\subsubsection*{Arduino Mikrocontroller}
+Für die Umsetzung wurde ein \glqq Arduino Nano\grqq Mikrocontroller mit Prozessor ATmega328P verwendet. Dieser führt selbst keine Datenverarbeitung aus, sondern bietet lediglich die Kommunikationsschnittstelle zwischen Smartphone und Sensoren. Die Kommunikation zum Smartphone erfolgt über die Serielle Schnittstelle, die Kommunikation zum Sensor über den I$^2$C-Bus. 
 
 
-\subsection*{CH340}
+\subsubsection*{CH340}
 Der Arduino Nano ist mit dem  Seriell-zu-USB-Chip CH340 ausgestattet.
 Es unterstützt sowohl 5V, als auch 3.3V Spannungsquellen zum Betrieb.
 Die Baudraten reichen von 50bps bis zu 2Mbps.
 
 
-\subsection*{MPU-6050}
+\subsubsection*{MPU-6050}
 Nach dem Datenblatt \cite{MPU6050} besitzt der MPU-6050 Sensor ein Gyroskop und Beschleunigungssensoren für X-, Y- und Z-Achse.
 Auf einer Oberfläche angebracht kann der Beschleunigungssensor verwendet werden, um Schwingungen der Oberfläche aufzunehmen.
 Die Abtastrate des Beschleunigungssensors beträgt max. 1kHz, der Messbereich je nach Konfiguration +-2g, +-4g, +-8g, +-16g.
