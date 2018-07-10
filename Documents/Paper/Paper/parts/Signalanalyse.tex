@@ -6,17 +6,19 @@ Zur Erkennung von von Anschlägen und Abgrenzung von Hintergrundrauschen werden 
 Wurde ein Anschlag erkannt, so beginnt ein Zeitfenster von ca. 500ms, in dem eingehende Messwerte gepuffert werden. Nach Ablauf des Zeitfensters wird dem Programm signalisiert, dass ein Schlag aufgenommen wurde. Zusätzlich werden die Messwerte bis ca. 20ms vor dem erkannten Anschlag in die Zeitreihe aufgenommen.
 
 \subsection*{Analyse der Beschleunigungsdaten}
-Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, die Spektrale Leistungssdichte der Zeitreihe bestimmt.
-In der aktuellen Implementierung konnten Abtastraten von ca. 200Hz erreicht werden. 
-Für ein Zeitfenster von ca. 500ms ergeben sich somit 128 Messwerte. 
+Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, und die Spektrale Leistungssdichte der Zeitreihe bestimmt.
+In der aktuellen Implementierung konnten Abtastraten von ca. 200Hz erreicht werden. Die größte damit detektierbare Frequenz $f_{max}$ liegt somit bei 100Hz.
+Für ein Zeitfenster von ca. 500ms ergeben sich 128 Messwerte.
 Nach Anwendung der Fouriertransformation erhält man somit 64 diskrete Frequenzgruppen mit einer Trennschärfe von ca. 2Hz.
 
-Aus diesen Daten werden die 4 Frequenzanteile mit der höchsten Leistungsdichte ermittelt zur weiteren Verwendung gespeichert.
+Aus diesen Daten werden die 4 Frequenzanteile mit der höchsten Amplitude ermittelt zur weiteren Verwendung gespeichert.
 
 \subsection*{Lernphase}
-Zum Erlernen einer Schlagposition werden 10 Schläge aufgezeichnet und der Durchschnitt der jeweils stärksten Frequenzgruppe, zweitstärksten Frequenzgruppe, usw... ermittelt. Diese werden als charakteristisches Pattern gespeichert.
+Zum Erlernen einer Schlagposition werden zwölf Schläge aufgezeichnet, wie oben beschrieben analysiert. und anschließend der Durchschnitt der jeweils stärksten Frequenzgruppe, zweitstärksten Frequenzgruppe, usw. ermittelt, wie in Abb. \ref{fig:FFT_Mittelwerte} zu sehen ist. Diese werden als charakteristisches Muster gespeichert.
+
 Tabelle \ref{tab:FFT} zeigt die zwölf Schläge zum Lernen für Hihat und Bass.
-Die Schläge wurden auf einer Tischplatte ausgeführt mit 
+Die Schläge wurden auf einer Tischplatte ausgeführt mit unterschiedlicher Position für HiHat und Bass.
+Es ist zu erkenne, dass die Unterschiede zwischen den Mittelwerten größer sind, als zwischen den Median-Werte in Abb. \ref{fig:FFT_Median}.
 
 \begin{figure}[H]
 	\centering
@@ -69,18 +71,24 @@ Die Schläge wurden auf einer Tischplatte ausgeführt mit
 		\includegraphics[scale=0.5]{figures/Median_hihatbass.png}
 \end{subfigure}
 \caption{Median-Werte  von Hihat und Bass für Frequenzen F1 - F4}
-\label{fig:FFT}
+\label{fig:FFT_Median}
 \end{figure}
 
 
 \subsection*{Echtzeit-Klassifizierung}
-Ist die Echtzeit-Klassifizierung aktiviert, so werden nach erfolgter Anschlagserkennung und Schlagaufzeichnung die Messwerte analysiert und die stärksten Frequenzgruppen mit denen der gelernten Positionen verglichen. Der Schlag wird der Position mit der gerinsten totalen Abweichung zugeordnet.
+Ist die Echtzeit-Klassifizierung aktiviert, so werden nach erfolgter Anschlagserkennung und Schlagaufzeichnung die Messwerte analysiert und mit denen der gelernten Positionen verglichen. 
+Für diesen Vergleich werden die Frequenzabstände der jeweils stärkste Frequenzgruppen, zweitstärksten Frequenzgruppen, usw... ermittelt und die Teilergebnisse zu einer totalen Abweichung aufsummiert.
+
+Nachfolgend ist so eine Klassifizierung mittels der im Abschnitt "Lernphase" eingeführten Beispieldaten dargestellt:
+
+
+ 
 Erkennbar hierbei ist, dass in jedem Falle eine Zuordnung erfolgt - auch wenn die Abweichung absurd groß ist. Dies könnte jedoch leicht geändert werden, indem eine maximale Abweichung festgelegt wird und alle berechneten Abweichungen, die diesen Wert übersteigen, als nicht klassifizierbar eingestuft werden. Alternativ könnte, ähnlich zu anderen Clustering-Verfahren, eine Nachbarschaftsbeziehung zur Klassifikation verwendet werden.
 
 \subsection*{Signalaufbereitung/Filterung}
 
-In der aktuellen Implementierung erfolgt keine Filterung oder Nachbereitung der Messwerte. 
-
+In der aktuellen Implementierung wird keine Filterung der Messdaten vorgenommen. 
+Um die Genauigkeit der Frequenzanalyse zu erhöhen, sollten die Messwerte vor Anwendung der FFT mit einem Tiefpassfilter mit der Grenzfrequenz $f_{max}$ gefiltert werden.
 
 Eine Möglichkeit, um Rauschen zu unterdrücken wäre die Nutzung eines Grenzwertes. Auf diese Art können schwache Erschütterungen und leichte Vibrationen unterdrückt werden.
 Die Sensordaten könnten weiter geglättet werden durch Verwendung eines Box-Filters (Moving-Average) oder Gauss-Filters.
