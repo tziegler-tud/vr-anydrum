@@ -5,11 +5,13 @@ Für die Umsetzung wurde ein "Arduino Nano" Mikrocontroller mit Prozessor ATmega
 
 
 \subsection*{CH340}
-Bei dem Arduino Chip CH340 handelt es sich nach dem Datenblatt \cite{CH340} um einen BUS Konvertierungs Chip, der eine serielle USB Schnittstelle ansprechen kann.
+Der Arduino Nano ist mit dem  Seriell-zu-USB-Chip CH340 ausgestattet.
 Es unterstützt sowohl 5V, als auch 3.3V Spannungsquellen zum Betrieb.
 Die Baudraten reichen von 50bps bis zu 2Mbps.
 
 
 \subsection*{MPU-6050}
-Nach dem Datenblatt \cite{MPU6050} besitzt der MPU-6050 Sensor ein Gyroskop und ein Beschleunigungssensor mit X-, Y- und Z-Achsen.
-Der Beschleunigungssensor kann dabei verwendet werden, um Erschütterungen zu erkennen.
+Nach dem Datenblatt \cite{MPU6050} besitzt der MPU-6050 Sensor ein Gyroskop und Beschleunigungssensoren für X-, Y- und Z-Achse.
+Auf einer Oberfläche angebracht kann der Beschleunigungssensor verwendet werden, um Schwingungen der Oberfläche aufzunehmen.
+Die Abtastrate des Beschleunigungssensors beträgt max. 1kHz, der Messbereich je nach Konfiguration +-2g, +-4g, +-8g, +-16g.
+Für unser Projekt verwendeten wir den Beschleunigungssensor der Z-Achse im Wertebreich +-2g mit einer Auflösung von 16384 LSB/g.
