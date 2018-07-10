@@ -463,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements SensorActivity {
 
             if (!v.learned()) {
                 System.out.println("im here!");
-                boolean l = v.learn(mFFTRealTimeAnalyzer.calcMaxima(d));
+                boolean l = v.learn(mFFTRealTimeAnalyzer.calcFFTMaxima(d));
                 v.setLearned(l);
                 System.out.println("cp2");
                 System.out.println(Boolean.toString(v.learned()));

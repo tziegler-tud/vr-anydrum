@@ -64,12 +64,9 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
         final Button btnFFT = (Button) findViewById(R.id.BtnFFT);
         btnFFT.setOnClickListener(  new View.OnClickListener() {
             public void onClick(View v) {
-                FFTLogic mFFTLogic = new FFTLogic();
-                FFTRealTimeAnalyzer mFTR = new FFTRealTimeAnalyzer();
-                double[] data = mFFTLogic.transform(arduinoSensorManager.getLastKnock());
 
-                fftChart.appendData(data);
-                TextView text = (TextView) findViewById(R.id.viewMaxima);
+
+
             }
         });
     }
@@ -86,8 +83,9 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
             case 5:
 
 
-            case 6:
+            case 7:
                 drawChart();
+                drawFFT();
                 return;
 
             default:
@@ -121,6 +119,17 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
     private void drawChart(){
         this.dataChart.appendData(this.arduinoSensorManager.getLastKnock());
+    }
+    private void drawFFT(){
+        arduinoSensorManager.getLastKnock();
+        FFTLogic mFFTLogic = new FFTLogic();
+        FFTRealTimeAnalyzer mFTR = new FFTRealTimeAnalyzer();
+        double[] data = mFFTLogic.transform(arduinoSensorManager.getLastKnock());
+        fftChart.appendData(data);
+        TextView text = (TextView) findViewById(R.id.viewMaxima);
+        text.setText(data.toString());
+
+
     }
     public ArduinoUSB getArduinoUSB(){
         return null;

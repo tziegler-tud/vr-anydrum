@@ -37,8 +37,10 @@ public class FFTRealTimeAnalyzer {
         return true;
     }
 
-    public String matchData(double[] data){
+    public String matchData(double[] d){
         //List<Double> dist = new ArrayList<>();
+
+        double[] data = mFFTLogic.transform(d);
 
         String name = "default";
         int index = 0;
@@ -66,7 +68,9 @@ public class FFTRealTimeAnalyzer {
         return name;
     }
 
-    public List<Integer> calcMaxima(double[] data){
+    public List<Integer> calcFFTMaxima(double[] d){
+
+        double[] data = mFFTLogic.transform(d);
         return findLocalMaxima(data);
 
     }
