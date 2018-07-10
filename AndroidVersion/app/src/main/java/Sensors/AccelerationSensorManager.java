@@ -31,10 +31,10 @@ public class AccelerationSensorManager implements SensorEventListener {
     private boolean calibrating;
     private int calIndex;
 
-    private int knockLength = 62;
+    private int knockLength = 100;
 
 
-    private double[] lastKnock = new double[knockLength+2];
+    private double[] lastKnock = new double[knockLength+28];
 
     private boolean currentKnock;
     private boolean autoUnlock;
@@ -128,7 +128,9 @@ public class AccelerationSensorManager implements SensorEventListener {
             }
         } else {
             if (!this.lockState) {
+                System.out.println("not locked");
                 if (this.mSensorDataLogic.detectKnocks(this.buffer)) {
+                    this.lockState=true;
                     lock();
                     this.knock();
                 }
@@ -136,7 +138,7 @@ public class AccelerationSensorManager implements SensorEventListener {
             else {
                  if(currentKnock) this.lastKnock[lockedCount+2]=sensorEvent.values[2];
                  lockedCount += 1;
-                 if(lockedCount >= knockLength){
+                 if(currentKnock && lockedCount >= knockLength){
                      this.knockCompleted();
                      privateUnlock();
                      this.noKnock();
@@ -185,7 +187,7 @@ public class AccelerationSensorManager implements SensorEventListener {
         else {
             this.lockState = false;
             refMain.sensorManagerEvent(2);
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 10; i++) {
                 this.lastKnock[i] = buffer.get(buffer.size() - knockLength - i - 1);
             }
         }

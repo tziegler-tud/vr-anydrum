@@ -25,6 +25,7 @@ public class SensorDataLogic {
             float currentVal = buffer.get(l-1);
             float prevVal = buffer.get(l-2);
             if(currentVal>prevVal+10*this.stdDev && currentVal>8*prevVal){
+                System.out.println("Knock detected!");
                 return true;
             }
         }

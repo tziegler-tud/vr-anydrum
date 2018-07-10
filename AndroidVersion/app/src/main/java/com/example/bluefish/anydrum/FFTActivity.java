@@ -91,8 +91,10 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
             case 5:
 
 
-            case 6:
+            case 7:
+                System.out.println("knock completed");
                 drawChart();
+                drawFFT();
                 return;
 
             default:
@@ -105,14 +107,17 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
     private void createCharts()
     {
         this.dataChart = new LineChart(this, (GraphView) findViewById(R.id.graphViewData));
-        this.dataChart.setManual(-1,1,0,64);
+        this.dataChart.setScaling();
+        this.dataChart.setXAxisBoundsManual(true);
+        this.dataChart.setMinX(0);
+        this.dataChart.setMaxX(128);
 
         this.fftChart = new LineChart(this, (GraphView) findViewById(R.id.graphViewFFT));
         //fftChart.setManual(-5,5,0,64);
         fftChart.setScaling();
         fftChart.setXAxisBoundsManual(true);
         fftChart.setMinX(0);
-        fftChart.setMaxX(32);
+        fftChart.setMaxX(64);
     }
 
     public void updateChart(float data){
@@ -125,6 +130,15 @@ public class FFTActivity extends AppCompatActivity implements SensorActivity{
 
     private void drawChart(){
         this.dataChart.appendData(this.acSensorManager.getLastKnock());
+    }
+    private void drawFFT(){FFTLogic mFFTLogic = new FFTLogic();
+        FFTRealTimeAnalyzer mFTR = new FFTRealTimeAnalyzer();
+        double[] data = mFFTLogic.transform(acSensorManager.getLastKnock());
+
+        fftChart.appendData(data);
+        TextView text = (TextView) findViewById(R.id.viewMaxima);
+        mFTR.addCluster("test",acSensorManager.getLastKnock());
+        text.setText(mFTR.getMaxima("test").toString());
     }
 
 

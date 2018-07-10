@@ -91,7 +91,7 @@ public class FFTRealTimeAnalyzer {
 
     private List<Integer> findLocalMaxima(double[] data){
         int window_size = 5;
-        int maxima_amount = 3;
+        int maxima_amount = 4;
         List<Integer> localMaxima = new LinkedList<>();
         List<Integer> maxima = new LinkedList<>();
         Integer[] max = new Integer[maxima_amount];
