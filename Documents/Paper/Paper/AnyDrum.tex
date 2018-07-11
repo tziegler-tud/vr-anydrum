@@ -38,18 +38,16 @@
 \keywords{Drums $|$ Android $|$ Arduino $|$ PureData $|$} 
 
 \begin{abstract}
-Das bestimmen von Erschütterungen an Objekten kann mit Hilfe verschiedener Sensoren geschehen.
-Dabei können Piezzosensoren oder Beschleunigungssensoren zum Einsatz kommen.
-Um Erschütterungen auf einer Ebene zu lokalisieren und voneinander von ihrer Stärke zu unterscheiden, wurden Beschleunigungssensoren verwendet.
+Wird eine Oberfläche durch einen Anschlag angeregt, so beginnt die Oberfläche zu schwingen. Diese Schwingung kann mittels Beschleunigungssensoren auf der Oberfläche aufgenommen werden.
+Diese Schwingung sollen genutzt werden, um verschiedene Anschlagspositionen voneinander unterscheiden zu können.
 
-Verwendet wurde der MPU-6050 Sensor zusammen mit einem Arduino Nano.
+Verwendet wurde ein Arduino Nano mit einem Kombisensor MPU-6050. 
 Die Auswertung der Sensordaten fand auf einem Android-Smartphone statt.
-Um die Erkennung von Erschütterungen zu testen, wurden einzelne Schläge auf einen Tisch ausgewertet.
-Mehrere Schläge wurden analysiert und kategorisiert, indem ihnen einzelne Schlagzeuggeräusche zugeordnet wurden.
-Die Analyse wurde mit Hilfe einer FFT-Funktion durchgeführt.
+Zur Unterscheidung der Anschlagpositionen wurden aus den aufgenommenen Schwingungen mittels FFT-Analyse die dominantesten Frequenzen ermittelt und der Frequenzabstand zu den erlernten Positionen bestimmt.
+Nach erfolgreicher Zuordnung zu einer bekannten Position wurde ein entsprechender Ton abgespielt.
 
-Einzelne Schläge liesen sich damit gut bestimmen mit einem Sensor.
-Ebenso zwei Schläge an unterschiedlichen Positionen konnten mit geringer Fehlerrate unterschieden werden.
+Ziel des Projektes war es, mittels des entstandenen Systems eine beliebige Oberfläche als virtuell erweitertes Percussioninstrument nutzen zu können.
+
 
 \end{abstract}
 

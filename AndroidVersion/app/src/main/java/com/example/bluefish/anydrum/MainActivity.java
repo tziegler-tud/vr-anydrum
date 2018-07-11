@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private void createChart()
     {
         LineChart chart = new LineChart(this, aclSensor.getListOfSensorDataFiltered());
-    }
+    }git
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
