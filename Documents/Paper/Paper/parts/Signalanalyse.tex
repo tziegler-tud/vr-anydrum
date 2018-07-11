@@ -6,20 +6,21 @@ Zur Erkennung von von Anschlägen und Abgrenzung von Hintergrundrauschen werden 
 Wurde ein Anschlag erkannt, so beginnt ein Zeitfenster von ca. 500ms, in dem eingehende Messwerte gepuffert werden. Nach Ablauf des Zeitfensters wird dem Programm signalisiert, dass ein Schlag aufgenommen wurde. Zusätzlich werden die Messwerte bis ca. 20ms vor dem erkannten Anschlag in die Zeitreihe aufgenommen.
 
 \subsubsection*{Analyse der Beschleunigungsdaten}
-Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, und die Spektrale Leistungssdichte der Zeitreihe bestimmt.
+Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der dominantesten Frequenzen.
+Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen und die Amplituden der Frequenzgruppen bestimmt.
 In der aktuellen Implementierung konnten Abtastraten von ca. 200Hz erreicht werden. Die größte damit detektierbare Frequenz $f_{max}$ liegt somit bei 100Hz.
 Für ein Zeitfenster von ca. 500ms ergeben sich 128 Messwerte.
 Nach Anwendung der Fouriertransformation erhält man somit 64 diskrete Frequenzgruppen mit einer Trennschärfe von ca. 2Hz.
 
-Aus diesen Daten werden die vier Frequenzanteile mit der höchsten Amplitude ermittelt zur weiteren Verwendung gespeichert.
+Aus diesen Daten werden die vier Frequenzgruppen mit der höchsten Amplitude ermittelt und zur weiteren Verwendung gespeichert.
 
-Abbildung zeigt die Benutzeroberfläche und eine Darstellung der aufgenommen Schwingungen des Beschleunigungssensors.
-Dabei gibt die X-Achse den zeitlichen Verlauf in Abhängigkeit von der gewählten Abtastrate an und die Y-Achse die wahrgenommene Beschleunigung des Sensors in Y-Richtung.
+Um verschiedene Oberflächen auf ihre Eignung zu untersuchen, erweiterten wir unsere App um eine Funktion zur Darstellung der FFT-Analyse. Abbildung 2 zeigt die Analyse einer aufgenommenen Schwingung in einem frühen Stadium des Projektes.
+
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.4]{figures/gui_FFT.png}
-	\caption{Analyse eines aufgenommenen Schlages mit FFT-Analyse und größten Maxima. Die Abbildung entstand mit einer frühen Version der Android-App, die noch den Beschleunigungssensor des Smartphones verwendete. Aufgrund der niedrigen Samplerate ist die Schwingung ist bereits nach 80 Messwerten abgeklungen. Weiterhin wurden zu diesem Zeitpunkt nur die drei stärksten Maxima ermittelt.}
+	\caption{Analyse eines aufgenommenen Schlages mit FFT-Analyse und größten Maxima. Der obere Graph zeigt die aufgenommenen Messwerte, der untere das Ergebniss der FFT-Analyse. Die Abbildung entstand mit einer frühen Version der Android-App, die noch den Beschleunigungssensor des Smartphones verwendete. Aufgrund der niedrigen Abtastrate ist die Schwingung ist bereits nach 80 Messwerten abgeklungen. Weiterhin wurden zu diesem Zeitpunkt nur die drei stärksten Maxima ermittelt.}
 	\label{fig:guiA}
 \end{figure}
 
@@ -30,7 +31,7 @@ Zum Erlernen einer Schlagposition werden zwölf Schläge aufgezeichnet, wie oben
 
 Tabelle \ref{tab:FFT} zeigt die zwölf Schläge zum Lernen für Hihat und Bass.
 Die Schläge wurden auf einer Tischplatte ausgeführt mit unterschiedlicher Position für HiHat und Bass.
-Es ist zu erkennen, dass die Unterschiede zwischen den Arithm. Mittelwerten deutlich größer sind, als zwischen den Median-Werte in Abb. \ref{fig:FFT_Median}. Aufgrund dieser Beobachtung wurde das Arithm. Mittel gewählt, um das charakteristische Muster zu erzeugen. 
+Es ist zu erkennen, dass die Unterschiede zwischen den Arithm. Mittelwerten deutlich größer sind, als zwischen den Median-Werte in Abb. \ref{fig:FFT_Median}. Aufgrund dieser Beobachtung wurde das Arithm. Mittel gewählt, um das charakteristische Muster zu erzeugen. Weiterhin ist erkennbar, das die Unterschiede selbst bei der viertstärksten Frequenzgruppe noch deutlich sind. Wurden zusätzlich die fünftstärksten, sechststärksten, etc.. Frequenzgruppen mit einbezogen, verloren diese zunehmend an Signifikanz und das Ergebniss der Klassifikation wurde ungenauer.
 
 \begin{table}[H]
 	\centering
