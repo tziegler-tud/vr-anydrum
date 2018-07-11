@@ -1,40 +1,54 @@
-\subsection*{Signalanalyse}
+\subsection{Signalanalyse}
 \label{sec:Signalanalyse}
-\subsubsection*{Anschlagserkennung}
-Zur Erkennung von von Anschlägen und Abgrenzung von Hintergrundrauschen werden die Messdaten in Echtzeit geprüft. Hierzu werden die jeweils letzten beiden Messwerte miteinander verglichen. Ein Anschlag wird erkannt, wenn der aktuellere Wert den vorherigen Wert um ein bestimmtes Vielfaches der Standartabweichung übersteigt. Der Faktor sollte dabei auf das zu erwartende Rauschen abgestimmt werden - höhere Werte neigen weniger dazu, Ausschläge im Rauschen bzw. unabsichtliche Behrührungen der Oberfläsche als Anschlag zu erkennen, niedrigere Werte erlauben dagegen, auch sanfte Anschläge zu erkennen. In unseren Versuchen hat sich ein Faktor von 6 als stabil erwiesen.
+\subsubsection{Anschlagserkennung}
+Zur Erkennung von Anschlägen und Abgrenzung von Hintergrundrauschen werden die Messdaten in Echtzeit geprüft. 
+Hierzu werden die jeweils letzten beiden Messwerte miteinander verglichen. 
+Ein Anschlag wird erkannt, wenn der aktuellere Wert den vorherigen Wert um ein bestimmtes Vielfaches der Standartabweichung übersteigt. 
+Der Faktor sollte dabei auf das zu erwartende Rauschen abgestimmt werden.
+Höhere Werte neigen weniger dazu, Ausschläge im Rauschen bzw. unabsichtliche Berührungen der Oberfläche als Anschlag zu erkennen.
+Niedrigere Werte erlauben dagegen, auch sanfte Anschläge zu erkennen.
+In unseren Versuchen hat sich ein Faktor von sechs als stabil erwiesen.
 
-Wurde ein Anschlag erkannt, so beginnt ein Zeitfenster von ca. 500ms, in dem eingehende Messwerte gepuffert werden. Nach Ablauf des Zeitfensters wird dem Programm signalisiert, dass ein Schlag aufgenommen wurde. Zusätzlich werden die Messwerte bis ca. 20ms vor dem erkannten Anschlag in die Zeitreihe aufgenommen.
+Wurde ein Anschlag erkannt, so beginnt ein Zeitfenster von ca. 500ms, in dem eingehende Messwerte gepuffert werden. 
+Nach Ablauf des Zeitfensters wird dem Programm signalisiert, dass ein Schlag aufgenommen wurde. 
+Zusätzlich werden die Messwerte bis ca. 20ms vor dem erkannten Anschlag in die Zeitreihe aufgenommen.
 
-\subsubsection*{Analyse der Beschleunigungsdaten}
-Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, und die Spektrale Leistungssdichte der Zeitreihe bestimmt.
-In der aktuellen Implementierung konnten Abtastraten von ca. 200Hz erreicht werden. Die größte damit detektierbare Frequenz $f_{max}$ liegt somit bei 100Hz.
+\subsubsection{Analyse der Beschleunigungsdaten}
+\label{sec:Analyse-a}
+Die Klassifizierung aufgenommener Schläge erfolgt mittels Auswertung der stärksten Frequenzen. 
+Hierzu werden die Messwerte zunächst einer diskreten Fouriertransformation unterzogen, und die Spektrale Leistungssdichte der Zeitreihe bestimmt.
+In der aktuellen Implementierung konnten Abtastraten von ca. 200Hz erreicht werden. 
+Die größte detektierbare Frequenz $f_{max}$ liegt somit bei 100Hz.
 Für ein Zeitfenster von ca. 500ms ergeben sich 128 Messwerte.
 Nach Anwendung der Fouriertransformation erhält man somit 64 diskrete Frequenzgruppen mit einer Trennschärfe von ca. 2Hz.
 
 Aus diesen Daten werden die vier Frequenzanteile mit der höchsten Amplitude ermittelt zur weiteren Verwendung gespeichert.
 
-Abbildung zeigt die Benutzeroberfläche und eine Darstellung der aufgenommen Schwingungen des Beschleunigungssensors.
+Abbildung \ref{fig:guiA} zeigt die Benutzeroberfläche und eine Darstellung der aufgenommen Schwingungen des Beschleunigungssensors.
 Dabei gibt die X-Achse den zeitlichen Verlauf in Abhängigkeit von der gewählten Abtastrate an und die Y-Achse die wahrgenommene Beschleunigung des Sensors in Y-Richtung.
 
-\begin{figure}[H]
+\begin{figure}[H]Lernphase
 	\centering
 	\includegraphics[scale=0.4]{figures/gui_FFT.png}
-	\caption{Analyse eines aufgenommenen Schlages mit FFT-Analyse und größten Maxima. Die Abbildung entstand mit einer frühen Version der Android-App, die noch den Beschleunigungssensor des Smartphones verwendete. Aufgrund der niedrigen Samplerate ist die Schwingung ist bereits nach 80 Messwerten abgeklungen. Weiterhin wurden zu diesem Zeitpunkt nur die drei stärksten Maxima ermittelt.}
+	\caption{Analyse eines aufgenommenen Schlages mit FFT-Analyse und größten Maxima. Die Abbildung entstand mit einer frühen Version der Android-App, die noch den Beschleunigungssensor des Smartphones verwendete. Aufgrund der niedrigen Samplerate ist die Schwingung bereits nach 80 Messwerten abgeklungen. Weiterhin wurden zu diesem Zeitpunkt nur die drei stärksten Maxima ermittelt.}
 	\label{fig:guiA}
 \end{figure}
 
 
-\subsubsection*{Lernphase}
+\subsubsection{Lernphase}
 \label{sec:Lernphase}
-Zum Erlernen einer Schlagposition werden zwölf Schläge aufgezeichnet, wie oben beschrieben analysiert. und anschließend der Durchschnitt der jeweils stärksten Frequenzgruppe, zweitstärksten Frequenzgruppe, usw. ermittelt, wie in Abb. \ref{fig:FFT_Mittelwerte} zu sehen ist. Diese werden als charakteristisches Muster gespeichert.
+Zum Erlernen einer Schlagposition werden zwölf Schläge aufgezeichnet und wie oben in Abschnitt \ref{sec:Analyse-a} beschrieben analysiert.
+Anschließend wird der Durchschnitt der jeweils stärksten Frequenzgruppe, zweitstärksten Frequenzgruppe, usw. ermittelt, wie in Abb. \ref{fig:FFT_Mittelwerte} zu sehen ist. 
+Diese werden als charakteristisches Muster gespeichert.
 
 Tabelle \ref{tab:FFT} zeigt die zwölf Schläge zum Lernen für Hihat und Bass.
 Die Schläge wurden auf einer Tischplatte ausgeführt mit unterschiedlicher Position für HiHat und Bass.
-Es ist zu erkennen, dass die Unterschiede zwischen den Arithm. Mittelwerten deutlich größer sind, als zwischen den Median-Werte in Abb. \ref{fig:FFT_Median}. Aufgrund dieser Beobachtung wurde das Arithm. Mittel gewählt, um das charakteristische Muster zu erzeugen. 
+Es ist zu erkennen, dass die Unterschiede zwischen den Arithm. Mittelwerten deutlich größer sind, als zwischen den Median-Werte in Abb. \ref{fig:FFT_Median}. 
+Aufgrund dieser Beobachtung wurde das Arithm. Mittel gewählt, um das charakteristische Muster zu erzeugen. 
 
 \begin{table}[H]
 	\centering
-	\caption{Stärkste Frequenzgruppen}
+	\caption{Stärkste Frequenzgruppen aus jeweils zwölf Schlägen für HiHat und Bass}
 	\begin{tabular}{l c c c c | l c c c c}
 		HiHat &&&& &Bass \\
 		\hline
@@ -107,11 +121,12 @@ Es ist zu erkennen, dass die Unterschiede zwischen den Arithm. Mittelwerten deut
 \end{figure}
 
 
-\subsubsection*{Echtzeit-Klassifizierung}
+\subsubsection{Echtzeit-Klassifizierung}
 Ist die Echtzeit-Klassifizierung aktiviert, so werden nach erfolgter Anschlagserkennung und Schlagaufzeichnung die Messwerte analysiert und mit denen der gelernten Positionen verglichen. 
-Für diesen Vergleich werden die Frequenzabstände der jeweils stärkste Frequenzgruppen, zweitstärksten Frequenzgruppen, usw... ermittelt und die Teilergebnisse zu einer totalen Abweichung aufsummiert.
+Für diesen Vergleich werden die Frequenzabstände der jeweils stärkste Frequenzgruppen, zweitstärksten Frequenzgruppen, usw. ermittelt und die Teilergebnisse zu einer totalen Abweichung aufsummiert.
 
-Nachfolgend ist so eine Klassifizierung mittels der im Abschnitt Lernphase eingeführten Beispieldaten dargestellt. Nach erfolgter Lernphase wurde ein Anschlag aufgenommen und analysiert:
+Nachfolgend ist so eine Klassifizierung mittels der im Abschnitt \ref{sec:Lernphase} eingeführten Beispieldaten dargestellt.
+Nach erfolgter Lernphase wurde ein Anschlag aufgenommen und analysiert:
 
 Dominateste Frequenzgruppen des Anschlages: 
 \begin{tabular}{c c c c}
@@ -141,11 +156,14 @@ Error_{Base} &= \lvert (13-7.9)\rvert + \lvert(18-22.8)\rvert + \lvert(7-24.6)\r
 Error_{Base} &= 30,7
 \end{align*}
 
-Der Fehlerwert für HiHat ist geringer, demzufolge wird die angeschlagene Position als HiHat-Position klassifiziert.
+Der Fehlerwert für HiHat ist geringer.
+Demzufolge wird die angeschlagene Position als HiHat-Position klassifiziert.
  
-Erkennbar hierbei ist, dass in jedem Falle eine Zuordnung erfolgt - auch wenn die Abweichung absurd groß ist. Dies könnte jedoch leicht geändert werden, indem eine maximale Abweichung festgelegt wird und alle berechneten Abweichungen, die diesen Wert übersteigen, als nicht klassifizierbar eingestuft werden. Alternativ könnte, ähnlich zu anderen Clustering-Verfahren, eine Nachbarschaftsbeziehung zur Klassifikation verwendet werden.
+Erkennbar hierbei ist, dass in jedem Falle eine Zuordnung erfolgt, auch wenn die Abweichung sehr groß ist. 
+Dies könnte jedoch leicht geändert werden, indem eine maximale Abweichung festgelegt wird und alle berechneten Abweichungen, die diesen Wert übersteigen, als nicht klassifizierbar eingestuft werden. 
+Alternativ könnte, ähnlich zu anderen Clustering-Verfahren, eine Nachbarschaftsbeziehung zur Klassifikation verwendet werden.
 
-\subsubsection*{Signalaufbereitung und Filterung}
+\subsubsection{Signalaufbereitung und Filterung}
 
 In der aktuellen Implementierung wird keine Filterung der Messdaten vorgenommen. 
 Um die Genauigkeit der Frequenzanalyse zu erhöhen, sollten die Messwerte vor Anwendung der FFT mit einem Tiefpassfilter mit der Grenzfrequenz $f_{max}$ gefiltert werden.

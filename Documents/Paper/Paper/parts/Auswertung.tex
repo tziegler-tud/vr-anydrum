@@ -1,0 +1,49 @@
+\section{Auswertung}
+\subsection{Oberfläche}
+\textit{Welche Oberflächen eignen sich am besten?}
+
+Im Laufe des Projektes wurde eine Reihe von Testdurchläufen auf verschiedenen Oberflächen ausgeführt. Dazu wurden zwei Positionen mit jeweils 10 Schlägen angelernt und anschließend 100 Anschläge druchgeführt. 
+Die Dämpfung erfolgte durch eine flach auf den Tisch gelegte Hand realisiert. 
+Zur Bewertung der Oberfläche wurde die effektive Erkennungsrate herangezogen.
+
+\begin{table}[H]   
+	\centering
+     
+     \caption{Erkennungsrate verschiedener Oberflächen}
+     \label{tab:surf}
+\begin{tabular}{l c}
+Oberfläche & Erkennungsrate \\
+\hline
+Holztisch, & 65\% \\
+Holztisch, mit Dämpfern & 68\% \\
+Kunststofftisch, leer & 60\% \\
+Kunststofftisch mit laufenden PCs & 53\% \\
+
+\end{tabular}
+\end{table}
+
+
+
+In Tabelle ~\ref{tab:surf} ist erkennbar, dass zwischen gedämpfter und ungedämpfter Holztischplatte kaum signifikante Unterschiede bestehen. 
+Die Dämpfung könnte jedoch relevant werden, wenn ein schnelleres Spieltempo angestrebt wird, und Schwingungen aus Anschlägen sich überlagern. 
+In unserem Versuch führten wir den nächsten Anschlag erst aus, wenn die Schwingung der Oberfläche durch den vorherigen Anschlag abgeklungen war.
+
+Weiterhin ist erkennbar, dass die Erkennungsrate bei der Kunststofftischplatte geringer war als bei der Holzplatte.
+
+
+\subsection{Zeitfenster}
+\textit{Wie groß muss das Zeitfenster für einen Schlag gewählt werden, um eine robuste Erkennung sowie eine geringe Latenz zu erreichen?}
+
+Zu Beginn des Projektes wurde zwischen Anschlag und Soundausgabe eine maximale Latenz von 100ms angestrebt. Im Laufe der Entwicklung mussten jedoch festgestellt werden, dass mit den verwendeten Methoden diese Latenzzeit nicht erreicht werden kann.
+
+Um die Anschläge zuverlässig unterscheiden zu können, muss nach der FFT-Analyse eine ausreichend hohe Frequenzauflösung erreicht werden. Bei anfänglichen Versuchen mit 32 und 64 Messwerten pro Schlag zeigte sich, dass bei unterschiedlichen Anschlagspositionen die dominantesten Frequenzgruppen größtenteils identisch waren. Erst durch eine weitere Verfeinerung auf 128 Messwerte pro Schlag konnten zuverlässig Unterschiede in den dominantesten Frequenzen ermittelt werden.
+
+Mit Verwendung des MPU6050 konnten Sampleraten von ca. 200Hz erreicht werden. Um 128 Messwerte aufzunehmen, muss somit ein Zeitfenster von ca. 500ms aufgenommen werden. Da während dieses Zeitfensters noch keine Analyse ausgeführt werden kann, ergibt sich die in der aktuellen Implementierung vorhandene, enorm hohe Latenz von ca. 550ms.
+
+Um das ursprüngliche Ziel einer Latenz von <100ms einzuhalten, müsste eine deutlich höhrere Samplerate erreicht werden. Wir vermuten, dass bei einer Samplingrate von ca. 2.5kHz und einem Zeitfenster von 50ms zur Messwertaufnahme eine Latenz von <100ms gelichzeitig zu einer robusten Erkennung erreicht werden könnte.
+
+
+\subsection{Analyse}
+\textit{Welche Informationen können aus den Beschleunigungsdaten gewonnen werden, und welche eignen sich zur Echtzeit-Klassifizierung?}
+
+Wir wählten den Ansatz der Klassifizierung anhand der dominantesten Frequenzen. Wie in der Projektarbeit "Virtuelles Schlagzeug" (Peetz/Ankermann/Ridder, Modul Virtuelle Realität, TU Dresden, 2017) beschrieben, ist damit eine zuverlässige Unterscheidung mind. zweier Anschlagspositionen möglich. Vorraussetzung ist jedoch eine Ausreichend große Abtastrate des Sensors, wie im Abschnitt \glqq Zeitfenster\grqq~  beschrieben.

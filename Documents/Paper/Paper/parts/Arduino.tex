@@ -1,18 +1,18 @@
-\subsection*{Arduino}
+\subsection{Arduino}
 \label{sec:Arduino}
 
-\subsubsection*{Arduino Mikrocontroller}
-Verwendet wurde ein \glqq Arduino Nano\grqq~  Mikrocontroller mit Prozessor ATmega328P. Dieser führt selbst keine Datenverarbeitung aus, sondern bietet lediglich die Kommunikationsschnittstelle zwischen Smartphone und Sensoren. Die Kommunikation zum Smartphone erfolgt über die Serielle Schnittstelle, die Kommunikation zum Sensor über den I$^2$C-Bus. 
+\subsubsection{Arduino Mikrocontroller}
+Verwendet wurde ein \glqq Arduino Nano\grqq  Mikrocontroller mit Prozessor ATmega328P. Dieser führt selbst keine Datenverarbeitung aus, sondern bietet lediglich die Kommunikationsschnittstelle zwischen Smartphone und Sensoren. Die Kommunikation zum Smartphone erfolgt über die Serielle Schnittstelle, die Kommunikation zum Sensor über den I$^2$C-Bus. 
 
 
-\subsubsection*{CH340}
+\subsubsection{CH340}
 Der Arduino Nano ist mit dem  Seriell-zu-USB-Chip CH340 ausgestattet.
-Es unterstützt sowohl 5V, als auch 3.3V Spannungsquellen zum Betrieb.
+Laut Datenblatt \cite{CH340} werden sowohl 5V, als auch 3.3V Spannungsquellen zum Betrieb unterstützt.
 Die Baudraten reichen von 50bps bis zu 2Mbps.
 
 
-\subsubsection*{MPU-6050}
-Nach dem Datenblatt \cite{MPU6050} besitzt der MPU-6050 Sensor ein Gyroskop und Beschleunigungssensoren für X-, Y- und Z-Achse.
+\subsubsection{MPU-6050}
+Nach dem Datenblatt \cite{MPU6050} besitzt der MPU-6050 Sensor ein Gyroskop und Beschleunigungssensoren für die X-, Y- und Z-Achse.
 Auf einer Oberfläche angebracht kann der Beschleunigungssensor verwendet werden, um Schwingungen der Oberfläche aufzunehmen.
 Die Abtastrate des Beschleunigungssensors beträgt max. 1kHz, der Messbereich je nach Konfiguration +-2g, +-4g, +-8g, +-16g.
-Für unser Projekt verwendeten wir den Beschleunigungssensor der Z-Achse im Wertebreich +-2g mit einer Auflösung von 16384 LSB/g.
+Für unser Projekt verwendeten wir den Beschleunigungssensor der Z-Achse im Wertebreich +-2g mit einer Auflösung von $16384 \frac{LSB}{g}$.
