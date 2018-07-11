@@ -262,7 +262,7 @@
 %% Section/subsection/paragraph set-up
 \RequirePackage[explicit]{titlesec}
 \setcounter{secnumdepth}{5}
-\renewcommand{\thesubsection}{\Alph{subsection}}
+%\renewcommand{\thesubsection}{\Alph{subsection}}
 
 \titleformat{\section}
   {\large\sffamily\bfseries}
