@@ -25,41 +25,62 @@ Dabei gibt die X-Achse den zeitlichen Verlauf in Abhängigkeit von der gewählte
 
 
 \subsubsection*{Lernphase}
+\label{sec:Lernphase}
 Zum Erlernen einer Schlagposition werden zwölf Schläge aufgezeichnet, wie oben beschrieben analysiert. und anschließend der Durchschnitt der jeweils stärksten Frequenzgruppe, zweitstärksten Frequenzgruppe, usw. ermittelt, wie in Abb. \ref{fig:FFT_Mittelwerte} zu sehen ist. Diese werden als charakteristisches Muster gespeichert.
 
 Tabelle \ref{tab:FFT} zeigt die zwölf Schläge zum Lernen für Hihat und Bass.
 Die Schläge wurden auf einer Tischplatte ausgeführt mit unterschiedlicher Position für HiHat und Bass.
-Es ist zu erkenne, dass die Unterschiede zwischen den Mittelwerten größer sind, als zwischen den Median-Werte in Abb. \ref{fig:FFT_Median}.
+Es ist zu erkennen, dass die Unterschiede zwischen den Arithm. Mittelwerten deutlich größer sind, als zwischen den Median-Werte in Abb. \ref{fig:FFT_Median}. Aufgrund dieser Beobachtung wurde das Arithm. Mittel gewählt, um das charakteristische Muster zu erzeugen. 
 
 \begin{table}[H]
 	\centering
-	\caption{Stärkste Frequenzen}
+	\caption{Stärkste Frequenzgruppen}
 	\begin{tabular}{l c c c c | l c c c c}
 		HiHat &&&& &Bass \\
 		\hline
-		Frequenz & F1 & F2 & F3 & F4  & & F1 & F2 & F3 & F4\\	
-		& 13 & 14 & 15 & 19  &&13& 114& 115& 87\\
-		& 30 & 31 & 23 & 24 &&13& 28& 29& 30\\
-		& 13& 14& 15& 16 &&35& 36& 23& 24\\
-		& 29& 30& 13&36 &&13& 14& 15& 62\\
-		& 17& 23&24& 30 	&&15& 16& 42& 43\\
-		&13& 24& 25& 47	&&13& 54& 30& 31\\
-
-		&27& 15& 16& 17	&&20& 89& 90& 39\\
-
-		 &17& 18& 30& 31 &&13& 20& 26& 27\\
-
-		&42& 43& 44& 55		&&19& 20& 29& 30\\
-
-		 &25& 33& 34& 35 &&19& 20& 13& 26 \\
-
-		&22& 23& 13& 37		&&13& 14& 15& 16\\
-
-		&31& 32& 14& 15  &&13& 58& 59& 60\\
-		\\
+		Frequenzgruppe & $F_1$ & $F_2$ & $F_3$ & $F_4$  & & $F_1$ & $F_2$ & $F_3$ & $F_4$\\	
+		
+        & 6	 & 13  & 8  & 18 && 6  & 52 &	58 & 41\\
+        & 15 &	19 & 7  & 10 && 6  & 14 &	18 & 10\\
+        & 5  &	24 & 15	& 11 && 17 & 23 &	11 & 29\\
+        & 14 &	18 & 7  & 26 && 6  & 27 &	11 & 31\\
+        & 8	 &  16 & 12 & 23 && 7  & 11 &	21 & 15\\
+        & 5  &	12 & 16 & 21 && 6  & 27 &	15 & 10\\
+        & 14 &	7  & 20	& 4  && 10 & 45 &	60 & 21\\
+        & 8	 &  30 & 41 & 14 &&  6 & 10 &	15 & 27\\
+        & 21 &	24 & 31 & 7  &&  9 & 10 &	14 & 30\\
+        & 12 &	18 & 23 & 35 &&  9 & 11 &	5  & 18\\
+        & 11 &	23 &  6 & 18 &&  7 & 14 &	31 & 20\\
+        & 17 &	11 &  7 &  4 &&  6 & 29 &	36 & 58\\
+        		\\
 		\hline
-		Durchschnitt & 23,25&	25	&22,167& 30,167 && 16,583	&40,25&	40,5&	39,583	\\
-		Median & 23,5 &	23,5& 19,5	& 30,5 && 13 &	24	& 29	 &30,5 \\		 
+		Arithm. Mittel & 11.3 & 17.9 & 16.1 &	15.9  && 7.9 & 22.8 &	24.6 &	25.8\\
+		Median       & 11.5 & 18   & 13.5 &	16    && 6.5 & 18.5 &	16.5 &	24\\		 
+
+ 
+        
+%        & 13 & 14 & 15 & 19  &&13& 114& 115& 87\\
+%		& 30 & 31 & 23 & 24 &&13& 28& 29& 30\\
+%		& 13& 14& 15& 16 &&35& 36& 23& 24\\
+%		& 29& 30& 13&36 &&13& 14& 15& 62\\
+%		& 17& 23&24& 30 	&&15& 16& 42& 43\\
+%		&13& 24& 25& 47	&&13& 54& 30& 31\\
+%
+%		&27& 15& 16& 17	&&20& 89& 90& 39\\
+%
+%		 &17& 18& 30& 31 &&13& 20& 26& 27\\
+%
+%		&42& 43& 44& 55		&&19& 20& 29& 30\\
+%
+%		 &25& 33& 34& 35 &&19& 20& 13& 26 \\
+%
+%		&22& 23& 13& 37		&&13& 14& 15& 16\\
+%
+%		&31& 32& 14& 15  &&13& 58& 59& 60\\
+%		\\
+%		\hline
+%		Durchschnitt & 23,25&	25	&22,167& 30,167 && 16,583	&40,25&	40,5&	39,583	\\
+%		Median & 23,5 &	23,5& 19,5	& 30,5 && 13 &	24	& 29	 &30,5 \\		 
 		
 
 	\end{tabular}
@@ -69,9 +90,9 @@ Es ist zu erkenne, dass die Unterschiede zwischen den Mittelwerten größer sind
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
-		\includegraphics[scale=0.5]{figures/Mittelwert_hihatbass.png}
+		\includegraphics[scale=0.5]{figures/Mittelwert_2.png}
 \end{subfigure}
-\caption{Mittelwerte von Hihat und Bass für Frequenzen F1 - F4}
+\caption{Arithm. Mittel von Hihat und Bass für Frequenzen F1 - F4}
 \label{fig:FFT_Mittelwerte}
 \end{figure}
 
@@ -79,9 +100,9 @@ Es ist zu erkenne, dass die Unterschiede zwischen den Mittelwerten größer sind
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
-		\includegraphics[scale=0.5]{figures/Median_hihatbass.png}
+		\includegraphics[scale=0.5]{figures/Median_2.png}
 \end{subfigure}
-\caption{Median-Werte  von Hihat und Bass für Frequenzen F1 - F4}
+\caption{Median von Hihat und Bass für Frequenzen F1 - F4}
 \label{fig:FFT_Median}
 \end{figure}
 
@@ -90,9 +111,37 @@ Es ist zu erkenne, dass die Unterschiede zwischen den Mittelwerten größer sind
 Ist die Echtzeit-Klassifizierung aktiviert, so werden nach erfolgter Anschlagserkennung und Schlagaufzeichnung die Messwerte analysiert und mit denen der gelernten Positionen verglichen. 
 Für diesen Vergleich werden die Frequenzabstände der jeweils stärkste Frequenzgruppen, zweitstärksten Frequenzgruppen, usw... ermittelt und die Teilergebnisse zu einer totalen Abweichung aufsummiert.
 
-Nachfolgend ist so eine Klassifizierung mittels der im Abschnitt "Lernphase" eingeführten Beispieldaten dargestellt:
+Nachfolgend ist so eine Klassifizierung mittels der im Abschnitt Lernphase eingeführten Beispieldaten dargestellt. Nach erfolgter Lernphase wurde ein Anschlag aufgenommen und analysiert:
+
+Dominateste Frequenzgruppen des Anschlages: 
+\begin{tabular}{c c c c}
+$F_1$ & $F_2$ & $F_3$ & $F_4$\\
+\hline
+ 13  &	18 &	7 &	28\\
+\end{tabular}
+
+Berechnung der Frequenzabstände:
+\begin{displaymath}
+Error_{position} = \sum_{i=1}^{4} \lvert F_{i,schlag} - F_{i,position}\rvert
+\end{displaymath}
+
+ergibt folgende Fehlerwerte:
 
 
+\begin{align*}
+Error_{HiHat} &= \sum_{i=1}^{4}  \lvert F_{i,schlag} - F_{i,HiHat}\rvert \\
+Error_{HiHat} &= \lvert(13-11.3)\rvert + \lvert(18-17.9)\rvert + \lvert(7-16.1)\rvert + \lvert(28-15.9)\rvert \\
+Error_{HiHat} &= 23
+\end{align*}
+
+
+\begin{align*}
+Error_{Base} &= \sum_{i=1}^{4} \lvert F_{i,schlag} - F_{i,Base}\rvert \\
+Error_{Base} &= \lvert (13-7.9)\rvert + \lvert(18-22.8)\rvert + \lvert(7-24.6)\rvert + \lvert(28-25.8)\rvert \\
+Error_{Base} &= 30,7
+\end{align*}
+
+Der Fehlerwert für HiHat ist geringer, demzufolge wird die angeschlagene Position als HiHat-Position klassifiziert.
  
 Erkennbar hierbei ist, dass in jedem Falle eine Zuordnung erfolgt - auch wenn die Abweichung absurd groß ist. Dies könnte jedoch leicht geändert werden, indem eine maximale Abweichung festgelegt wird und alle berechneten Abweichungen, die diesen Wert übersteigen, als nicht klassifizierbar eingestuft werden. Alternativ könnte, ähnlich zu anderen Clustering-Verfahren, eine Nachbarschaftsbeziehung zur Klassifikation verwendet werden.
 
