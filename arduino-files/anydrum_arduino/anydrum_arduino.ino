@@ -13,6 +13,12 @@
       return tmp_str;
     }
 
+    uint8_t counter = 0;
+    const uint8_t arraysize = 100;
+
+    //int16_t bufferL[arraysize];
+    //int16_t bufferR[200];
+
 
     
     void setup() {
@@ -31,6 +37,14 @@
      
     }
     void loop() {
+
+      /*
+       * 
+       * One Sensor is not used in current implementation of the AnyDrum Project. Use this part to read out second sensor values and add Serial.print(temp) at bottom.
+       * 
+       * */
+
+       /*
       Wire.beginTransmission(MPU_ADDR1);
       Wire.write(0x3B); // starting with register 0x3B (ACCEL_XOUT_H) [MPU-6000 and MPU-6050 Register Map and Descriptions Revision 4.2, p.40]
       Wire.endTransmission(false); // the parameter indicates that the Arduino will send a restart. As a result, the connection is kept active.
@@ -46,19 +60,22 @@
       gyro_z = Wire.read()<<8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
       
       // print out data
-      /*Serial.print("aX = "); Serial.print(convert_int16_to_str(accelerometer_x));
-      Serial.print(" | aY = "); Serial.print(convert_int16_to_str(accelerometer_y));
-      Serial.print(" | aZ = "); Serial.print(convert_int16_to_str(accelerometer_z));
-      // the following equation was taken from the documentation [MPU-6000/MPU-6050 Register Map and Description, p.30]
-      Serial.print(" | tmp = "); Serial.print(temperature/340.00+36.53);
-      Serial.print(" | gX = "); Serial.print(convert_int16_to_str(gyro_x));
-      Serial.print(" | gY = "); Serial.print(convert_int16_to_str(gyro_y));
-      Serial.print(" | gZ = "); Serial.print(convert_int16_to_str(gyro_z));*/
+      //Serial.print("aX = "); Serial.print(convert_int16_to_str(accelerometer_x));
+      //Serial.print(" | aY = "); Serial.print(convert_int16_to_str(accelerometer_y));
+      //Serial.print(" | aZ = "); Serial.print(convert_int16_to_str(accelerometer_z));
+      //// the following equation was taken from the documentation [MPU-6000/MPU-6050 Register Map and Description, p.30]
+      //Serial.print(" | tmp = "); Serial.print(temperature/340.00+36.53);
+      //Serial.print(" | gX = "); Serial.print(convert_int16_to_str(gyro_x));
+      //Serial.print(" | gY = "); Serial.print(convert_int16_to_str(gyro_y));
+      //Serial.print(" | gZ = "); Serial.print(convert_int16_to_str(gyro_z));
 
       //Serial.println();
       temp = accelerometer_z;
+      
 
      Wire.endTransmission(true);
+
+     */
 
       Wire.beginTransmission(MPU_ADDR2);
       Wire.write(0x3B); // starting with register 0x3B (ACCEL_XOUT_H) [MPU-6000 and MPU-6050 Register Map and Descriptions Revision 4.2, p.40]
@@ -84,16 +101,13 @@
       Serial.print(" | gY = "); Serial.print(convert_int16_to_str(gyro_y));
       Serial.print(" | gZ = "); Serial.print(convert_int16_to_str(gyro_z));*/
 
-      //Serial.println();
-      Serial.print(temp);
-      Serial.print("\t");
-      Serial.println(accelerometer_z);
+      
 
-       Wire.endTransmission(true);
-
-      //p.Plot();
+   
+      Serial.print(accelerometer_z);
+      Serial.print(",");
       
       // delay
-      delay(1);
+      delay(5);
     }
 
