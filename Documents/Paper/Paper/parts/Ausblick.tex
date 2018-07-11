@@ -1,6 +1,6 @@
 \section{Ausblick}
 
-Eine Möglichkeit um Ausreiser genauer zu erkennen bieten Clustering-Verfahren.
+Um Ausreiser genauer zu erkennen und Daten besser zu klassifizieren, bieten sich Clustering-Verfahren an.
 Elbatta und Ashour untersuchen verschiedene Clustering Ansätze und stellen in ihrer Arbeit \cite{Elbatta2013ADM} einen verbesserten DBSCAN-Algorithmus vor.
 DBSCAN ist ein  dichtebasierter Cluster-Algorithmus, der als Parameter einen Radius und eine Mindestanzahl an Punkte pro Cluster benötigt.
 Im Gegensatz zu partitionierungsbasierten Cluster-Algorithmen, wie zum Beispiel K-Means, besitzt DBSCAN den Vorteil, dass es freie Formen von Clustern erkennen kann und sich besonders gut für Daten mit Rauschen eignet.
@@ -10,6 +10,9 @@ Ist die Anzahl Nachbarpunkte kleiner als die Mindestanzahl wird dies als Rausche
 Es wird rekursiv mit dem nächsten freien Punkt verfahren, der noch nicht zu einem Cluster gehört und noch nicht bewertet wurde.
 
 Bei der Verwendung eines solchen Verfahrens spielt jedoch die Vorverarbeitung der Daten eine wichtige Rolle.
-Ebenso muss das Zeitfenster für die Daten mitbeachtet werden.
+Ebenso muss das Zeitfenster für die Daten mitberücksichtigt werden.
 
-Um die Latenz zu verringern, könnten ...
+Für die Vorverabeitung könnte zum Beispiel ein Grenzwertfilter angewendet werden, um Grundrauschen zu unterdrücken.
+Bei Möglichen Überlagerungen dieses Grundrauschens mit den Frequenzen, die beim Schlagen auf die Tischplatte entstehen, könnten sich Box-Filter (Moving Average) oder Gauss-Filter anwenden lassen.
+
+%Um die Latenz zu verringern, könnten 
