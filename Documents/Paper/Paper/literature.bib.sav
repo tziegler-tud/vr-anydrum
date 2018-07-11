@@ -1,0 +1,95 @@
+% Encoding: UTF-8
+
+@InProceedings{Elbatta2013ADM,
+  author    = {Mohammed T. H. Elbatta and Wesam M. Ashour},
+  title     = {A Dynamic Method for Discovering Density Varied Clusters},
+  booktitle = {International Journal of Signal Processing, Image Processing and Pattern Recognition Vol. 6, No. 1, February, 2013},
+  year      = {2013},
+  keywords  = {rank4},
+}
+
+@Unpublished{timbreID,
+  author   = {William Brent},
+  title    = {A TIMBRE ANALYSIS AND CLASSIFICATION TOOLKIT FOR PURE DATA},
+  note     = {University of California, San Diego, Center for Research in Computing and the Arts},
+  keywords = {rank5},
+}
+
+@Misc{CH340,
+  author       = {http://wch.cn/},
+  title        = {USB to serial chip CH340},
+  howpublished = {\url{https://www.olimex.com/Products/Breadboarding/BB-CH340T/resources/CH340DS1.PDF}},
+  year         = {2018},
+}
+
+@Misc{mik3y,
+  author       = {mike w (mik3y)},
+  title        = {usb-serial-for-android},
+  howpublished = {\url{https://github.com/mik3y/usb-serial-for-android}},
+  year         = {2018},
+}
+
+@Misc{felHR85,
+  author       = {Herranz, Felipe (felHR85)},
+  title        = {UsbSerial},
+  howpublished = {\url{https://github.com/felHR85/UsbSerial}},
+  year         = {2018},
+}
+
+@Misc{puredata,
+  author       = {IEM (\url{http://iem.at/}) - Institute of Electronic Music and Acoustics},
+  title        = {Pure Data},
+  howpublished = {\url{https://puredata.info/}},
+  year         = {2018},
+}
+
+@Misc{pdAndroid,
+  author       = {libpd (\url{http://libpd.cc/})},
+  title        = {pd-for-android},
+  howpublished = {\url{https://github.com/libpd/pd-for-android}},
+  year         = {2018},
+}
+
+@Misc{MPU6050,
+  author       = {TDK Inc.},
+  title        = {MPU 6000 and MPU 6050 Product Specification Revision 3.4},
+  howpublished = {\url{https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf}},
+}
+
+@Misc{qualcomm,
+  author       = {Qualcomm Technologies, Inc. and/or its affiliated companies},
+  title        = {Snapdragon 430 Mobile Platform},
+  howpublished = {\url{https://www.qualcomm.com/products/snapdragon/processors/430}},
+  year         = {2018},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
+
+book{conger_gamification_2016,
+	title = {Gamification of Service Desk Work},
+	isbn = {978-981-287-611-9 978-981-287-612-6},
+	pages = {151--172},
+	publisher = {Springer, Singapore},
+	author = {Conger, Sue},
+	urldate = {2018-01-24},
+	year = {2016},
+	langid = {english},
+	note = {DOI: 10.1007/978-981-287-612-6\_8}
+},
+
+inproceedings{game_elements,
+	title = {From game design elements to gamefulness:
+	defining gamification.},
+	note = In: Proceedings from Mindtrek 2011. Tampere, Finnland:
+	ACM, 2011},
+	author = {Deterding, S.; Dixon, D.; Khaled, R.; Nacke, L.},
+	langid = {deutsch}
+},
+
+online{redaktion_gamification_????,
+	title = {{GAMIFICATION} – {BEISPIELE} {FÜR} {IHREN} {UNTERNEHMENSERFOLG}},
+	year= {Zugriff am 2018-01.15},
+	note = {http://blog.asdag.com/gamification-beispiele-fuer-ihren-unternehmenserfolg},
+	urldate = {2018-01-15},
+	langid = {german}
+}

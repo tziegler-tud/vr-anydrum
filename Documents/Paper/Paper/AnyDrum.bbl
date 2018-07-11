@@ -1,0 +1,42 @@
+\begin{thebibliography}{uIoEMA18}
+
+\bibitem[Her18]{felHR85}
+Felipe~(felHR85) Herranz.
+\newblock Usbserial.
+\newblock \url{https://github.com/felHR85/UsbSerial}, 2018.
+
+\bibitem[htt18]{CH340}
+http://wch.cn/.
+\newblock Usb to serial chip ch340.
+\newblock
+  \url{https://www.olimex.com/Products/Breadboarding/BB-CH340T/resources/CH340DS1.PDF},
+  2018.
+
+\bibitem[Inc]{MPU6050}
+TDK Inc.
+\newblock Mpu 6000 and mpu 6050 product specification revision 3.4.
+\newblock
+  \url{https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf}.
+
+\bibitem[lu18]{pdAndroid}
+libpd (\url{http://libpd.cc/}).
+\newblock pd-for-android.
+\newblock \url{https://github.com/libpd/pd-for-android}, 2018.
+
+\bibitem[mwm18]{mik3y}
+mike~w (mik3y).
+\newblock usb-serial-for-android.
+\newblock \url{https://github.com/mik3y/usb-serial-for-android}, 2018.
+
+\bibitem[QT18]{qualcomm}
+Inc. and/or its affiliated~companies Qualcomm~Technologies.
+\newblock Snapdragon 430 mobile platform.
+\newblock \url{https://www.qualcomm.com/products/snapdragon/processors/430},
+  2018.
+
+\bibitem[uIoEMA18]{puredata}
+IEM (\url{http://iem.at/}) Institute~of Electronic~Music and Acoustics.
+\newblock Pure data.
+\newblock \url{https://puredata.info/}, 2018.
+
+\end{thebibliography}
