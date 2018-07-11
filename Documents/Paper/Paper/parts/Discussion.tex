@@ -1,2 +1,14 @@
 \section{Diskussion}
+Die Verwendung des Beschleunigungssensors von einem Smartphone unterscheidet sich zu sehr zwischen einzelnen Modellen und Herstellern.
+Hingegen können externe Sensoren an verschiedenen Smartphones genutzt werden, sofern USB-OTG unterstützt wird.
+Damit ist eine gleichbleibende Funktionsweise und Erkennungsrate unter verschiedenen Geräten gewährleistet.
 
+Das Filtern und die Signalanalyse muss somit nur für die Skalardaten des Multisensors MPU6050 erfolgen.
+Beim Testen der Erkennungsrate wurde in Abb. \ref{fig:FFT_Median} gezeigt, dass die einzelnen Median-Werte der Frequenzgruppen sich weniger stark unterscheiden, als ihre jeweiligen Arithmetischen Mittel.
+Dies liegt daran, dass sich in den Daten mehr Ausreißer befinden, die durch Schläge auf eine Tischplatte entstanden.
+
+Die Sensordaten können anschließend als Schlag detektiert und aufgenommen werden.
+Dabei spielt das Zeitfenster eine wichtige Rolle für die Genauigkeit und Latenz, wie in Unterabschnitt \ref{sec:zeitfenster} beschrieben.
+
+Desweiteren wurde in Unterabschnitt \ref{sec:zeitfenster} ein Zeitfenster von 550ms gewählt.
+Um das ursprüngliche Ziel einer Latenz von <100ms einzuhalten, müsste eine deutlich höhrere Samplerate erreicht werden. Wir vermuten, dass bei einer Samplingrate von ca. 2.5kHz und einem Zeitfenster von 50ms zur Messwertaufnahme eine Latenz von <100ms gelichzeitig zu einer robusten Erkennung erreicht werden könnte.
